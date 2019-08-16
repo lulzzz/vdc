@@ -19,3 +19,16 @@ This one click deployment will build a VDC Admin & Development box in Azure.  Al
 1. Once the VM is deployed use the Azure portal to connect.
 1. Double click the Docker for Windows shortcut on the desktop.
 1. It will take a few minutes for Docker to start the first time.
+1. 
+1. 
+1. ---
+1. DEPLOYING FROM VM
+=================
+1 - Use labvm link from github
+vdcadmin
+Password.1!!
+
+If you login too early, the software won't be ready.
+
+You may need to sign out and sign back in for Docker to work.
+You'll need to restart to enable Hyper-V
