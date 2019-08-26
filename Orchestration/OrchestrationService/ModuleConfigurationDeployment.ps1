@@ -76,7 +76,8 @@ Function New-Deployment {
 
         $factory = `
             Invoke-Bootstrap `
-                -WorkingDirectory $defaultWorkingDirectory;
+                -WorkingDirectory $defaultWorkingDirectory `
+                -Mode @{ "False" = "deploy"; "True" = "validate"; }[$Validate.ToString()];
 
         $deploymentService = `
             $factory.GetInstance('IDeploymentService');
@@ -880,7 +881,10 @@ Function Invoke-Bootstrap {
     param (
         [Parameter(Mandatory=$true)]
         [string]
-        $WorkingDirectory
+        $WorkingDirectory,
+        [Parameter(Mandatory=$false)]
+        [string]
+        $Mode = "deploy"
     )
 
     $toolkitConfigurationFileName = `
@@ -920,7 +924,9 @@ Function Invoke-Bootstrap {
                     $auditStorageInformation.SubscriptionId,
                     $auditStorageInformation.ResourceGroup,
                     $auditStorageInformation.Location,
-                    $auditStorageInformation.StorageAccountName);
+                    $auditStorageInformation.StorageAccountName,
+                    $Mode
+                    );
 
             $factory = `
                 New-FactoryInstance `

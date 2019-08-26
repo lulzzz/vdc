@@ -4,6 +4,7 @@ Class Initialize {
     [string]$dataStoreResourceGroupName = 'vdc-storage-rg';
     [string]$dataStoreName = 'vdcDataStore';
     [string]$dataStoreLocation = 'westus';
+    [string]$mode = 'deploy';
     # This array indicates the folders/containers/tables/collections
     # to be created inside of VDC Data Store
     $dataStoreSubFolders = @(
@@ -41,7 +42,8 @@ Class Initialize {
                     [string]$dataStoreSubscriptionId,
                     [string]$dataStoreResourceGroupName='',
                     [string]$dataStoreLocation='',
-                    [string]$dataStoreName='') {
+                    [string]$dataStoreName='',
+                    [string]$mode) {
         $this.dataStoreTenantId = `
             $dataStoreTenantId;
         $this.dataStoreSubscriptionId = `
@@ -52,6 +54,8 @@ Class Initialize {
             $dataStoreLocation;
         $this.dataStoreName = `
             $dataStoreName;
+        $this.mode = `
+            $mode;
         return $this.createStorageAccountDataStore();
     }
 
@@ -136,11 +140,18 @@ Class Initialize {
                 !$validJson) {
                 Write-Debug "No valid JSON found, running Storage Account bootstrap";
                 
-                # Setting context in order to create / verify the toolkit
-                # resource group and storage account resource
-                Set-AzContext `
-                    -Tenant $this.dataStoreTenantId `
-                    -Subscription $this.dataStoreSubscriptionId;
+                # Change the subscription context only if the mode is deploy. If 
+                # in validate mode, do not change the subscription context. Doing so 
+                # will break the validation in the case of a multi-subscription 
+                # deployment (i.e, modules designated to be deployed to more than one
+                # subscription).
+                if($this.mode -eq "deploy") {
+                    # Setting context in order to create / verify the toolkit
+                    # resource group and storage account resource
+                    Set-AzContext `
+                        -Tenant $this.dataStoreTenantId `
+                        -Subscription $this.dataStoreSubscriptionId;
+                }
 
                 $storageResourceGroup = Get-AzResourceGroup `
                     -Name $this.dataStoreResourceGroupName `
@@ -222,13 +233,21 @@ Class Initialize {
                     
                     Write-Debug "Obtaining new SAS Token, previous expired"
 
-                    # Setting AZ context to be able to retrieve the proper
-                    # SAS token, there are situations where the toolkit
-                    # subscription is different than the one from the
-                    # archetype deployment 
-                    Set-AzContext `
-                        -Tenant $this.dataStoreTenantId `
-                        -Subscription $this.dataStoreSubscriptionId;
+
+                    # Change the subscription context only if the mode is deploy. If 
+                    # in validate mode, do not change the subscription context. Doing so 
+                    # will break the validation in the case of a multi-subscription 
+                    # deployment (i.e, modules designated to be deployed to more than one
+                    # subscription).
+                    if($this.mode -eq "deploy") {
+                        # Setting AZ context to be able to retrieve the proper
+                        # SAS token, there are situations where the toolkit
+                        # subscription is different than the one from the
+                        # archetype deployment 
+                        Set-AzContext `
+                            -Tenant $this.dataStoreTenantId `
+                            -Subscription $this.dataStoreSubscriptionId;
+                    }
                     
                     $sasToken = `
                         $this.GetSASToken(
