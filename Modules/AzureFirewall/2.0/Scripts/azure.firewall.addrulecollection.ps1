@@ -38,6 +38,7 @@ Function ConvertTo-HashTable() {
         return $null;
     }
 }
+Get-AzContext;
 
 # Construct the Resource Id for Azure Firewall using subscription id, resource group name and azure firewall name
 $azureFirewallId = "/subscriptions/$SubscriptionId/resourceGroups/$AzureFirewallResourceGroup/providers/Microsoft.Network/azureFirewalls/$AzureFirewallName";
