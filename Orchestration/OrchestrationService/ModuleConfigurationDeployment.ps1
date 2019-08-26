@@ -182,12 +182,16 @@ Function New-Deployment {
                 $subscriptionCheck -ne [Guid]::Empty -and `
                 $tenantIdCheck -ne [Guid]::Empty -and
                 $subscriptionCheck -ne $sub.Subscription.Id) {
+                
+                # Switch subscription only when in deployment mode.
+                if($Validate.IsPresent -eq $false) {
 
-                Write-Debug "Setting subscription context";
+                    Write-Debug "Setting subscription context";
 
-                Set-SubscriptionContext `
-                    -SubscriptionId $subscriptionInformation.SubscriptionId `
-                    -TenantId $subscriptionInformation.TenantId;
+                    Set-SubscriptionContext `
+                        -SubscriptionId $subscriptionInformation.SubscriptionId `
+                        -TenantId $subscriptionInformation.TenantId;
+                }
             }
 
             # Let's attempt to get the Audit Id from cache

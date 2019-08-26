@@ -216,7 +216,7 @@ Class Initialize {
                 # is the same for all the modules when in validation mode.
                 if($this.mode -eq "validate") {
                     Set-AzContext -Context $previousContext;
-                }
+                } 
 
                 $storageAccountDetails = @{
                     StorageAccountName = $this.dataStoreName
@@ -243,7 +243,7 @@ Class Initialize {
                     # same (as the validation resource group subscription) for all modules of a
                     # workload
                     $previousContext = Get-AzContext;
-                    
+
                     # Setting AZ context to be able to retrieve the proper
                     # SAS token, there are situations where the toolkit
                     # subscription is different than the one from the
