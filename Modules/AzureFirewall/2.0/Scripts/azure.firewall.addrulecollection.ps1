@@ -44,7 +44,7 @@ Get-AzContext;
 $azureFirewallId = "/subscriptions/$SubscriptionId/resourceGroups/$AzureFirewallResourceGroup/providers/Microsoft.Network/azureFirewalls/$AzureFirewallName";
 
 # Get the current state of the Azure Firewall from Graph
-$azfw = Search-AzGraph -Query "where id == '$azureFirewallId'";
+$azfw = Search-AzGraph -Query "where id == '$azureFirewallId'" -Subscription $SubscriptionId;
 
 if($null -ne $azfw) {
 
