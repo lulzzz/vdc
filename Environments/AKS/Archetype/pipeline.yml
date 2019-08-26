@@ -18,7 +18,7 @@ stages:
     - task: AzurePowerShell@4
       displayName: "Setup Validation Resource Group"
       inputs:
-        azureSubscription: 'Kunachim Azure SC'
+        azureSubscription: 'vdc2-spoke1'
         ScriptType: 'FilePath'
         ScriptPath: 'Orchestration/OrchestrationService/ValidationResourceGroupSetup.ps1'
         ScriptArguments: '-ResourceGroupName vdc-validation-rg -SetupResourceGroup'
@@ -41,7 +41,7 @@ stages:
     - task: AzurePowerShell@4
       displayName: "ARM Validation - Container Registries"
       inputs:
-        azureSubscription: 'Kunachim Azure SC'
+        azureSubscription: 'vdc2-spoke1'
         ScriptType: 'FilePath'
         ScriptPath: 'Orchestration/OrchestrationService/ModuleConfigurationDeployment.ps1'
         ScriptArguments: '-DefinitionPath "Environments/AKS/Archetype/definition.json" -ModuleConfigurationName "ContainerRegistry" -Validate'
@@ -53,6 +53,18 @@ stages:
         ADMIN_USER_PWD: $(ADMIN_USER_PWD)
         DOMAIN_ADMIN_USER_PWD: $(DOMAIN_ADMIN_USER_PWD)
         TENANT_ID: $(TENANT_ID)
+        ORGANIZATION_NAME: $(ORGANIZATION_NAME)
+        SERVICE_PRINCIPAL_CLIENT_ID: $(SERVICE_PRINCIPAL_CLIENT_ID)
+        SERVICE_PRINCIPAL_CLIENT_SECRET: $(SERVICE_PRINCIPAL_CLIENT_SECRET)
+        RBAC_SERVER_APP_ID: $(RBAC_SERVER_APP_ID)
+        RBAC_SERVER_SECRET: $(RBAC_SERVER_SECRET)
+        RBAC_CLIENT_APP_ID: $(RBAC_CLIENT_APP_ID)
+        RBAC_TENANT: $(RBAC_TENANT)
+        CLUSTER_ADMIN_GROUP_ID: $(CLUSTER_ADMIN_GROUP_ID)
+        NOC_USER_GROUP_ID: $(NOC_USER_GROUP_ID)
+        DEV_USER_GROUP_ID: $(DEV_USER_GROUP_ID)
+        SCRIPT_EXECUTION_SP_ID: $(SCRIPT_EXECUTION_SP_ID)
+        SCRIPT_EXECUTION_SP_KEY: $(SCRIPT_EXECUTION_SP_KEY)
   - job: AzureKubernetesServices
     pool:
       name: 'vdc-self-hosted'
@@ -73,7 +85,7 @@ stages:
     - task: AzurePowerShell@4
       displayName: "ARM Validation - Azure Kubernetes Services"
       inputs:
-        azureSubscription: 'Kunachim Azure SC'
+        azureSubscription: 'vdc2-spoke1'
         ScriptType: 'FilePath'
         ScriptPath: 'Orchestration/OrchestrationService/ModuleConfigurationDeployment.ps1'
         ScriptArguments: '-DefinitionPath "Environments/AKS/Archetype/definition.json" -ModuleConfigurationName "AzureKubernetesServices" -Validate'
@@ -85,6 +97,18 @@ stages:
         ADMIN_USER_PWD: $(ADMIN_USER_PWD)
         DOMAIN_ADMIN_USER_PWD: $(DOMAIN_ADMIN_USER_PWD)
         TENANT_ID: $(TENANT_ID)
+        ORGANIZATION_NAME: $(ORGANIZATION_NAME)
+        SERVICE_PRINCIPAL_CLIENT_ID: $(SERVICE_PRINCIPAL_CLIENT_ID)
+        SERVICE_PRINCIPAL_CLIENT_SECRET: $(SERVICE_PRINCIPAL_CLIENT_SECRET)
+        RBAC_SERVER_APP_ID: $(RBAC_SERVER_APP_ID)
+        RBAC_SERVER_SECRET: $(RBAC_SERVER_SECRET)
+        RBAC_CLIENT_APP_ID: $(RBAC_CLIENT_APP_ID)
+        RBAC_TENANT: $(RBAC_TENANT)
+        CLUSTER_ADMIN_GROUP_ID: $(CLUSTER_ADMIN_GROUP_ID)
+        NOC_USER_GROUP_ID: $(NOC_USER_GROUP_ID)
+        DEV_USER_GROUP_ID: $(DEV_USER_GROUP_ID)
+        SCRIPT_EXECUTION_SP_ID: $(SCRIPT_EXECUTION_SP_ID)
+        SCRIPT_EXECUTION_SP_KEY: $(SCRIPT_EXECUTION_SP_KEY)
   - job: TearDownValidationResourceGroup
     pool: 
       name: 'vdc-self-hosted'
@@ -95,7 +119,7 @@ stages:
     - task: AzurePowerShell@4
       displayName: "Teardown Validation Resource Group"
       inputs:
-        azureSubscription: 'Kunachim Azure SC'
+        azureSubscription: 'vdc2-spoke1'
         ScriptType: 'FilePath'
         ScriptPath: 'Orchestration/OrchestrationService/ValidationResourceGroupSetup.ps1'
         ScriptArguments: '-TearDownResourceGroup'
@@ -110,7 +134,7 @@ stages:
     - task: AzurePowerShell@4
       displayName: "Container Registries"
       inputs:
-        azureSubscription: 'Kunachim Azure SC'
+        azureSubscription: 'vdc2-spoke1'
         ScriptType: 'FilePath'
         ScriptPath: 'Orchestration/OrchestrationService/ModuleConfigurationDeployment.ps1'
         ScriptArguments: '-DefinitionPath "Environments/AKS/Archetype/definition.json" -ModuleConfigurationName "ContainerRegistry"'
@@ -122,6 +146,18 @@ stages:
         ADMIN_USER_PWD: $(ADMIN_USER_PWD)
         DOMAIN_ADMIN_USER_PWD: $(DOMAIN_ADMIN_USER_PWD)
         TENANT_ID: $(TENANT_ID)
+        ORGANIZATION_NAME: $(ORGANIZATION_NAME)
+        SERVICE_PRINCIPAL_CLIENT_ID: $(SERVICE_PRINCIPAL_CLIENT_ID)
+        SERVICE_PRINCIPAL_CLIENT_SECRET: $(SERVICE_PRINCIPAL_CLIENT_SECRET)
+        RBAC_SERVER_APP_ID: $(RBAC_SERVER_APP_ID)
+        RBAC_SERVER_SECRET: $(RBAC_SERVER_SECRET)
+        RBAC_CLIENT_APP_ID: $(RBAC_CLIENT_APP_ID)
+        RBAC_TENANT: $(RBAC_TENANT)
+        CLUSTER_ADMIN_GROUP_ID: $(CLUSTER_ADMIN_GROUP_ID)
+        NOC_USER_GROUP_ID: $(NOC_USER_GROUP_ID)
+        DEV_USER_GROUP_ID: $(DEV_USER_GROUP_ID)
+        SCRIPT_EXECUTION_SP_ID: $(SCRIPT_EXECUTION_SP_ID)
+        SCRIPT_EXECUTION_SP_KEY: $(SCRIPT_EXECUTION_SP_KEY)
   - job: AzureKubernetesServices
     timeoutInMinutes: 0
     pool:
@@ -133,7 +169,7 @@ stages:
     - task: AzurePowerShell@4
       displayName: "Azure Kubernetes Services"
       inputs:
-        azureSubscription: 'Kunachim Azure SC'
+        azureSubscription: 'vdc2-spoke1'
         ScriptType: 'FilePath'
         ScriptPath: 'Orchestration/OrchestrationService/ModuleConfigurationDeployment.ps1'
         ScriptArguments: '-DefinitionPath "Environments/AKS/Archetype/definition.json" -ModuleConfigurationName "AzureKubernetesServices"'
@@ -145,6 +181,18 @@ stages:
         ADMIN_USER_PWD: $(ADMIN_USER_PWD)
         DOMAIN_ADMIN_USER_PWD: $(DOMAIN_ADMIN_USER_PWD)
         TENANT_ID: $(TENANT_ID)
+        ORGANIZATION_NAME: $(ORGANIZATION_NAME)
+        SERVICE_PRINCIPAL_CLIENT_ID: $(SERVICE_PRINCIPAL_CLIENT_ID)
+        SERVICE_PRINCIPAL_CLIENT_SECRET: $(SERVICE_PRINCIPAL_CLIENT_SECRET)
+        RBAC_SERVER_APP_ID: $(RBAC_SERVER_APP_ID)
+        RBAC_SERVER_SECRET: $(RBAC_SERVER_SECRET)
+        RBAC_CLIENT_APP_ID: $(RBAC_CLIENT_APP_ID)
+        RBAC_TENANT: $(RBAC_TENANT)
+        CLUSTER_ADMIN_GROUP_ID: $(CLUSTER_ADMIN_GROUP_ID)
+        NOC_USER_GROUP_ID: $(NOC_USER_GROUP_ID)
+        DEV_USER_GROUP_ID: $(DEV_USER_GROUP_ID)
+        SCRIPT_EXECUTION_SP_ID: $(SCRIPT_EXECUTION_SP_ID)
+        SCRIPT_EXECUTION_SP_KEY: $(SCRIPT_EXECUTION_SP_KEY)
   - job: ScriptsPreReqs
     timeoutInMinutes: 0
     pool:
@@ -156,7 +204,7 @@ stages:
     - task: AzurePowerShell@4
       displayName: "Permissions Scripts Pre Reqs"
       inputs:
-        azureSubscription: 'Kunachim Azure SC'
+        azureSubscription: 'vdc2-spoke1'
         ScriptType: 'FilePath'
         ScriptPath: 'Orchestration/OrchestrationService/ModuleConfigurationDeployment.ps1'
         ScriptArguments: '-DefinitionPath "Environments/AKS/Archetype/definition.json" -ModuleConfigurationName "PermissionsScriptsPreReqs"'
@@ -168,10 +216,22 @@ stages:
         ADMIN_USER_PWD: $(ADMIN_USER_PWD)
         DOMAIN_ADMIN_USER_PWD: $(DOMAIN_ADMIN_USER_PWD)
         TENANT_ID: $(TENANT_ID)
+        ORGANIZATION_NAME: $(ORGANIZATION_NAME)
+        SERVICE_PRINCIPAL_CLIENT_ID: $(SERVICE_PRINCIPAL_CLIENT_ID)
+        SERVICE_PRINCIPAL_CLIENT_SECRET: $(SERVICE_PRINCIPAL_CLIENT_SECRET)
+        RBAC_SERVER_APP_ID: $(RBAC_SERVER_APP_ID)
+        RBAC_SERVER_SECRET: $(RBAC_SERVER_SECRET)
+        RBAC_CLIENT_APP_ID: $(RBAC_CLIENT_APP_ID)
+        RBAC_TENANT: $(RBAC_TENANT)
+        CLUSTER_ADMIN_GROUP_ID: $(CLUSTER_ADMIN_GROUP_ID)
+        NOC_USER_GROUP_ID: $(NOC_USER_GROUP_ID)
+        DEV_USER_GROUP_ID: $(DEV_USER_GROUP_ID)
+        SCRIPT_EXECUTION_SP_ID: $(SCRIPT_EXECUTION_SP_ID)
+        SCRIPT_EXECUTION_SP_KEY: $(SCRIPT_EXECUTION_SP_KEY)
     - task: AzurePowerShell@4
       displayName: "Scripts Pre Reqs"
       inputs:
-        azureSubscription: 'Kunachim Azure SC'
+        azureSubscription: 'vdc2-spoke1'
         ScriptType: 'FilePath'
         ScriptPath: 'Orchestration/OrchestrationService/ModuleConfigurationDeployment.ps1'
         ScriptArguments: '-DefinitionPath "Environments/AKS/Archetype/definition.json" -ModuleConfigurationName "ScriptsPreReqs"'
@@ -183,6 +243,18 @@ stages:
         ADMIN_USER_PWD: $(ADMIN_USER_PWD)
         DOMAIN_ADMIN_USER_PWD: $(DOMAIN_ADMIN_USER_PWD)
         TENANT_ID: $(TENANT_ID)
+        ORGANIZATION_NAME: $(ORGANIZATION_NAME)
+        SERVICE_PRINCIPAL_CLIENT_ID: $(SERVICE_PRINCIPAL_CLIENT_ID)
+        SERVICE_PRINCIPAL_CLIENT_SECRET: $(SERVICE_PRINCIPAL_CLIENT_SECRET)
+        RBAC_SERVER_APP_ID: $(RBAC_SERVER_APP_ID)
+        RBAC_SERVER_SECRET: $(RBAC_SERVER_SECRET)
+        RBAC_CLIENT_APP_ID: $(RBAC_CLIENT_APP_ID)
+        RBAC_TENANT: $(RBAC_TENANT)
+        CLUSTER_ADMIN_GROUP_ID: $(CLUSTER_ADMIN_GROUP_ID)
+        NOC_USER_GROUP_ID: $(NOC_USER_GROUP_ID)
+        DEV_USER_GROUP_ID: $(DEV_USER_GROUP_ID)
+        SCRIPT_EXECUTION_SP_ID: $(SCRIPT_EXECUTION_SP_ID)
+        SCRIPT_EXECUTION_SP_KEY: $(SCRIPT_EXECUTION_SP_KEY)
   - job: CreateClusterRBACRoleBindings
     timeoutInMinutes: 0
     pool:
@@ -194,7 +266,7 @@ stages:
     - task: AzurePowerShell@4
       displayName: "Create Cluster RBAC Role Bindings"
       inputs:
-        azureSubscription: 'Kunachim Azure SC'
+        azureSubscription: 'vdc2-spoke1'
         ScriptType: 'FilePath'
         ScriptPath: 'Orchestration/OrchestrationService/ModuleConfigurationDeployment.ps1'
         ScriptArguments: '-DefinitionPath "Environments/AKS/Archetype/definition.json" -ModuleConfigurationName "CreateClusterRBACRoleBindings"'
@@ -206,3 +278,15 @@ stages:
         ADMIN_USER_PWD: $(ADMIN_USER_PWD)
         DOMAIN_ADMIN_USER_PWD: $(DOMAIN_ADMIN_USER_PWD)
         TENANT_ID: $(TENANT_ID)
+        ORGANIZATION_NAME: $(ORGANIZATION_NAME)
+        SERVICE_PRINCIPAL_CLIENT_ID: $(SERVICE_PRINCIPAL_CLIENT_ID)
+        SERVICE_PRINCIPAL_CLIENT_SECRET: $(SERVICE_PRINCIPAL_CLIENT_SECRET)
+        RBAC_SERVER_APP_ID: $(RBAC_SERVER_APP_ID)
+        RBAC_SERVER_SECRET: $(RBAC_SERVER_SECRET)
+        RBAC_CLIENT_APP_ID: $(RBAC_CLIENT_APP_ID)
+        RBAC_TENANT: $(RBAC_TENANT)
+        CLUSTER_ADMIN_GROUP_ID: $(CLUSTER_ADMIN_GROUP_ID)
+        NOC_USER_GROUP_ID: $(NOC_USER_GROUP_ID)
+        DEV_USER_GROUP_ID: $(DEV_USER_GROUP_ID)
+        SCRIPT_EXECUTION_SP_ID: $(SCRIPT_EXECUTION_SP_ID)
+        SCRIPT_EXECUTION_SP_KEY: $(SCRIPT_EXECUTION_SP_KEY)

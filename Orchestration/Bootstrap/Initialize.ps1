@@ -261,7 +261,7 @@ Class Initialize {
             $ENV:BOOTSTRAP_INITIALIZED = $storageAccountDetailsJson;
 
             # Azure DevOps syntax to set a pipeline variable
-            Write-Host "##vso[task.setvariable variable=BOOTSTRAP_INITIALIZED]$storageAccountDetailsJson";
+            Write-Host "##vso[task.setvariable variable=BOOTSTRAP_INITIALIZED;isOutput=true]$storageAccountDetailsJson";
             Write-Host "Bootstrap process completed successfully";
             return $storageAccountDetails;
         }

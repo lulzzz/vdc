@@ -57,6 +57,8 @@ stages:
         ORGANIZATION_NAME: $(ORGANIZATION_NAME)
         VDC_SUBSCRIPTIONS: $(VDC_SUBSCRIPTIONS)
         VDC_TOOLKIT_SUBSCRIPTION: $(VDC_TOOLKIT_SUBSCRIPTION)
+        SCRIPT_EXECUTION_SP_ID: $(SCRIPT_EXECUTION_SP_ID)
+        SCRIPT_EXECUTION_SP_KEY: $(SCRIPT_EXECUTION_SP_KEY)
     - task: AzurePowerShell@4
       displayName: "ARM Validation - Enable Service EndPoint On Diagnostic Storage Account"
       inputs:
@@ -76,6 +78,8 @@ stages:
         ORGANIZATION_NAME: $(ORGANIZATION_NAME)
         VDC_SUBSCRIPTIONS: $(VDC_SUBSCRIPTIONS)
         VDC_TOOLKIT_SUBSCRIPTION: $(VDC_TOOLKIT_SUBSCRIPTION)
+        SCRIPT_EXECUTION_SP_ID: $(SCRIPT_EXECUTION_SP_ID)
+        SCRIPT_EXECUTION_SP_KEY: $(SCRIPT_EXECUTION_SP_KEY)
   - job: LogAnalytics
     pool:
       name: 'vdc-self-hosted'
@@ -112,6 +116,8 @@ stages:
         ORGANIZATION_NAME: $(ORGANIZATION_NAME)
         VDC_SUBSCRIPTIONS: $(VDC_SUBSCRIPTIONS)
         VDC_TOOLKIT_SUBSCRIPTION: $(VDC_TOOLKIT_SUBSCRIPTION)
+        SCRIPT_EXECUTION_SP_ID: $(SCRIPT_EXECUTION_SP_ID)
+        SCRIPT_EXECUTION_SP_KEY: $(SCRIPT_EXECUTION_SP_KEY)
   - job: SecurityCenter
     pool:
       name: 'vdc-self-hosted'
@@ -148,6 +154,8 @@ stages:
         ORGANIZATION_NAME: $(ORGANIZATION_NAME)
         VDC_SUBSCRIPTIONS: $(VDC_SUBSCRIPTIONS)
         VDC_TOOLKIT_SUBSCRIPTION: $(VDC_TOOLKIT_SUBSCRIPTION)
+        SCRIPT_EXECUTION_SP_ID: $(SCRIPT_EXECUTION_SP_ID)
+        SCRIPT_EXECUTION_SP_KEY: $(SCRIPT_EXECUTION_SP_KEY)
   - job: EventHub
     pool:
       name: 'vdc-self-hosted'
@@ -184,7 +192,9 @@ stages:
         ORGANIZATION_NAME: $(ORGANIZATION_NAME)
         VDC_SUBSCRIPTIONS: $(VDC_SUBSCRIPTIONS)
         VDC_TOOLKIT_SUBSCRIPTION: $(VDC_TOOLKIT_SUBSCRIPTION)
-  - job: NetworkSecurityGroup
+        SCRIPT_EXECUTION_SP_ID: $(SCRIPT_EXECUTION_SP_ID)
+        SCRIPT_EXECUTION_SP_KEY: $(SCRIPT_EXECUTION_SP_KEY)
+  - job: NetworkSecurityGroups
     pool:
       name: 'vdc-self-hosted'
     dependsOn: [ SetupValidationResourceGroup, StorageAccounts ]
@@ -220,7 +230,9 @@ stages:
         ORGANIZATION_NAME: $(ORGANIZATION_NAME)
         VDC_SUBSCRIPTIONS: $(VDC_SUBSCRIPTIONS)
         VDC_TOOLKIT_SUBSCRIPTION: $(VDC_TOOLKIT_SUBSCRIPTION)
-  - job: RouteTable
+        SCRIPT_EXECUTION_SP_ID: $(SCRIPT_EXECUTION_SP_ID)
+        SCRIPT_EXECUTION_SP_KEY: $(SCRIPT_EXECUTION_SP_KEY)
+  - job: RouteTables
     pool:
       name: 'vdc-self-hosted'
     dependsOn: [ SetupValidationResourceGroup, StorageAccounts ]
@@ -256,6 +268,8 @@ stages:
         ORGANIZATION_NAME: $(ORGANIZATION_NAME)
         VDC_SUBSCRIPTIONS: $(VDC_SUBSCRIPTIONS)
         VDC_TOOLKIT_SUBSCRIPTION: $(VDC_TOOLKIT_SUBSCRIPTION)
+        SCRIPT_EXECUTION_SP_ID: $(SCRIPT_EXECUTION_SP_ID)
+        SCRIPT_EXECUTION_SP_KEY: $(SCRIPT_EXECUTION_SP_KEY)
   - job: VirtualNetwork
     pool:
       name: 'vdc-self-hosted'
@@ -292,6 +306,8 @@ stages:
         ORGANIZATION_NAME: $(ORGANIZATION_NAME)
         VDC_SUBSCRIPTIONS: $(VDC_SUBSCRIPTIONS)
         VDC_TOOLKIT_SUBSCRIPTION: $(VDC_TOOLKIT_SUBSCRIPTION)
+        SCRIPT_EXECUTION_SP_ID: $(SCRIPT_EXECUTION_SP_ID)
+        SCRIPT_EXECUTION_SP_KEY: $(SCRIPT_EXECUTION_SP_KEY)
     - task: PowerShell@2
       displayName: "Pester Tests for Module - Virtual Network Peering"
       inputs:
@@ -321,6 +337,8 @@ stages:
         ORGANIZATION_NAME: $(ORGANIZATION_NAME)
         VDC_SUBSCRIPTIONS: $(VDC_SUBSCRIPTIONS)
         VDC_TOOLKIT_SUBSCRIPTION: $(VDC_TOOLKIT_SUBSCRIPTION)
+        SCRIPT_EXECUTION_SP_ID: $(SCRIPT_EXECUTION_SP_ID)
+        SCRIPT_EXECUTION_SP_KEY: $(SCRIPT_EXECUTION_SP_KEY)
     - task: AzurePowerShell@4
       displayName: "ARM Validation - VirtualNetwork Peering From AKS"
       inputs:
@@ -340,6 +358,8 @@ stages:
         ORGANIZATION_NAME: $(ORGANIZATION_NAME)
         VDC_SUBSCRIPTIONS: $(VDC_SUBSCRIPTIONS)
         VDC_TOOLKIT_SUBSCRIPTION: $(VDC_TOOLKIT_SUBSCRIPTION)
+        SCRIPT_EXECUTION_SP_ID: $(SCRIPT_EXECUTION_SP_ID)
+        SCRIPT_EXECUTION_SP_KEY: $(SCRIPT_EXECUTION_SP_KEY)
   - job: KeyVault
     pool:
       name: 'vdc-self-hosted'
@@ -376,6 +396,8 @@ stages:
         ORGANIZATION_NAME: $(ORGANIZATION_NAME)
         VDC_SUBSCRIPTIONS: $(VDC_SUBSCRIPTIONS)
         VDC_TOOLKIT_SUBSCRIPTION: $(VDC_TOOLKIT_SUBSCRIPTION)
+        SCRIPT_EXECUTION_SP_ID: $(SCRIPT_EXECUTION_SP_ID)
+        SCRIPT_EXECUTION_SP_KEY: $(SCRIPT_EXECUTION_SP_KEY)
     - task: AzurePowerShell@4
       displayName: "ARM Validation - Enable Service Endpoint on Key Vault"
       inputs:
@@ -395,6 +417,8 @@ stages:
         ORGANIZATION_NAME: $(ORGANIZATION_NAME)
         VDC_SUBSCRIPTIONS: $(VDC_SUBSCRIPTIONS)
         VDC_TOOLKIT_SUBSCRIPTION: $(VDC_TOOLKIT_SUBSCRIPTION)
+        SCRIPT_EXECUTION_SP_ID: $(SCRIPT_EXECUTION_SP_ID)
+        SCRIPT_EXECUTION_SP_KEY: $(SCRIPT_EXECUTION_SP_KEY)
   - job: UpdateAzureFirewall
     pool:
       name: 'vdc-self-hosted'
@@ -431,10 +455,12 @@ stages:
         ORGANIZATION_NAME: $(ORGANIZATION_NAME)
         VDC_SUBSCRIPTIONS: $(VDC_SUBSCRIPTIONS)
         VDC_TOOLKIT_SUBSCRIPTION: $(VDC_TOOLKIT_SUBSCRIPTION)
+        SCRIPT_EXECUTION_SP_ID: $(SCRIPT_EXECUTION_SP_ID)
+        SCRIPT_EXECUTION_SP_KEY: $(SCRIPT_EXECUTION_SP_KEY)
   - job: TearDownValidationResourceGroup
     pool: 
       name: 'vdc-self-hosted'
-    dependsOn: [ StorageAccounts, LogAnalytics, SecurityCenter, EventHub, NetworkSecurityGroup, RouteTable, VirtualNetwork, KeyVault ]
+    dependsOn: [ StorageAccounts, LogAnalytics, SecurityCenter, EventHub, NetworkSecurityGroups, RouteTables, VirtualNetwork, KeyVault ]
     variables: 
       BOOTSTRAP_INITIALIZED: $[dependencies.StorageAccounts.outputs['bootstratInitializedOutput.BOOTSTRAP_INITIALIZED']]
     steps:
@@ -472,6 +498,8 @@ stages:
         ORGANIZATION_NAME: $(ORGANIZATION_NAME)
         VDC_SUBSCRIPTIONS: $(VDC_SUBSCRIPTIONS)
         VDC_TOOLKIT_SUBSCRIPTION: $(VDC_TOOLKIT_SUBSCRIPTION)
+        SCRIPT_EXECUTION_SP_ID: $(SCRIPT_EXECUTION_SP_ID)
+        SCRIPT_EXECUTION_SP_KEY: $(SCRIPT_EXECUTION_SP_KEY)
   - job: LogAnalytics 
     timeoutInMinutes: 0
     pool:
@@ -499,6 +527,8 @@ stages:
         ORGANIZATION_NAME: $(ORGANIZATION_NAME)
         VDC_SUBSCRIPTIONS: $(VDC_SUBSCRIPTIONS)
         VDC_TOOLKIT_SUBSCRIPTION: $(VDC_TOOLKIT_SUBSCRIPTION)
+        SCRIPT_EXECUTION_SP_ID: $(SCRIPT_EXECUTION_SP_ID)
+        SCRIPT_EXECUTION_SP_KEY: $(SCRIPT_EXECUTION_SP_KEY)
   - job: SecurityCenter
     timeoutInMinutes: 0
     pool:
@@ -526,6 +556,8 @@ stages:
         ORGANIZATION_NAME: $(ORGANIZATION_NAME)
         VDC_SUBSCRIPTIONS: $(VDC_SUBSCRIPTIONS)
         VDC_TOOLKIT_SUBSCRIPTION: $(VDC_TOOLKIT_SUBSCRIPTION)
+        SCRIPT_EXECUTION_SP_ID: $(SCRIPT_EXECUTION_SP_ID)
+        SCRIPT_EXECUTION_SP_KEY: $(SCRIPT_EXECUTION_SP_KEY)
   - job: EventHub
     timeoutInMinutes: 0
     pool:
@@ -553,7 +585,9 @@ stages:
         ORGANIZATION_NAME: $(ORGANIZATION_NAME)
         VDC_SUBSCRIPTIONS: $(VDC_SUBSCRIPTIONS)
         VDC_TOOLKIT_SUBSCRIPTION: $(VDC_TOOLKIT_SUBSCRIPTION)
-  - job: DefaultNSG
+        SCRIPT_EXECUTION_SP_ID: $(SCRIPT_EXECUTION_SP_ID)
+        SCRIPT_EXECUTION_SP_KEY: $(SCRIPT_EXECUTION_SP_KEY)
+  - job: NetworkSecurityGroups
     timeoutInMinutes: 0
     pool:
       name: 'vdc-self-hosted'
@@ -580,6 +614,8 @@ stages:
         ORGANIZATION_NAME: $(ORGANIZATION_NAME)
         VDC_SUBSCRIPTIONS: $(VDC_SUBSCRIPTIONS)
         VDC_TOOLKIT_SUBSCRIPTION: $(VDC_TOOLKIT_SUBSCRIPTION)
+        SCRIPT_EXECUTION_SP_ID: $(SCRIPT_EXECUTION_SP_ID)
+        SCRIPT_EXECUTION_SP_KEY: $(SCRIPT_EXECUTION_SP_KEY)
   - job: DefaultRouteTable
     timeoutInMinutes: 0
     pool:
@@ -607,11 +643,13 @@ stages:
         ORGANIZATION_NAME: $(ORGANIZATION_NAME)
         VDC_SUBSCRIPTIONS: $(VDC_SUBSCRIPTIONS)
         VDC_TOOLKIT_SUBSCRIPTION: $(VDC_TOOLKIT_SUBSCRIPTION)
+        SCRIPT_EXECUTION_SP_ID: $(SCRIPT_EXECUTION_SP_ID)
+        SCRIPT_EXECUTION_SP_KEY: $(SCRIPT_EXECUTION_SP_KEY)
   - job: VirtualNetwork
     timeoutInMinutes: 0
     pool:
       name: 'vdc-self-hosted'
-    dependsOn: [ LogAnalytics, DiagnosticStorageAccount, DefaultRouteTable, DefaultNSG ]
+    dependsOn: [ LogAnalytics, DiagnosticStorageAccount, DefaultRouteTable, NetworkSecurityGroups ]
     variables: 
       BOOTSTRAP_INITIALIZED: $[dependencies.DiagnosticStorageAccount.outputs['bootstratInitializedOutput.BOOTSTRAP_INITIALIZED']]
     steps:
@@ -634,6 +672,8 @@ stages:
         ORGANIZATION_NAME: $(ORGANIZATION_NAME)
         VDC_SUBSCRIPTIONS: $(VDC_SUBSCRIPTIONS)
         VDC_TOOLKIT_SUBSCRIPTION: $(VDC_TOOLKIT_SUBSCRIPTION)
+        SCRIPT_EXECUTION_SP_ID: $(SCRIPT_EXECUTION_SP_ID)
+        SCRIPT_EXECUTION_SP_KEY: $(SCRIPT_EXECUTION_SP_KEY)
     - task: AzurePowerShell@4
       displayName: "Local Virtual Network Peering"
       inputs:
@@ -653,6 +693,8 @@ stages:
         ORGANIZATION_NAME: $(ORGANIZATION_NAME)
         VDC_SUBSCRIPTIONS: $(VDC_SUBSCRIPTIONS)
         VDC_TOOLKIT_SUBSCRIPTION: $(VDC_TOOLKIT_SUBSCRIPTION)
+        SCRIPT_EXECUTION_SP_ID: $(SCRIPT_EXECUTION_SP_ID)
+        SCRIPT_EXECUTION_SP_KEY: $(SCRIPT_EXECUTION_SP_KEY)
     - task: AzurePowerShell@4
       displayName: "Remote Virtual Network Peering"
       inputs:
@@ -672,14 +714,8 @@ stages:
         ORGANIZATION_NAME: $(ORGANIZATION_NAME)
         VDC_SUBSCRIPTIONS: $(VDC_SUBSCRIPTIONS)
         VDC_TOOLKIT_SUBSCRIPTION: $(VDC_TOOLKIT_SUBSCRIPTION)
-  - job: EnableServiceEndPointOnDiagnosticStorageAccount
-    timeoutInMinutes: 0
-    pool:
-      name: 'vdc-self-hosted'
-    dependsOn: [ VirtualNetwork, DiagnosticStorageAccount ]
-    variables: 
-      BOOTSTRAP_INITIALIZED: $[dependencies.DiagnosticStorageAccount.outputs['bootstratInitializedOutput.BOOTSTRAP_INITIALIZED']]
-    steps:
+        SCRIPT_EXECUTION_SP_ID: $(SCRIPT_EXECUTION_SP_ID)
+        SCRIPT_EXECUTION_SP_KEY: $(SCRIPT_EXECUTION_SP_KEY)
     - task: AzurePowerShell@4
       displayName: "Enable Service Endpoint On Diagnostic Storage Account"
       inputs:
@@ -699,6 +735,29 @@ stages:
         ORGANIZATION_NAME: $(ORGANIZATION_NAME)
         VDC_SUBSCRIPTIONS: $(VDC_SUBSCRIPTIONS)
         VDC_TOOLKIT_SUBSCRIPTION: $(VDC_TOOLKIT_SUBSCRIPTION)
+        SCRIPT_EXECUTION_SP_ID: $(SCRIPT_EXECUTION_SP_ID)
+        SCRIPT_EXECUTION_SP_KEY: $(SCRIPT_EXECUTION_SP_KEY)
+    - task: AzurePowerShell@4
+      displayName: "Enable Service Endpoint On Key Vault"
+      inputs:
+        azureSubscription: 'vdc2-spoke1'
+        ScriptType: 'FilePath'
+        ScriptPath: 'Orchestration/OrchestrationService/ModuleConfigurationDeployment.ps1'
+        ScriptArguments: '-DefinitionPath "Environments/AKS/LandingZone/definition.json" -ModuleConfigurationName "EnableServiceEndpointOnKeyVault"'
+        azurePowerShellVersion: 'LatestVersion'
+      env:
+        ADMIN_USER_PWD: $(ADMIN_USER_PWD)
+        ADMIN_USER_SSH: $(ADMIN_USER_SSH)
+        DEPLOYMENT_APP_ID: $(DEPLOYMENT_APP_ID)
+        DEPLOYMENT_USER_ID: $(DEPLOYMENT_USER_ID)
+        DOMAIN_ADMIN_USER_PWD: $(DOMAIN_ADMIN_USER_PWD)
+        DOMAIN_ADMIN_USERNAME: $(DOMAIN_ADMIN_USERNAME)
+        TENANT_ID: $(TENANT_ID)
+        ORGANIZATION_NAME: $(ORGANIZATION_NAME)
+        VDC_SUBSCRIPTIONS: $(VDC_SUBSCRIPTIONS)
+        VDC_TOOLKIT_SUBSCRIPTION: $(VDC_TOOLKIT_SUBSCRIPTION)
+        SCRIPT_EXECUTION_SP_ID: $(SCRIPT_EXECUTION_SP_ID)
+        SCRIPT_EXECUTION_SP_KEY: $(SCRIPT_EXECUTION_SP_KEY)
   - job: KeyVault
     timeoutInMinutes: 0
     pool:
@@ -726,7 +785,30 @@ stages:
         ORGANIZATION_NAME: $(ORGANIZATION_NAME)
         VDC_SUBSCRIPTIONS: $(VDC_SUBSCRIPTIONS)
         VDC_TOOLKIT_SUBSCRIPTION: $(VDC_TOOLKIT_SUBSCRIPTION)
-  - job: PrepareRuleCollectionForUpdate
+        SCRIPT_EXECUTION_SP_ID: $(SCRIPT_EXECUTION_SP_ID)
+        SCRIPT_EXECUTION_SP_KEY: $(SCRIPT_EXECUTION_SP_KEY)
+    - task: AzurePowerShell@4
+      displayName: "Create CA Certificate"
+      inputs:
+        azureSubscription: 'vdc2-spoke1'
+        ScriptType: 'FilePath'
+        ScriptPath: 'Orchestration/OrchestrationService/ModuleConfigurationDeployment.ps1'
+        ScriptArguments: '-DefinitionPath "Environments/AKS/LandingZone/definition.json" -ModuleConfigurationName "CreateCACertificate"'
+        azurePowerShellVersion: 'LatestVersion'
+      env:
+        ADMIN_USER_PWD: $(ADMIN_USER_PWD)
+        ADMIN_USER_SSH: $(ADMIN_USER_SSH)
+        DEPLOYMENT_APP_ID: $(DEPLOYMENT_APP_ID)
+        DEPLOYMENT_USER_ID: $(DEPLOYMENT_USER_ID)
+        DOMAIN_ADMIN_USER_PWD: $(DOMAIN_ADMIN_USER_PWD)
+        DOMAIN_ADMIN_USERNAME: $(DOMAIN_ADMIN_USERNAME)
+        TENANT_ID: $(TENANT_ID)
+        ORGANIZATION_NAME: $(ORGANIZATION_NAME)
+        VDC_SUBSCRIPTIONS: $(VDC_SUBSCRIPTIONS)
+        VDC_TOOLKIT_SUBSCRIPTION: $(VDC_TOOLKIT_SUBSCRIPTION)
+        SCRIPT_EXECUTION_SP_ID: $(SCRIPT_EXECUTION_SP_ID)
+        SCRIPT_EXECUTION_SP_KEY: $(SCRIPT_EXECUTION_SP_KEY)
+  - job: UpdateAzureFirewall
     timeoutInMinutes: 0
     pool:
       name: 'vdc-self-hosted'
@@ -753,6 +835,8 @@ stages:
         ORGANIZATION_NAME: $(ORGANIZATION_NAME)
         VDC_SUBSCRIPTIONS: $(VDC_SUBSCRIPTIONS)
         VDC_TOOLKIT_SUBSCRIPTION: $(VDC_TOOLKIT_SUBSCRIPTION)
+        SCRIPT_EXECUTION_SP_ID: $(SCRIPT_EXECUTION_SP_ID)
+        SCRIPT_EXECUTION_SP_KEY: $(SCRIPT_EXECUTION_SP_KEY)
     - task: AzurePowerShell@4
       displayName: "Consolidate Network Rules"
       inputs:
@@ -772,14 +856,8 @@ stages:
         ORGANIZATION_NAME: $(ORGANIZATION_NAME)
         VDC_SUBSCRIPTIONS: $(VDC_SUBSCRIPTIONS)
         VDC_TOOLKIT_SUBSCRIPTION: $(VDC_TOOLKIT_SUBSCRIPTION)
-  - job: UpdateAzureFirewall
-    timeoutInMinutes: 0
-    pool:
-      name: 'vdc-self-hosted'
-    dependsOn: [ PrepareRuleCollectionForUpdate, DiagnosticStorageAccount ]
-    variables: 
-      BOOTSTRAP_INITIALIZED: $[dependencies.DiagnosticStorageAccount.outputs['bootstratInitializedOutput.BOOTSTRAP_INITIALIZED']]
-    steps:
+        SCRIPT_EXECUTION_SP_ID: $(SCRIPT_EXECUTION_SP_ID)
+        SCRIPT_EXECUTION_SP_KEY: $(SCRIPT_EXECUTION_SP_KEY)
     - task: AzurePowerShell@4
       displayName: "Add Rules To Azure Firewall"
       inputs:
@@ -799,57 +877,6 @@ stages:
         ORGANIZATION_NAME: $(ORGANIZATION_NAME)
         VDC_SUBSCRIPTIONS: $(VDC_SUBSCRIPTIONS)
         VDC_TOOLKIT_SUBSCRIPTION: $(VDC_TOOLKIT_SUBSCRIPTION)
-  - job: CreateCACertificate
-    timeoutInMinutes: 0
-    pool:
-      name: 'vdc-self-hosted'
-    dependsOn: [ KeyVault, DiagnosticStorageAccount ]
-    variables: 
-      BOOTSTRAP_INITIALIZED: $[dependencies.DiagnosticStorageAccount.outputs['bootstratInitializedOutput.BOOTSTRAP_INITIALIZED']]
-    steps:
-    - task: AzurePowerShell@4
-      displayName: "Create CA Certificate"
-      inputs:
-        azureSubscription: 'vdc2-spoke1'
-        ScriptType: 'FilePath'
-        ScriptPath: 'Orchestration/OrchestrationService/ModuleConfigurationDeployment.ps1'
-        ScriptArguments: '-DefinitionPath "Environments/AKS/LandingZone/definition.json" -ModuleConfigurationName "CreateCACertificate"'
-        azurePowerShellVersion: 'LatestVersion'
-      env:
-        ADMIN_USER_PWD: $(ADMIN_USER_PWD)
-        ADMIN_USER_SSH: $(ADMIN_USER_SSH)
-        DEPLOYMENT_APP_ID: $(DEPLOYMENT_APP_ID)
-        DEPLOYMENT_USER_ID: $(DEPLOYMENT_USER_ID)
-        DOMAIN_ADMIN_USER_PWD: $(DOMAIN_ADMIN_USER_PWD)
-        DOMAIN_ADMIN_USERNAME: $(DOMAIN_ADMIN_USERNAME)
-        TENANT_ID: $(TENANT_ID)
-        ORGANIZATION_NAME: $(ORGANIZATION_NAME)
-        VDC_SUBSCRIPTIONS: $(VDC_SUBSCRIPTIONS)
-        VDC_TOOLKIT_SUBSCRIPTION: $(VDC_TOOLKIT_SUBSCRIPTION)
-  - job: EnableServiceEndpointOnKeyVault
-    timeoutInMinutes: 0
-    pool:
-      name: 'vdc-self-hosted'
-    dependsOn: [ CreateCACertificate, DiagnosticStorageAccount ]
-    variables: 
-      BOOTSTRAP_INITIALIZED: $[dependencies.DiagnosticStorageAccount.outputs['bootstratInitializedOutput.BOOTSTRAP_INITIALIZED']]
-    steps:
-    - task: AzurePowerShell@4
-      displayName: "Enable Service Endpoint On Key Vault"
-      inputs:
-        azureSubscription: 'vdc2-spoke1'
-        ScriptType: 'FilePath'
-        ScriptPath: 'Orchestration/OrchestrationService/ModuleConfigurationDeployment.ps1'
-        ScriptArguments: '-DefinitionPath "Environments/AKS/LandingZone/definition.json" -ModuleConfigurationName "EnableServiceEndpointOnKeyVault"'
-        azurePowerShellVersion: 'LatestVersion'
-      env:
-        ADMIN_USER_PWD: $(ADMIN_USER_PWD)
-        ADMIN_USER_SSH: $(ADMIN_USER_SSH)
-        DEPLOYMENT_APP_ID: $(DEPLOYMENT_APP_ID)
-        DEPLOYMENT_USER_ID: $(DEPLOYMENT_USER_ID)
-        DOMAIN_ADMIN_USER_PWD: $(DOMAIN_ADMIN_USER_PWD)
-        DOMAIN_ADMIN_USERNAME: $(DOMAIN_ADMIN_USERNAME)
-        TENANT_ID: $(TENANT_ID)
-        ORGANIZATION_NAME: $(ORGANIZATION_NAME)
-        VDC_SUBSCRIPTIONS: $(VDC_SUBSCRIPTIONS)
-        VDC_TOOLKIT_SUBSCRIPTION: $(VDC_TOOLKIT_SUBSCRIPTION)
+        SCRIPT_EXECUTION_SP_ID: $(SCRIPT_EXECUTION_SP_ID)
+        SCRIPT_EXECUTION_SP_KEY: $(SCRIPT_EXECUTION_SP_KEY)
+    
