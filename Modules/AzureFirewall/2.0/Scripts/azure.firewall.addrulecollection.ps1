@@ -97,5 +97,5 @@ if($null -ne $azfw) {
 }
 else {
 
-    Throw "Firewall named $AzureFirewallName does not exists";
+    Throw "Firewall $azureFirewallId does not exists";
 }
