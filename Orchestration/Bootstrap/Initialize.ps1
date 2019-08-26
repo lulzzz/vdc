@@ -238,7 +238,11 @@ Class Initialize {
                     
                     Write-Debug "Obtaining new SAS Token, previous expired"
 
-                    previousContext = Get-AzContext;
+                    # Keep track of previous context so that we can revert back. This will be 
+                    # needed when we perform validate operation where the context need to remain 
+                    # same (as the validation resource group subscription) for all modules of a
+                    # workload
+                    $previousContext = Get-AzContext;
                     
                     # Setting AZ context to be able to retrieve the proper
                     # SAS token, there are situations where the toolkit
