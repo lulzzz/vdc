@@ -545,6 +545,8 @@ Function New-CustomScripts {
                 Start-CustomScript `
                     -ModuleConfiguration $ModuleConfiguration;
          
+            Write-Debug "Script Output is $(ConvertTo-Json $scriptOutput -Depth 50)";
+            
             # Update the archetype instance json
             if($null -ne $scriptOutput `
                 -and $null -ne $ModuleConfiguration.Script `

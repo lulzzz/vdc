@@ -307,9 +307,8 @@ Class CustomScriptExecution {
                         # Set the result only if there is an output
                         if($_.Output.Count -ge 1) {
                             # TODO: To verify
-                            #$result = $_.Output | Select-Object -Property * -ExcludeProperty PSComputerName,RunspaceID,PSShowComputerName;
-                            $result = (ConvertTo-Json $_.Output | ConvertFrom-Json -AsHashtable).value
-
+                            $result = $_.Output | Select-Object -Property * -ExcludeProperty PSComputerName,RunspaceID,PSShowComputerName;
+                            #$result = (ConvertTo-Json $_.Output | ConvertFrom-Json -AsHashtable).value
                         }
                         else {
                             $result = $null;
