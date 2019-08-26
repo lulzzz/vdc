@@ -214,7 +214,7 @@ Class Initialize {
 
                 # Set context back to its previous state. This will ensure the subscription
                 # is the same for all the modules when in validation mode.
-                if($this.mode -eq "deploy") {
+                if($this.mode -eq "validate") {
                     Set-AzContext -Context $previousContext;
                 }
 
@@ -260,7 +260,7 @@ Class Initialize {
 
                     # Set context back to its previous state. This will ensure the subscription
                     # is the same for all the modules when in validation mode.
-                    if($this.mode -eq "deploy") {
+                    if($this.mode -eq "validate") {
                         Set-AzContext -Context $previousContext;
                     }
 
