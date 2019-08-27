@@ -14,7 +14,11 @@
     $WorkingDirectory,
     [Parameter(Mandatory=$false)]
     [switch]
-    $Validate)
+    $Validate,
+    [Parameter(Mandatory=$false)]
+    [switch]
+    $TearDownValidationResourceGroup
+    )
 
 $rootPath = Split-Path -Path $MyInvocation.MyCommand.Definition -Parent;
 $bootstrapModulePath = Join-Path $rootPath -ChildPath '..' -AdditionalChildPath @('Bootstrap', 'Initialize.ps1');
@@ -189,6 +193,22 @@ Function New-Deployment {
                     -SubscriptionId $subscriptionInformation.SubscriptionId `
                     -TenantId $subscriptionInformation.TenantId;
                 
+            }
+
+            # Setup and teardown of validation Resource Group. This logic needs to be executed after the 
+            # correct Subscription context is setup. Validation Resource Group is always setup in the 
+            # Archetype's subscription (and not in the individual Module's Subscription context)
+            if($Validate.IsPresent -eq $true -and `
+                $TearDownValidationResourceGroup.IsPresent -eq $false) {
+                # Setup a Resource Group for validation if one does not already exists
+                Initialize-ValidationResourceGroupForArchetype `
+                    -ArchetypeInstanceName $ArchetypeInstanceName;
+            }
+            elseif($Validate.IsPresent -eq $true -and `
+                    $TearDownValidationResourceGroup.IsPresent -eq $false) {
+                # Destroy the validation Resource Group
+                Destroy-ValidationResourceGroupForArchetype `
+                        -ArchetypeInstanceName $ArchetypeInstanceName;
             }
 
             # Let's attempt to get the Audit Id from cache
@@ -976,7 +996,10 @@ Function Get-SubscriptionInformation {
         $SubscriptionName,
         [Parameter(Mandatory=$false)]
         [hashtable]
-        $ModuleConfiguration
+        $ModuleConfiguration,
+        [Parameter(Mandatory=$true)]
+        [string]
+        $Mode
     )
 
     try {
@@ -1006,10 +1029,12 @@ Function Get-SubscriptionInformation {
 
             $subscriptionInformation = $null;
 
+            # Use the Module Instance's Subscription information only in "deploy" mode. Otherwise, use the Archetype's Subscription information.
             Write-Debug "Let's check if module configuration is not null and has a Subscription property with a value different than null or empty.";
             if (($null -ne $ModuleConfiguration) -and `
                 $null -ne $subscriptionKey -and `
-                ![string]::IsNullOrEmpty($ModuleConfiguration.$subscriptionKey)) {
+                ![string]::IsNullOrEmpty($ModuleConfiguration.$subscriptionKey) -and `
+                $Mode -eq "deploy") {
                 Write-Debug "Module instance configuration found and has a Subscription property, will use its values to run a deployment.";
                 Write-Debug "Subscription name is: $($moduleConfiguration.$subscriptionKey)";
 
@@ -2643,6 +2668,95 @@ Function Get-OutputFromStateStore() {
         Write-Debug "Outputs not found";
         return $null;
     }
+}
+
+
+Function Initialize-ValidationResourceGroupForArchetype() {
+    [CmdletBinding()]
+    param(
+        [Parameter(Mandatory=$true)]
+        [string]
+        $ArchetypeInstanceName
+    )
+
+    $resourceGroupFound = `
+        Assert-ValidationResourceGroupForArchetype `
+            -ArchetypeInstanceName $ArchetypeInstanceName;
+    
+    if($resourceGroupFound -eq $false) {
+        Start-ExponentialBackoff `
+            -Expression { New-AzResourceGroup `
+                            -Name $resourceGroupName `
+                            -Location $location -Force; }
+
+        Write-Host "Validation ResourceGroup $resourceGroupName created."
+    }
+    else {
+        Write-Host "Validation ResourceGroup $resourceGroupName already exists."
+    }
+}
+
+Function Destroy-ValidationResourceGroupForArchetype() {
+    [CmdletBinding()]
+    param(
+        [Parameter(Mandatory=$true)]
+        [string]
+        $ArchetypeInstanceName
+    )
+
+    $resourceGroupFound = `
+        Assert-ValidationResourceGroupForArchetype `
+            -ArchetypeInstanceName $ArchetypeInstanceName;
+    
+    if($resourceGroupFound -eq $false) {
+        Start-ExponentialBackoff `
+            -Expression { Remove-AzResourceGroup `
+                            -Name $resourceGroupName `
+                            -Location $location -Force; }
+
+        Write-Host "Validation ResourceGroup $resourceGroupName created."
+    }
+    else {
+        Write-Host "Validation ResourceGroup $resourceGroupName already exists."
+    }
+}
+
+Function Assert-ValidationResourceGroupForArchetype() {
+    [CmdletBinding()]
+    param(
+        [Parameter(Mandatory=$true)]
+        [string]
+        $ArchetypeInstanceName
+    )
+
+    $resourceGroup = `
+        Get-ValidationResourceGroupForArchetype `
+            -ArchetypeInstanceName $ArchetypeInstanceName;
+    
+    if($null -ne $resourceGroup) {
+        return $true;
+    }
+    else {
+        return $false;
+    }
+
+}
+
+Function Get-ValidationResourceGroupForArchetype() {
+    [CmdletBinding()]
+    param(
+        [Parameter(Mandatory=$true)]
+        [string]
+        $ArchetypeInstanceName
+    )
+    
+    $resourceGroupName = `
+        Get-ValidationResourceGroupNameForArchetype `
+            -ArchetypeInstanceName $ArchetypeInstanceName;
+
+    return `
+        Get-AzResourceGroup $resourceGroupName `
+            -ErrorAction SilentlyContinue;
 }
 
 # Entry point script, used when invoking ModuleConfigurationDeployment.ps1

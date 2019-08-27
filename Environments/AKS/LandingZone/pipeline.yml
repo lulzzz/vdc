@@ -11,18 +11,6 @@ trigger:
 stages:
 - stage: Validate
   jobs:
-  - job: SetupValidationResourceGroup
-    pool: 
-      name: 'vdc-self-hosted'
-    steps:
-    - task: AzurePowerShell@4
-      displayName: "Setup Validation Resource Group"
-      inputs:
-        azureSubscription: 'vdc2-spoke1'
-        ScriptType: 'FilePath'
-        ScriptPath: 'Orchestration/OrchestrationService/ValidationResourceGroupSetup.ps1'
-        ScriptArguments: '-ResourceGroupName vdc-validation-rg -SetupResourceGroup'
-        azurePowerShellVersion: 'LatestVersion'
   - job: StorageAccounts
     pool:
       name: 'vdc-self-hosted'
@@ -432,7 +420,7 @@ stages:
   - job: UpdateAzureFirewall
     pool:
       name: 'vdc-self-hosted'
-    dependsOn: [ SetupValidationResourceGroup, StorageAccounts ]
+    dependsOn: [ StorageAccounts, LogAnalytics, SecurityCenter, EventHub, NetworkSecurityGroups, RouteTables, VirtualNetwork, KeyVault ]
     variables: 
       BOOTSTRAP_INITIALIZED: $[dependencies.StorageAccounts.outputs['bootstratInitializedOutput.BOOTSTRAP_INITIALIZED']]
     steps:
@@ -452,7 +440,7 @@ stages:
         azureSubscription: 'vdc2-spoke1'
         ScriptType: 'FilePath'
         ScriptPath: 'Orchestration/OrchestrationService/ModuleConfigurationDeployment.ps1'
-        ScriptArguments: '-DefinitionPath "Environments/AKS/LandingZone/definition.json" -ModuleConfigurationName "UpdateAzureFirewall" -Validate'
+        ScriptArguments: '-DefinitionPath "Environments/AKS/LandingZone/definition.json" -ModuleConfigurationName "UpdateAzureFirewall" -Validate -TearDownValidationResourceGroup'
         azurePowerShellVersion: 'LatestVersion'
       env:
         ADMIN_USER_PWD: $(ADMIN_USER_PWD)
@@ -467,21 +455,6 @@ stages:
         VDC_TOOLKIT_SUBSCRIPTION: $(VDC_TOOLKIT_SUBSCRIPTION)
         SCRIPT_EXECUTION_SP_ID: $(SCRIPT_EXECUTION_SP_ID)
         SCRIPT_EXECUTION_SP_KEY: $(SCRIPT_EXECUTION_SP_KEY)
-  - job: TearDownValidationResourceGroup
-    pool: 
-      name: 'vdc-self-hosted'
-    dependsOn: [ StorageAccounts, LogAnalytics, SecurityCenter, EventHub, NetworkSecurityGroups, RouteTables, VirtualNetwork, KeyVault ]
-    variables: 
-      BOOTSTRAP_INITIALIZED: $[dependencies.StorageAccounts.outputs['bootstratInitializedOutput.BOOTSTRAP_INITIALIZED']]
-    steps:
-    - task: AzurePowerShell@4
-      displayName: "Teardown Validation Resource Group"
-      inputs:
-        azureSubscription: 'vdc2-spoke1'
-        ScriptType: 'FilePath'
-        ScriptPath: 'Orchestration/OrchestrationService/ValidationResourceGroupSetup.ps1'
-        ScriptArguments: '-TearDownResourceGroup'
-        azurePowerShellVersion: 'LatestVersion'
 - stage: Deploy
   jobs:
   - job: DiagnosticStorageAccount
