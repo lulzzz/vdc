@@ -54,6 +54,7 @@ Class AzureResourceManagerDeploymentService: IDeploymentService {
 
     [void] ExecuteValidation([string] $tenantId, `
                             [string] $subscriptionId, `
+                            [string] $archetypeInstanceName, `
                             [string] $deploymentTemplate, `
                             [string] $deploymentParameters, `
                             [string] $location) {
@@ -62,7 +63,7 @@ Class AzureResourceManagerDeploymentService: IDeploymentService {
             # Try to fetch the validation resource group
             $validationResourceGroup = `
                 Get-ValidationResourceGroupForArchetype `
-                    -ArchetypeInstanceName $ArchetypeInstanceName;
+                    -ArchetypeInstanceName $archetypeInstanceName;
 
             # Does the validation resource group exists?
             if($null -ne $validationResourceGroup) {

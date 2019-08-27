@@ -1866,6 +1866,7 @@ Function New-AzureResourceManagerDeployment {
                 $deploymentService.ExecuteValidation(
                     $TenantId,
                     $SubscriptionId,
+                    $ArchetypeInstanceName,
                     $DeploymentTemplate,
                     $DeploymentParameters,
                     $Location);
