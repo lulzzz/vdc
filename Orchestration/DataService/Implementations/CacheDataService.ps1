@@ -39,17 +39,11 @@ Class CacheDataService: ICacheDataService {
         # Retrieve the value from cache using key
         $cache = `
             $this.cacheRepository.GetByKey($key);
-        $isJson = $false;
 
         if ($cache) {
-            # Check if the string returned is a JSON string
-            $isJson = `
-                Test-Json $cache `
-                    -ErrorAction SilentlyContinue;
             
             # If we can convert to object, then return converted object 
             # else return string
-            #if($isJson) {
             Try {
                 $cache = `
                     ConvertFrom-Json `
@@ -58,7 +52,12 @@ Class CacheDataService: ICacheDataService {
                         -Depth 50;
             }
             Catch {
-                
+                # No action item if an error is thrown. This is because Test-Json
+                # does not correctly check all string for Json conversion. Some strings
+                # that are convertible to Json fails Test-Json check. So, we need to rely
+                # on ConvertFrom-Json directly instead of using Test-Json to check and 
+                # then calling ConvertFrom-Json. However doing so will result in exception
+                # being thrown by ConvertFrom-Json if an invalid string is passed.
             }
             return $cache;
         }

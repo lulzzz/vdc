@@ -303,8 +303,7 @@
                 "Command": "../../../Modules/AzureFirewall/2.0/Scripts/azure.firewall.addrulecollection.ps1",
                 "Arguments" : {
                     "SubscriptionId": "${Subscriptions.SharedServices.SubscriptionId}",
-                    "AzureFirewallName": "${Parameters.ModuleConfigurationParameters.SharedServices.VirtualNetwork.NetworkVirtualAppliance.AzureFirewall.Name}",
-                    "AzureFirewallResourceGroup": "${Parameters.ModuleConfigurationParameters.SharedServices.VirtualNetwork.ResourceGroupName}",
+                    "AzureFirewallId": "${Parameters.ModuleConfigurationParameters.SharedServices.VirtualNetwork.NetworkVirtualAppliance.AzureFirewall.Id}",
                     "RuleCollections": "'${Parameters.ModuleConfigurationParameters.VirtualNetwork.AzureFirewallApplicationRuleCollection}'",
                     "RuleType": "application"
                 }

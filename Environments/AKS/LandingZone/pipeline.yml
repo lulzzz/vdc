@@ -355,7 +355,7 @@ stages:
         azureSubscription: 'vdc2-spoke1'
         ScriptType: 'FilePath'
         ScriptPath: 'Orchestration/OrchestrationService/ModuleConfigurationDeployment.ps1'
-        ScriptArguments: '-DefinitionPath "Environments/AKS/LandingZone/definition.json" -ModuleConfigurationName "RemoteVirtualNetworkPeering" -Validate -Debug'
+        ScriptArguments: '-DefinitionPath "Environments/AKS/LandingZone/definition.json" -ModuleConfigurationName "RemoteVirtualNetworkPeering" -Validate'
         azurePowerShellVersion: 'LatestVersion'
       env:
         ADMIN_USER_PWD: $(ADMIN_USER_PWD)
@@ -842,7 +842,7 @@ stages:
         azureSubscription: 'vdc2-spoke1'
         ScriptType: 'FilePath'
         ScriptPath: 'Orchestration/OrchestrationService/ModuleConfigurationDeployment.ps1'
-        ScriptArguments: '-DefinitionPath "Environments/AKS/LandingZone/definition.json" -ModuleConfigurationName "ConsolidateApplicationRules" -Debug'
+        ScriptArguments: '-DefinitionPath "Environments/AKS/LandingZone/definition.json" -ModuleConfigurationName "ConsolidateApplicationRules"'
         azurePowerShellVersion: 'LatestVersion'
       env:
         ADMIN_USER_PWD: $(ADMIN_USER_PWD)
@@ -863,7 +863,7 @@ stages:
         azureSubscription: 'vdc2-spoke1'
         ScriptType: 'FilePath'
         ScriptPath: 'Orchestration/OrchestrationService/ModuleConfigurationDeployment.ps1'
-        ScriptArguments: '-DefinitionPath "Environments/AKS/LandingZone/definition.json" -ModuleConfigurationName "ConsolidateNetworkRules" -Debug'
+        ScriptArguments: '-DefinitionPath "Environments/AKS/LandingZone/definition.json" -ModuleConfigurationName "ConsolidateNetworkRules"'
         azurePowerShellVersion: 'LatestVersion'
       env:
         ADMIN_USER_PWD: $(ADMIN_USER_PWD)
@@ -884,7 +884,7 @@ stages:
         azureSubscription: 'vdc2-spoke1'
         ScriptType: 'FilePath'
         ScriptPath: 'Orchestration/OrchestrationService/ModuleConfigurationDeployment.ps1'
-        ScriptArguments: '-DefinitionPath "Environments/AKS/LandingZone/definition.json" -ModuleConfigurationName "UpdateAzureFirewall" -Debug'
+        ScriptArguments: '-DefinitionPath "Environments/AKS/LandingZone/definition.json" -ModuleConfigurationName "UpdateAzureFirewall"'
         azurePowerShellVersion: 'LatestVersion'
       env:
         ADMIN_USER_PWD: $(ADMIN_USER_PWD)
