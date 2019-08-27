@@ -14,7 +14,6 @@ Class CacheDataService: ICacheDataService {
         
         # Adding .Contains("System.Collections.Generic.Dictionary") because
         # Azure deployment outputs is of type of Generic.Dictionary[Sdk.OutputVariables]
-        Write-Host "Debugging - Cache Value Type is $valueType"
         if (($valueType -eq "System.Collections.Hashtable") -or `
             ($valueType.Contains("System.Collections.Generic.Dictionary")) -or `
             ($valueType -eq "System.Management.Automation.PSCustomObject") -or `
@@ -25,7 +24,6 @@ Class CacheDataService: ICacheDataService {
                     -InputObject $value `
                     -Compress `
                     -Depth 100;
-            Write-Host "String value of cache is $cacheValue";
         }
         else {
             $cacheValue = $value;
