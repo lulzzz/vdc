@@ -17,7 +17,9 @@ Class CacheDataService: ICacheDataService {
         Write-Host "Debugging - Cache Value Type is $valueType"
         if (($valueType -eq "System.Collections.Hashtable") -or `
             ($valueType.Contains("System.Collections.Generic.Dictionary")) -or `
-            ($valueType -eq "System.Management.Automation.PSCustomObject")) {
+            ($valueType -eq "System.Management.Automation.PSCustomObject") -or `
+            ($valueType -eq "System.Object[]") -or `
+            ($valueType -eq "System.Object")) {
             $cacheValue = `
                 ConvertTo-Json `
                     -InputObject $value `
