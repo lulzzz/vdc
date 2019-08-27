@@ -51,12 +51,16 @@ Class CacheDataService: ICacheDataService {
             
             # If we can convert to object, then return converted object 
             # else return string
-            if($isJson) {
+            #if($isJson) {
+            Try {
                 $cache = `
                     ConvertFrom-Json `
                         -AsHashtable `
                         -InputObject $cache `
                         -Depth 50;
+            }
+            Catch {
+                
             }
             return $cache;
         }

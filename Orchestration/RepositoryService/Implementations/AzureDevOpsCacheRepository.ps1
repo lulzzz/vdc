@@ -47,7 +47,7 @@ Class AzureDevOpsCacheRepository: ICacheRepository {
         # return type from Get-Item is name-value pair, if present
         # return its Value
         if($null -ne $environmentValue) {
-            Write-Host "Value at the time of cache retrieval is $($environmentValue.Value)";
+            Write-Host "Value at the time of cache set is $($environmentValue.Value)";
             return $environmentValue.Value;
         }
         else {
