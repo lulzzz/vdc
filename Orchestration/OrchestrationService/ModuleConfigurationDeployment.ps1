@@ -321,8 +321,9 @@ Function New-Deployment {
                 if ($null -ne $subscriptionInformation -and `
                     -not $isSubscriptionDeployment) {
                         
+                    Write-Host "Checkpoint 1";
                     if($Validate.IsPresent -eq $false) {
-
+                        Write-Host "Checkpoint 2";
                         # Retrieve the deployment resource group name
                         $moduleConfigurationResourceGroupName = `
                             Get-ResourceGroupName `
@@ -332,11 +333,12 @@ Function New-Deployment {
                     }
                     elseif($Validate.IsPresent -eq $true -and `
                         $TearDownValidationResourceGroup.IsPresent -eq $false) {
-                        
+                        Write-Host "Checkpoint 3";
                         # Retrieve the validation resource group name
                         $moduleConfigurationResourceGroupName = `
                             Get-ValidationResourceGroupName `
                                 -ArchetypeInstanceName $ArchetypeInstanceName;
+                        Write-Host "Checkpoint 4";
                     }
 
                     New-ResourceGroup `
