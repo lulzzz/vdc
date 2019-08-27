@@ -165,7 +165,8 @@ Function New-Deployment {
                 Get-SubscriptionInformation `
                     -ArchetypeInstanceJson $archetypeInstanceJson `
                     -SubscriptionName $archetypeInstanceJson.Parameters.Subscription `
-                    -ModuleConfiguration $moduleConfiguration;
+                    -ModuleConfiguration $moduleConfiguration `
+                    -Mode @{ "False" = "deploy"; "True" = "validate"; }[$Validate.ToString()];
 
             if ($null -eq $subscriptionInformation) {
                 throw "Subscription: $($archetypeInstanceJson.Parameters.Subscription) not found";
