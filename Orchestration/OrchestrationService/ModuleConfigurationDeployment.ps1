@@ -204,12 +204,6 @@ Function New-Deployment {
                 Initialize-ValidationResourceGroupForArchetype `
                     -ArchetypeInstanceName $ArchetypeInstanceName;
             }
-            elseif($Validate.IsPresent -eq $true -and `
-                    $TearDownValidationResourceGroup.IsPresent -eq $true) {
-                # Destroy the validation Resource Group
-                Destroy-ValidationResourceGroupForArchetype `
-                        -ArchetypeInstanceName $ArchetypeInstanceName;
-            }
 
             # Let's attempt to get the Audit Id from cache
             $auditCacheKey = `
@@ -467,6 +461,23 @@ Function New-Deployment {
                     -RBAC $rbacResourceState `
                     -Validate:$($Validate.IsPresent);
             Write-Debug "Module state created, Id: $($moduleStateId)";
+
+            # Finally, destroy the validation resource group only if the following conditions are satisfied:
+            # 1. Deployment is run in Validate mode
+            # 2. TearDownValidationResourceGroup flag is present
+            if($Validate.IsPresent -eq $true -and `
+                    $TearDownValidationResourceGroup.IsPresent -eq $true) {
+
+                Write-Debug "Validation Resource Group is being destroyed ..."
+
+                # Destroy the validation Resource Group
+                Destroy-ValidationResourceGroupForArchetype `
+                        -ArchetypeInstanceName $ArchetypeInstanceName;
+
+                Write-Host "Validation Resource Group is destroyed."
+            }
+
+            
         }
     }
     catch {
