@@ -11,22 +11,9 @@ trigger:
 stages:
 - stage: Validate
   jobs:
-  - job: SetupValidationResourceGroup
-    pool: 
-      name: 'vdc-self-hosted'
-    steps:
-    - task: AzurePowerShell@4
-      displayName: "Setup Validation Resource Group"
-      inputs:
-        azureSubscription: 'vdc2-spoke1'
-        ScriptType: 'FilePath'
-        ScriptPath: 'Orchestration/OrchestrationService/ValidationResourceGroupSetup.ps1'
-        ScriptArguments: '-ResourceGroupName vdc-validation-rg -SetupResourceGroup'
-        azurePowerShellVersion: 'LatestVersion'
   - job: ContainerRegistry
     pool:
       name: 'vdc-self-hosted'
-    dependsOn: SetupValidationResourceGroup
     steps:
     - task: PowerShell@2
       displayName: "Pester Tests for Module - Container Registries"
@@ -81,7 +68,7 @@ stages:
   - job: AzureKubernetesServices
     pool:
       name: 'vdc-self-hosted'
-    dependsOn: [ SetupValidationResourceGroup, ContainerRegistry ]
+    dependsOn: [ ContainerRegistry ]
     variables: 
       BOOTSTRAP_INITIALIZED: $[dependencies.ContainerRegistry.outputs['bootstratInitializedOutput.BOOTSTRAP_INITIALIZED']]
     steps:
@@ -101,7 +88,7 @@ stages:
         azureSubscription: 'vdc2-spoke1'
         ScriptType: 'FilePath'
         ScriptPath: 'Orchestration/OrchestrationService/ModuleConfigurationDeployment.ps1'
-        ScriptArguments: '-DefinitionPath "Environments/AKS/Archetype/definition.json" -ModuleConfigurationName "AzureKubernetesServices" -Validate'
+        ScriptArguments: '-DefinitionPath "Environments/AKS/Archetype/definition.json" -ModuleConfigurationName "AzureKubernetesServices" -Validate -TearDownValidationResourceGroup'
         azurePowerShellVersion: 'LatestVersion'
       env:
         VDC_SUBSCRIPTIONS: $(VDC_SUBSCRIPTIONS)
@@ -125,21 +112,6 @@ stages:
         DEV_USER_GROUP_ID: $(DEV_USER_GROUP_ID)
         SCRIPT_EXECUTION_SP_ID: $(SCRIPT_EXECUTION_SP_ID)
         SCRIPT_EXECUTION_SP_KEY: $(SCRIPT_EXECUTION_SP_KEY)
-  - job: TearDownValidationResourceGroup
-    pool: 
-      name: 'vdc-self-hosted'
-    dependsOn: [ ContainerRegistry, AzureKubernetesServices ]
-    variables: 
-      BOOTSTRAP_INITIALIZED: $[dependencies.ContainerRegistry.outputs['bootstratInitializedOutput.BOOTSTRAP_INITIALIZED']]
-    steps:
-    - task: AzurePowerShell@4
-      displayName: "Teardown Validation Resource Group"
-      inputs:
-        azureSubscription: 'vdc2-spoke1'
-        ScriptType: 'FilePath'
-        ScriptPath: 'Orchestration/OrchestrationService/ValidationResourceGroupSetup.ps1'
-        ScriptArguments: '-TearDownResourceGroup'
-        azurePowerShellVersion: 'LatestVersion'
 - stage: Deploy
   jobs:
   - job: ContainerRegistry

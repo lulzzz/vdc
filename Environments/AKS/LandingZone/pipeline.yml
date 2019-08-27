@@ -52,7 +52,7 @@ stages:
         azureSubscription: 'vdc2-spoke1'
         ScriptType: 'FilePath'
         ScriptPath: 'Orchestration/OrchestrationService/ModuleConfigurationDeployment.ps1'
-        ScriptArguments: '-DefinitionPath "Environments/AKS/LandingZone/definition.json" -ModuleConfigurationName "EnableServiceEndPointOnDiagnosticStorageAccount" -Validate -TearDownValidationResourceGroup'
+        ScriptArguments: '-DefinitionPath "Environments/AKS/LandingZone/definition.json" -ModuleConfigurationName "EnableServiceEndPointOnDiagnosticStorageAccount" -Validate'
         azurePowerShellVersion: 'LatestVersion'
       env:
         ADMIN_USER_PWD: $(ADMIN_USER_PWD)
@@ -138,7 +138,7 @@ stages:
         azureSubscription: 'vdc2-spoke1'
         ScriptType: 'FilePath'
         ScriptPath: 'Orchestration/OrchestrationService/ModuleConfigurationDeployment.ps1'
-        ScriptArguments: '-DefinitionPath "Environments/AKS/LandingZone/definition.json" -ModuleConfigurationName "AzureSecurityCenter" -Validate'
+        ScriptArguments: '-DefinitionPath "Environments/AKS/LandingZone/definition.json" -ModuleConfigurationName "AzureSecurityCenter" -Validate -Debug'
         azurePowerShellVersion: 'LatestVersion'
       env:
         ADMIN_USER_PWD: $(ADMIN_USER_PWD)

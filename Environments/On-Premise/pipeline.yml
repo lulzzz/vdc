@@ -10,22 +10,9 @@ trigger:
 stages:
 - stage: Validate
   jobs:
-  - job: SetupValidationResourceGroup
-    pool: 
-      name: 'vdc-self-hosted'
-    steps:
-    - task: AzurePowerShell@4
-      displayName: "Setup Validation Resource Group"
-      inputs:
-        azureSubscription: 'vdc2-onprem'
-        ScriptType: 'FilePath'
-        ScriptPath: 'Orchestration/OrchestrationService/ValidationResourceGroupSetup.ps1'
-        ScriptArguments: '-ResourceGroupName vdc-validation-rg -SetupResourceGroup'
-        azurePowerShellVersion: 'LatestVersion'
   - job: StorageAccounts
     pool:
       name: 'vdc-self-hosted'
-    dependsOn: SetupValidationResourceGroup
     steps:
     - task: PowerShell@2
       displayName: "Pester Tests for Module - Storage Accounts"
@@ -71,7 +58,7 @@ stages:
   - job: LogAnalytics
     pool:
       name: 'vdc-self-hosted'
-    dependsOn: [ SetupValidationResourceGroup, StorageAccounts ]
+    dependsOn: [ StorageAccounts ]
     variables: 
       BOOTSTRAP_INITIALIZED: $[dependencies.StorageAccounts.outputs['bootstratInitializedOutput.BOOTSTRAP_INITIALIZED']]
     steps:
@@ -109,7 +96,7 @@ stages:
   - job: NetworkSecurityGroups
     pool:
       name: 'vdc-self-hosted'
-    dependsOn: [ SetupValidationResourceGroup, StorageAccounts ]
+    dependsOn: [ StorageAccounts ]
     variables: 
       BOOTSTRAP_INITIALIZED: $[dependencies.StorageAccounts.outputs['bootstratInitializedOutput.BOOTSTRAP_INITIALIZED']]
     steps:
@@ -147,7 +134,7 @@ stages:
   - job: VirtualNetwork
     pool:
       name: 'vdc-self-hosted'
-    dependsOn: [ SetupValidationResourceGroup, StorageAccounts ]
+    dependsOn: [ StorageAccounts ]
     variables: 
       BOOTSTRAP_INITIALIZED: $[dependencies.StorageAccounts.outputs['bootstratInitializedOutput.BOOTSTRAP_INITIALIZED']]
     steps:
@@ -185,7 +172,7 @@ stages:
   - job: VirtualNetworkGateway
     pool:
       name: 'vdc-self-hosted'
-    dependsOn: [ SetupValidationResourceGroup, StorageAccounts ]
+    dependsOn: [ StorageAccounts ]
     variables: 
       BOOTSTRAP_INITIALIZED: $[dependencies.StorageAccounts.outputs['bootstratInitializedOutput.BOOTSTRAP_INITIALIZED']]
     steps:
@@ -223,7 +210,7 @@ stages:
   - job: KeyVault
     pool:
       name: 'vdc-self-hosted'
-    dependsOn: [ SetupValidationResourceGroup, StorageAccounts ]
+    dependsOn: [ StorageAccounts ]
     variables: 
       BOOTSTRAP_INITIALIZED: $[dependencies.StorageAccounts.outputs['bootstratInitializedOutput.BOOTSTRAP_INITIALIZED']]
     steps:
@@ -282,7 +269,7 @@ stages:
   - job: ActiveDirectory
     pool:
       name: 'vdc-self-hosted'
-    dependsOn: [ SetupValidationResourceGroup, StorageAccounts ]
+    dependsOn: [ StorageAccounts ]
     variables: 
       BOOTSTRAP_INITIALIZED: $[dependencies.StorageAccounts.outputs['bootstratInitializedOutput.BOOTSTRAP_INITIALIZED']]
     steps:
@@ -323,7 +310,7 @@ stages:
         azureSubscription: 'vdc2-onprem'
         ScriptType: 'FilePath'
         ScriptPath: 'Orchestration/OrchestrationService/ModuleConfigurationDeployment.ps1'
-        ScriptArguments: '-DefinitionPath "Environments/On-Premise/definition.json" -ModuleConfigurationName "InstallActiveDirectory" -Validate'
+        ScriptArguments: '-DefinitionPath "Environments/On-Premise/definition.json" -ModuleConfigurationName "InstallActiveDirectory" -Validate -TearDownValidationResourceGroup'
         azurePowerShellVersion: 'LatestVersion'
       env:
         ADMIN_USER_PWD: $(ADMIN_USER_PWD)
@@ -338,19 +325,6 @@ stages:
         VDC_TOOLKIT_SUBSCRIPTION: $(VDC_TOOLKIT_SUBSCRIPTION)
         SCRIPT_EXECUTION_SP_ID: $(SCRIPT_EXECUTION_SP_ID)
         SCRIPT_EXECUTION_SP_KEY: $(SCRIPT_EXECUTION_SP_KEY)
-  - job: TearDownValidationResourceGroup
-    pool: 
-      name: 'vdc-self-hosted'
-    dependsOn: [ StorageAccounts, LogAnalytics, NetworkSecurityGroups, VirtualNetwork, VirtualNetworkGateway, ActiveDirectory ]
-    steps:
-    - task: AzurePowerShell@4
-      displayName: "Teardown Validation Resource Group"
-      inputs:
-        azureSubscription: 'vdc2-onprem'
-        ScriptType: 'FilePath'
-        ScriptPath: 'Orchestration/OrchestrationService/ValidationResourceGroupSetup.ps1'
-        ScriptArguments: '-TearDownResourceGroup'
-        azurePowerShellVersion: 'LatestVersion'
 - stage: Deploy
   jobs:
   - job: DiagnosticStorageAccount
