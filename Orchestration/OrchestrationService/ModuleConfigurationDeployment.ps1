@@ -2752,8 +2752,7 @@ Function Get-ValidationResourceGroupForArchetype() {
     )
     
     $resourceGroupName = `
-        Get-ValidationResourceGroupNameForArchetype `
-            -ArchetypeInstanceName $ArchetypeInstanceName;
+        Get-UniqueString($ArchetypeInstanceName);
 
     return `
         Get-AzResourceGroup $resourceGroupName `
