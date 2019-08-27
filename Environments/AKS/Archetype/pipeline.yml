@@ -65,6 +65,16 @@ stages:
         DEV_USER_GROUP_ID: $(DEV_USER_GROUP_ID)
         SCRIPT_EXECUTION_SP_ID: $(SCRIPT_EXECUTION_SP_ID)
         SCRIPT_EXECUTION_SP_KEY: $(SCRIPT_EXECUTION_SP_KEY)
+    - task: PowerShell@2
+      displayName: "Sets multi-job variable"
+      name: "bootstratInitializedOutput"
+      inputs:
+        targetType: 'inline'
+        script: '
+        
+          $bootstrapInitialized = $ENV:BOOTSTRAP_INITIALIZED;
+          Write-Host "##vso[task.setvariable variable=BOOTSTRAP_INITIALIZED;isOutput=true]$bootstrapInitialized";'
+        pwsh: true
   - job: AzureKubernetesServices
     pool:
       name: 'vdc-self-hosted'
@@ -158,6 +168,16 @@ stages:
         DEV_USER_GROUP_ID: $(DEV_USER_GROUP_ID)
         SCRIPT_EXECUTION_SP_ID: $(SCRIPT_EXECUTION_SP_ID)
         SCRIPT_EXECUTION_SP_KEY: $(SCRIPT_EXECUTION_SP_KEY)
+    - task: PowerShell@2
+      displayName: "Sets multi-job variable"
+      name: "bootstratInitializedOutput"
+      inputs:
+        targetType: 'inline'
+        script: '
+        
+          $bootstrapInitialized = $ENV:BOOTSTRAP_INITIALIZED;
+          Write-Host "##vso[task.setvariable variable=BOOTSTRAP_INITIALIZED;isOutput=true]$bootstrapInitialized";'
+        pwsh: true
   - job: AzureKubernetesServices
     timeoutInMinutes: 0
     pool:

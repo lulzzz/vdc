@@ -80,6 +80,16 @@ stages:
         VDC_TOOLKIT_SUBSCRIPTION: $(VDC_TOOLKIT_SUBSCRIPTION)
         SCRIPT_EXECUTION_SP_ID: $(SCRIPT_EXECUTION_SP_ID)
         SCRIPT_EXECUTION_SP_KEY: $(SCRIPT_EXECUTION_SP_KEY)
+    - task: PowerShell@2
+      displayName: "Sets multi-job variable"
+      name: "bootstratInitializedOutput"
+      inputs:
+        targetType: 'inline'
+        script: '
+        
+          $bootstrapInitialized = $ENV:BOOTSTRAP_INITIALIZED;
+          Write-Host "##vso[task.setvariable variable=BOOTSTRAP_INITIALIZED;isOutput=true]$bootstrapInitialized";'
+        pwsh: true
   - job: LogAnalytics
     pool:
       name: 'vdc-self-hosted'
@@ -500,6 +510,16 @@ stages:
         VDC_TOOLKIT_SUBSCRIPTION: $(VDC_TOOLKIT_SUBSCRIPTION)
         SCRIPT_EXECUTION_SP_ID: $(SCRIPT_EXECUTION_SP_ID)
         SCRIPT_EXECUTION_SP_KEY: $(SCRIPT_EXECUTION_SP_KEY)
+    - task: PowerShell@2
+      displayName: "Sets multi-job variable"
+      name: "bootstratInitializedOutput"
+      inputs:
+        targetType: 'inline'
+        script: '
+        
+          $bootstrapInitialized = $ENV:BOOTSTRAP_INITIALIZED;
+          Write-Host "##vso[task.setvariable variable=BOOTSTRAP_INITIALIZED;isOutput=true]$bootstrapInitialized";'
+        pwsh: true
   - job: LogAnalytics 
     timeoutInMinutes: 0
     pool:

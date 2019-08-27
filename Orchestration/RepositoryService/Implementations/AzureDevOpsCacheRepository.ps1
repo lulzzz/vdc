@@ -47,7 +47,6 @@ Class AzureDevOpsCacheRepository: ICacheRepository {
         # return type from Get-Item is name-value pair, if present
         # return its Value
         if($null -ne $environmentValue) {
-            Write-Host "Value at the time of cache set is $($environmentValue.Value)";
             return $environmentValue.Value;
         }
         else {
@@ -88,7 +87,6 @@ Class AzureDevOpsCacheRepository: ICacheRepository {
                (![string]::IsNullOrEmpty($environmentValue) `
                 -and $environmentValue -ne $value
                )) {
-                Write-Host "Value at the time of cache retrieval is $value";
                 Write-Host "##vso[task.setvariable variable=$key;]$value";
             }
         }
