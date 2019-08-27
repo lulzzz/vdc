@@ -14,7 +14,6 @@ stages:
   - job: StorageAccounts
     pool:
       name: 'vdc-self-hosted'
-    dependsOn: SetupValidationResourceGroup
     steps:
     - task: PowerShell@2
       displayName: "Pester Tests for Module - Storage Accounts"
