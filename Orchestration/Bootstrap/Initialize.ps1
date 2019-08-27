@@ -136,6 +136,9 @@ Class Initialize {
                 !$validJson) {
                 Write-Debug "No valid JSON found, running Storage Account bootstrap";
                 
+                $previousContext = `
+                    Get-AzContext;
+
                 # Setting context in order to create / verify the toolkit
                 # resource group and storage account resource
                 Set-AzContext `
@@ -202,6 +205,9 @@ Class Initialize {
                             $this.dataStoreName,
                             $this.dataStoreResourceGroupName);
 
+                Set-AzContext `
+                    -Context $previousContext;
+
                 $storageAccountDetails = @{
                     StorageAccountName = $this.dataStoreName
                     StorageAccountResourceGroup = $this.dataStoreResourceGroupName
@@ -222,6 +228,9 @@ Class Initialize {
                     
                     Write-Debug "Obtaining new SAS Token, previous expired"
 
+                    $previousContext = `
+                        Get-AzContext;
+
                     # Setting AZ context to be able to retrieve the proper
                     # SAS token, there are situations where the toolkit
                     # subscription is different than the one from the
@@ -235,6 +244,9 @@ Class Initialize {
                         $this.GetSASToken(
                             $this.dataStoreName,
                             $this.dataStoreResourceGroupName);
+
+                    Set-AzContext `
+                        -Context $previousContext;
 
                     Write-Debug "Sas token acquired, new expiriy time is: $($storageAccountDetails.ExpiryTime)"
                     $storageAccountDetails.StorageAccountSasToken = `
