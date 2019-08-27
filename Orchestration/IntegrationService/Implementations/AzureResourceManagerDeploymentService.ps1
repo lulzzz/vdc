@@ -62,7 +62,7 @@ Class AzureResourceManagerDeploymentService: IDeploymentService {
         try {
             # Try to fetch the validation resource group
             $validationResourceGroup = `
-                Get-ValidationResourceGroupForArchetype `
+                Get-ValidationResourceGroup `
                     -ArchetypeInstanceName $archetypeInstanceName;
 
             # Does the validation resource group exists?
