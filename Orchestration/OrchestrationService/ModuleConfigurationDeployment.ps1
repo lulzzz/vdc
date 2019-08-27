@@ -2680,6 +2680,9 @@ Function Initialize-ValidationResourceGroupForArchetype() {
         $ArchetypeInstanceName
     )
 
+    # Location of the validation resource group is set to a default value
+    $location = "West US 2";
+
     $resourceGroupFound = `
         Assert-ValidationResourceGroupForArchetype `
             -ArchetypeInstanceName $ArchetypeInstanceName;
@@ -2712,8 +2715,7 @@ Function Destroy-ValidationResourceGroupForArchetype() {
     if($resourceGroupFound -eq $false) {
         Start-ExponentialBackoff `
             -Expression { Remove-AzResourceGroup `
-                            -Name $resourceGroupName `
-                            -Location $location -Force; }
+                            -Name $resourceGroupName; }
 
         Write-Host "Validation ResourceGroup $resourceGroupName created."
     }
