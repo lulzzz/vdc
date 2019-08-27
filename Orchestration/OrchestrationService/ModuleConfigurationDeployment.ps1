@@ -2718,7 +2718,8 @@ Function Destroy-ValidationResourceGroupForArchetype() {
     if($resourceGroupFound -eq $true) {
         Start-ExponentialBackoff `
             -Expression { Remove-AzResourceGroup `
-                            -Name $resourceGroupName; }
+                            -Name $resourceGroupName `
+                            -Force; }
 
         Write-Host "Validation ResourceGroup $resourceGroupName deleted."
     }
