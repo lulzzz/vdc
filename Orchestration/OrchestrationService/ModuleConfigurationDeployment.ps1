@@ -319,7 +319,8 @@ Function New-Deployment {
                 # If we are not in a subscription deployment
                 # proceed to create a resource group
                 if ($null -ne $subscriptionInformation -and `
-                    -not $isSubscriptionDeployment) {
+                    -not $isSubscriptionDeployment  -and `
+                    $TearDownValidationResourceGroup.IsPresent -eq $false) {
                         
                     if($Validate.IsPresent -eq $false) {
                         # Retrieve the deployment resource group name
@@ -329,8 +330,7 @@ Function New-Deployment {
                                     -ModuleConfiguration $moduleConfiguration;
                         Write-Debug "Resource Group is: $moduleConfigurationResourceGroupName";
                     }
-                    elseif($Validate.IsPresent -eq $true -and `
-                        $TearDownValidationResourceGroup.IsPresent -eq $false) {
+                    elseif($Validate.IsPresent -eq $true) {
                         # Retrieve the validation resource group name
                         $moduleConfigurationResourceGroupName = `
                             Get-ValidationResourceGroupName `
