@@ -343,7 +343,7 @@ Function New-Deployment {
                         -ResourceGroupName $moduleConfigurationResourceGroupName `
                         -ResourceGroupLocation $subscriptionInformation.Location `
                         -Validate:$($Validate.IsPresent);
-                        
+
                     Write-Debug "Resource Group successfully created";
                 }
 
@@ -2685,19 +2685,6 @@ Function Get-OutputFromStateStore() {
     }
 }
 
-
-Function Get-ValidationResourceGroupName() {
-    [CmdletBinding()]
-    param(
-        [Parameter(Mandatory=$true)]
-        [string]
-        $ArchetypeInstanceName
-    )
-    
-    return `
-        Get-UniqueString($ArchetypeInstanceName);
-}
-
 Function Destroy-ValidationResourceGroup() {
     [CmdletBinding()]
     param(
@@ -2713,7 +2700,8 @@ Function Destroy-ValidationResourceGroup() {
     if($resourceGroupFound -eq $true) {
 
         $resourceGroupName = `
-            Get-UniqueString($ArchetypeInstanceName);
+            Get-ValidationResourceGroupName `
+                -ArchetypeInstanceName $ArchetypeInstanceName;
 
         Start-ExponentialBackoff `
             -Expression { Remove-AzResourceGroup `
@@ -2757,11 +2745,24 @@ Function Get-ValidationResourceGroup() {
     )
     
     $resourceGroupName = `
-        Get-UniqueString($ArchetypeInstanceName);
+        Get-ValidationResourceGroupName `
+            -ArchetypeInstanceName $ArchetypeInstanceName;
 
     return `
         Get-AzResourceGroup $resourceGroupName `
             -ErrorAction SilentlyContinue;
+}
+
+Function Get-ValidationResourceGroupName() {
+    [CmdletBinding()]
+    param(
+        [Parameter(Mandatory=$true)]
+        [string]
+        $ArchetypeInstanceName
+    )
+    
+    return `
+        Get-UniqueString($ArchetypeInstanceName);
 }
 
 # Entry point script, used when invoking ModuleConfigurationDeployment.ps1
