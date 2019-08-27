@@ -2716,7 +2716,7 @@ Function Destroy-ValidationResourceGroupForArchetype() {
     
     if($resourceGroupFound -eq $true) {
 
-        Write-Host "Context during teardown is $(ConvertTo-Json $(Get-AzContext) -Depth 50)";
+        #Write-Host "Context during teardown is $(ConvertTo-Json $(Get-AzContext) -Depth 50)";
 
         $resourceGroupName = `
             Get-UniqueString($ArchetypeInstanceName);
