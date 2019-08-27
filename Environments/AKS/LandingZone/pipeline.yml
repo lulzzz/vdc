@@ -80,7 +80,7 @@ stages:
   - job: LogAnalytics
     pool:
       name: 'vdc-self-hosted'
-    dependsOn: [ SetupValidationResourceGroup, StorageAccounts ]
+    dependsOn: [ StorageAccounts ]
     variables: 
       BOOTSTRAP_INITIALIZED: $[dependencies.StorageAccounts.outputs['bootstratInitializedOutput.BOOTSTRAP_INITIALIZED']]
     steps:
@@ -118,7 +118,7 @@ stages:
   - job: SecurityCenter
     pool:
       name: 'vdc-self-hosted'
-    dependsOn: [ SetupValidationResourceGroup, StorageAccounts ]
+    dependsOn: [ StorageAccounts ]
     variables: 
       BOOTSTRAP_INITIALIZED: $[dependencies.StorageAccounts.outputs['bootstratInitializedOutput.BOOTSTRAP_INITIALIZED']]
     steps:
@@ -156,7 +156,7 @@ stages:
   - job: EventHub
     pool:
       name: 'vdc-self-hosted'
-    dependsOn: [ SetupValidationResourceGroup, StorageAccounts ]
+    dependsOn: [ StorageAccounts ]
     variables: 
       BOOTSTRAP_INITIALIZED: $[dependencies.StorageAccounts.outputs['bootstratInitializedOutput.BOOTSTRAP_INITIALIZED']]
     steps:
@@ -194,7 +194,7 @@ stages:
   - job: NetworkSecurityGroups
     pool:
       name: 'vdc-self-hosted'
-    dependsOn: [ SetupValidationResourceGroup, StorageAccounts ]
+    dependsOn: [ StorageAccounts ]
     variables: 
       BOOTSTRAP_INITIALIZED: $[dependencies.StorageAccounts.outputs['bootstratInitializedOutput.BOOTSTRAP_INITIALIZED']]
     steps:
@@ -232,7 +232,7 @@ stages:
   - job: RouteTables
     pool:
       name: 'vdc-self-hosted'
-    dependsOn: [ SetupValidationResourceGroup, StorageAccounts ]
+    dependsOn: [ StorageAccounts ]
     variables: 
       BOOTSTRAP_INITIALIZED: $[dependencies.StorageAccounts.outputs['bootstratInitializedOutput.BOOTSTRAP_INITIALIZED']]
     steps:
@@ -270,7 +270,7 @@ stages:
   - job: VirtualNetwork
     pool:
       name: 'vdc-self-hosted'
-    dependsOn: [ SetupValidationResourceGroup, StorageAccounts ]
+    dependsOn: [ StorageAccounts ]
     variables: 
       BOOTSTRAP_INITIALIZED: $[dependencies.StorageAccounts.outputs['bootstratInitializedOutput.BOOTSTRAP_INITIALIZED']]
     steps:
@@ -360,7 +360,7 @@ stages:
   - job: KeyVault
     pool:
       name: 'vdc-self-hosted'
-    dependsOn: [ SetupValidationResourceGroup, StorageAccounts ]
+    dependsOn: [ StorageAccounts ]
     variables: 
       BOOTSTRAP_INITIALIZED: $[dependencies.StorageAccounts.outputs['bootstratInitializedOutput.BOOTSTRAP_INITIALIZED']]
     steps:
