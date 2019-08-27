@@ -2686,10 +2686,10 @@ Function Initialize-ValidationResourceGroupForArchetype() {
         Assert-ValidationResourceGroupForArchetype `
             -ArchetypeInstanceName $ArchetypeInstanceName;
     
-    if($resourceGroupFound -eq $false) {
+    $resourceGroupName = `
+        Get-UniqueString($ArchetypeInstanceName);
 
-        $resourceGroupName = `
-            Get-UniqueString($ArchetypeInstanceName);
+    if($resourceGroupFound -eq $false) {
 
         Start-ExponentialBackoff `
             -Expression { New-AzResourceGroup `
