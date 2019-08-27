@@ -195,15 +195,7 @@ Function New-Deployment {
                 
             }
 
-            # Setup and teardown of validation Resource Group. This logic needs to be executed after the 
-            # correct Subscription context is setup. Validation Resource Group is always setup in the 
-            # Archetype's subscription (and not in the individual Module's Subscription context)
-            if($Validate.IsPresent -eq $true -and `
-                $TearDownValidationResourceGroup.IsPresent -eq $false) {
-                # Setup a Resource Group for validation if one does not already exists
-                Initialize-ValidationResourceGroupForArchetype `
-                    -ArchetypeInstanceName $ArchetypeInstanceName;
-            }
+            
 
             # Let's attempt to get the Audit Id from cache
             $auditCacheKey = `
@@ -328,16 +320,30 @@ Function New-Deployment {
                 # proceed to create a resource group
                 if ($null -ne $subscriptionInformation -and `
                     -not $isSubscriptionDeployment) {
-                    $moduleConfigurationResourceGroupName = `
-                        Get-ResourceGroupName `
-                            -ArchetypeInstanceName $ArchetypeInstanceName `
-                            -ModuleConfiguration $moduleConfiguration;
+                        
+                    if($Validate.IsPresent -eq $false) {
+
+                        # Retrieve the deployment resource group name
+                        $moduleConfigurationResourceGroupName = `
+                            Get-ResourceGroupName `
+                                    -ArchetypeInstanceName $ArchetypeInstanceName `
+                                    -ModuleConfiguration $moduleConfiguration;
                         Write-Debug "Resource Group is: $moduleConfigurationResourceGroupName";
+                    }
+                    elseif($Validate.IsPresent -eq $true -and `
+                        $TearDownValidationResourceGroup.IsPresent -eq $false) {
+                        
+                        # Retrieve the validation resource group name
+                        $moduleConfigurationResourceGroupName = `
+                            Get-ValidationResourceGroupName `
+                                -ArchetypeInstanceName $ArchetypeInstanceName;
+                    }
 
                     New-ResourceGroup `
                         -ResourceGroupName $moduleConfigurationResourceGroupName `
                         -ResourceGroupLocation $subscriptionInformation.Location `
                         -Validate:$($Validate.IsPresent);
+                        
                     Write-Debug "Resource Group successfully created";
                 }
 
@@ -471,13 +477,12 @@ Function New-Deployment {
                 Write-Debug "Validation Resource Group is being destroyed ..."
 
                 # Destroy the validation Resource Group
-                Destroy-ValidationResourceGroupForArchetype `
+                Destroy-ValidationResourceGroup `
                         -ArchetypeInstanceName $ArchetypeInstanceName;
 
                 Write-Host "Validation Resource Group is destroyed."
             }
 
-            
         }
     }
     catch {
@@ -2681,39 +2686,19 @@ Function Get-OutputFromStateStore() {
 }
 
 
-Function Initialize-ValidationResourceGroupForArchetype() {
+Function Get-ValidationResourceGroupName() {
     [CmdletBinding()]
     param(
         [Parameter(Mandatory=$true)]
         [string]
         $ArchetypeInstanceName
     )
-
-    # Location of the validation resource group is set to a default value
-    $location = "West US 2";
-
-    $resourceGroupFound = `
-        Assert-ValidationResourceGroupForArchetype `
-            -ArchetypeInstanceName $ArchetypeInstanceName;
     
-    $resourceGroupName = `
+    return `
         Get-UniqueString($ArchetypeInstanceName);
-
-    if($resourceGroupFound -eq $false) {
-
-        Start-ExponentialBackoff `
-            -Expression { New-AzResourceGroup `
-                            -Name $resourceGroupName `
-                            -Location $location -Force; }
-
-        Write-Host "Validation ResourceGroup $resourceGroupName created."
-    }
-    else {
-        Write-Host "Validation ResourceGroup $resourceGroupName already exists."
-    }
 }
 
-Function Destroy-ValidationResourceGroupForArchetype() {
+Function Destroy-ValidationResourceGroup() {
     [CmdletBinding()]
     param(
         [Parameter(Mandatory=$true)]
@@ -2722,12 +2707,10 @@ Function Destroy-ValidationResourceGroupForArchetype() {
     )
 
     $resourceGroupFound = `
-        Assert-ValidationResourceGroupForArchetype `
+        Assert-ValidationResourceGroup `
             -ArchetypeInstanceName $ArchetypeInstanceName;
     
     if($resourceGroupFound -eq $true) {
-
-        #Write-Host "Context during teardown is $(ConvertTo-Json $(Get-AzContext) -Depth 50)";
 
         $resourceGroupName = `
             Get-UniqueString($ArchetypeInstanceName);
@@ -2744,7 +2727,7 @@ Function Destroy-ValidationResourceGroupForArchetype() {
     }
 }
 
-Function Assert-ValidationResourceGroupForArchetype() {
+Function Assert-ValidationResourceGroup() {
     [CmdletBinding()]
     param(
         [Parameter(Mandatory=$true)]
@@ -2753,7 +2736,7 @@ Function Assert-ValidationResourceGroupForArchetype() {
     )
 
     $resourceGroup = `
-        Get-ValidationResourceGroupForArchetype `
+        Get-ValidationResourceGroup `
             -ArchetypeInstanceName $ArchetypeInstanceName;
     
     if($null -ne $resourceGroup) {
@@ -2765,7 +2748,7 @@ Function Assert-ValidationResourceGroupForArchetype() {
 
 }
 
-Function Get-ValidationResourceGroupForArchetype() {
+Function Get-ValidationResourceGroup() {
     [CmdletBinding()]
     param(
         [Parameter(Mandatory=$true)]
