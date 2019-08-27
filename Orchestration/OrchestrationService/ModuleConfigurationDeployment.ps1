@@ -2423,7 +2423,24 @@ Function Get-OutputReferenceValue() {
         if($null -ne $cacheValue)
         {
             Write-Debug "Output found in cache";
-            $resolvedOutput = $cacheValue;
+            
+            # Check if the string returned is a JSON string
+            $isJson = `
+                Test-Json $cacheValue `
+                    -ErrorAction SilentlyContinue;
+            
+            # If we can convert to object, then return converted object 
+            # else return string
+            if($isJson) {
+                $resolvedOutput = `
+                    ConvertFrom-Json `
+                        -AsHashtable `
+                        -InputObject $cacheValue `
+                        -Depth 50;
+            }
+            else {
+                $resolvedOutput = $cacheValue;
+            }
         }
         else
         {
