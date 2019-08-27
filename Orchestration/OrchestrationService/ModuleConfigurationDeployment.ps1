@@ -183,12 +183,12 @@ Function New-Deployment {
                 $subscriptionCheck -ne $sub.Subscription.Id -and `
                 $Validate.IsPresent -eq $false) {
 
-                    Write-Debug "Setting subscription context";
+                Write-Debug "Setting subscription context";
 
-                    Set-SubscriptionContext `
-                        -SubscriptionId $subscriptionInformation.SubscriptionId `
-                        -TenantId $subscriptionInformation.TenantId;
-                }
+                Set-SubscriptionContext `
+                    -SubscriptionId $subscriptionInformation.SubscriptionId `
+                    -TenantId $subscriptionInformation.TenantId;
+                
             }
 
             # Let's attempt to get the Audit Id from cache

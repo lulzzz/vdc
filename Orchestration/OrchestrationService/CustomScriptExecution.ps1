@@ -307,8 +307,10 @@ Class CustomScriptExecution {
                         # Set the result only if there is an output
                         if($_.Output.Count -ge 1) {
                             # TODO: To verify
-                            $result = $_.Output | Select-Object -Property * -ExcludeProperty PSComputerName,RunspaceID,PSShowComputerName;
-                            #$result = (ConvertTo-Json $_.Output | ConvertFrom-Json -AsHashtable).value
+                            # $result = $_.Output | Select-Object -Property * -ExcludeProperty PSComputerName,RunspaceID,PSShowComputerName;
+                            # TODO: add comments related to excludeprop
+                            # Also provide an example
+                            $result = (ConvertTo-Json $_.Output | ConvertFrom-Json -AsHashtable) | Select-Object -Property * -ExcludeProperty PSComputerName,RunspaceID,PSShowComputerName;
                         }
                         else {
                             $result = $null;
@@ -323,6 +325,8 @@ Class CustomScriptExecution {
                     Throw "Script failed to execute: $exception";
                 }
             }
+
+            Write-Host "Output here is $(ConvertTo-Json $result -Depth 50)";
             # Return the latest output
             return $result;
         }

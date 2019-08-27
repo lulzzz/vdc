@@ -71,8 +71,7 @@ Describe  "Custom Script Execution Unit Test Cases" {
 
         It "Should execute a Bash script" {
             
-            $bashRootPath = bash -c 'echo $PWD';
-            $scriptPath = Join-Path $bashRootPath -ChildPath 'Orchestration' -AdditionalChildPath  @("Tests", "Samples", "scripts", "sample-script.sh");
+            $scriptPath = Join-Path $rootPath -ChildPath '..' -AdditionalChildPath  @("Samples", "scripts", "sample-script.sh");
             $scriptPath = $scriptPath.Replace('\', '/')
             $command = $scriptPath;
 
