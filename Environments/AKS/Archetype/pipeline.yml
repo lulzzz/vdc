@@ -192,7 +192,7 @@ stages:
         azureSubscription: 'vdc2-spoke1'
         ScriptType: 'FilePath'
         ScriptPath: 'Orchestration/OrchestrationService/ModuleConfigurationDeployment.ps1'
-        ScriptArguments: '-DefinitionPath "Environments/AKS/Archetype/definition.json" -ModuleConfigurationName "AzureKubernetesServices"'
+        ScriptArguments: '-DefinitionPath "Environments/AKS/Archetype/definition.json" -ModuleConfigurationName "AzureKubernetesServices" -Debug'
         azurePowerShellVersion: 'LatestVersion'
       env:
         VDC_SUBSCRIPTIONS: $(VDC_SUBSCRIPTIONS)
