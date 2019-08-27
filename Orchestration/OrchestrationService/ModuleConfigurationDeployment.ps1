@@ -1862,12 +1862,10 @@ Function New-AzureResourceManagerDeployment {
 
         if($Validate.IsPresent) {
             Write-Debug "Validating the template";
-
             return `
                 $deploymentService.ExecuteValidation(
                     $TenantId,
                     $SubscriptionId,
-                    $defaultValidationResourceGroupName,
                     $DeploymentTemplate,
                     $DeploymentParameters,
                     $Location);
@@ -2712,15 +2710,15 @@ Function Destroy-ValidationResourceGroupForArchetype() {
         Assert-ValidationResourceGroupForArchetype `
             -ArchetypeInstanceName $ArchetypeInstanceName;
     
-    if($resourceGroupFound -eq $false) {
+    if($resourceGroupFound -eq $true) {
         Start-ExponentialBackoff `
             -Expression { Remove-AzResourceGroup `
                             -Name $resourceGroupName; }
 
-        Write-Host "Validation ResourceGroup $resourceGroupName created."
+        Write-Host "Validation ResourceGroup $resourceGroupName deleted."
     }
     else {
-        Write-Host "Validation ResourceGroup $resourceGroupName already exists."
+        Write-Host "Validation ResourceGroup $resourceGroupName does not exists."
     }
 }
 
