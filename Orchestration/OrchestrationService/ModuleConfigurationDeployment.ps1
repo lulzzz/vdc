@@ -206,7 +206,7 @@ Function New-Deployment {
                     -ArchetypeInstanceName $ArchetypeInstanceName;
             }
             elseif($Validate.IsPresent -eq $true -and `
-                    $TearDownValidationResourceGroup.IsPresent -eq $false) {
+                    $TearDownValidationResourceGroup.IsPresent -eq $true) {
                 # Destroy the validation Resource Group
                 Destroy-ValidationResourceGroupForArchetype `
                         -ArchetypeInstanceName $ArchetypeInstanceName;
@@ -2687,6 +2687,10 @@ Function Initialize-ValidationResourceGroupForArchetype() {
             -ArchetypeInstanceName $ArchetypeInstanceName;
     
     if($resourceGroupFound -eq $false) {
+
+        $resourceGroupName = `
+            Get-UniqueString($ArchetypeInstanceName);
+
         Start-ExponentialBackoff `
             -Expression { New-AzResourceGroup `
                             -Name $resourceGroupName `
