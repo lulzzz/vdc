@@ -72,7 +72,7 @@ Class AzureResourceManagerDeploymentService: IDeploymentService {
                     $this.InvokeARMOperation(
                         $tenantId,
                         $subscriptionId,
-                        $validationResourceGroup.Name,
+                        $validationResourceGroup.ResourceGroupName,
                         $deploymentTemplate,
                         $deploymentParameters,
                         $location,
@@ -81,7 +81,7 @@ Class AzureResourceManagerDeploymentService: IDeploymentService {
             else {
                 # Fail early if the validation resource group does not
                 # exists
-                Throw "Validation resource group - $($validationResourceGroup.Name) is not setup. Create the validation resource `
+                Throw "Validation resource group - $($validationResourceGroup.ResourceGroupName) is not setup. Create the validation resource `
                     group before invoking the ARM validation.";
             }
 

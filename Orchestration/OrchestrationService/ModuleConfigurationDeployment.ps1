@@ -185,8 +185,7 @@ Function New-Deployment {
                 [Guid]::TryParse($subscriptionInformation.TenantId, [ref]$tenantIdCheck) -and `
                 $subscriptionCheck -ne [Guid]::Empty -and `
                 $tenantIdCheck -ne [Guid]::Empty -and
-                $subscriptionCheck -ne $sub.Subscription.Id -and `
-                $Validate.IsPresent -eq $false) {
+                $subscriptionCheck -ne $sub.Subscription.Id) {
 
                 Write-Debug "Setting subscription context";
 
