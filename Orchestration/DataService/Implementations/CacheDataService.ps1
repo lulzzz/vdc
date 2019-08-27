@@ -25,6 +25,7 @@ Class CacheDataService: ICacheDataService {
                     -InputObject $value `
                     -Compress `
                     -Depth 100;
+            Write-Host "String value of cache is $cacheValue";
         }
         else {
             $cacheValue = $value;
