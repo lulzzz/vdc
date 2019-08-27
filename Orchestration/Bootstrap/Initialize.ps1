@@ -4,7 +4,6 @@ Class Initialize {
     [string]$dataStoreResourceGroupName = 'vdc-storage-rg';
     [string]$dataStoreName = 'vdcDataStore';
     [string]$dataStoreLocation = 'westus';
-    [string]$mode = 'deploy';
     # This array indicates the folders/containers/tables/collections
     # to be created inside of VDC Data Store
     $dataStoreSubFolders = @(
@@ -42,8 +41,7 @@ Class Initialize {
                     [string]$dataStoreSubscriptionId,
                     [string]$dataStoreResourceGroupName='',
                     [string]$dataStoreLocation='',
-                    [string]$dataStoreName='',
-                    [string]$mode) {
+                    [string]$dataStoreName='') {
         $this.dataStoreTenantId = `
             $dataStoreTenantId;
         $this.dataStoreSubscriptionId = `
@@ -54,8 +52,6 @@ Class Initialize {
             $dataStoreLocation;
         $this.dataStoreName = `
             $dataStoreName;
-        $this.mode = `
-            $mode;
         return $this.createStorageAccountDataStore();
     }
 
@@ -140,12 +136,6 @@ Class Initialize {
                 !$validJson) {
                 Write-Debug "No valid JSON found, running Storage Account bootstrap";
                 
-                # Keep track of previous context so that we can revert back. This will be 
-                # needed when we perform validate operation where the context need to remain 
-                # same (as the validation resource group subscription) for all modules of a
-                # workload
-                $previousContext = Get-AzContext;
-                
                 # Setting context in order to create / verify the toolkit
                 # resource group and storage account resource
                 Set-AzContext `
@@ -212,12 +202,6 @@ Class Initialize {
                             $this.dataStoreName,
                             $this.dataStoreResourceGroupName);
 
-                # Set context back to its previous state. This will ensure the subscription
-                # is the same for all the modules when in validation mode.
-                if($this.mode -eq "validate") {
-                    Set-AzContext -Context $previousContext;
-                } 
-
                 $storageAccountDetails = @{
                     StorageAccountName = $this.dataStoreName
                     StorageAccountResourceGroup = $this.dataStoreResourceGroupName
@@ -238,12 +222,6 @@ Class Initialize {
                     
                     Write-Debug "Obtaining new SAS Token, previous expired"
 
-                    # Keep track of previous context so that we can revert back. This will be 
-                    # needed when we perform validate operation where the context need to remain 
-                    # same (as the validation resource group subscription) for all modules of a
-                    # workload
-                    $previousContext = Get-AzContext;
-
                     # Setting AZ context to be able to retrieve the proper
                     # SAS token, there are situations where the toolkit
                     # subscription is different than the one from the
@@ -257,12 +235,6 @@ Class Initialize {
                         $this.GetSASToken(
                             $this.dataStoreName,
                             $this.dataStoreResourceGroupName);
-
-                    # Set context back to its previous state. This will ensure the subscription
-                    # is the same for all the modules when in validation mode.
-                    if($this.mode -eq "validate") {
-                        Set-AzContext -Context $previousContext;
-                    }
 
                     Write-Debug "Sas token acquired, new expiriy time is: $($storageAccountDetails.ExpiryTime)"
                     $storageAccountDetails.StorageAccountSasToken = `

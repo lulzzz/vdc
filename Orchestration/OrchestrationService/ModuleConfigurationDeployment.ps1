@@ -76,8 +76,7 @@ Function New-Deployment {
 
         $factory = `
             Invoke-Bootstrap `
-                -WorkingDirectory $defaultWorkingDirectory `
-                -Mode @{ "False" = "deploy"; "True" = "validate"; }[$Validate.ToString()];
+                -WorkingDirectory $defaultWorkingDirectory;
 
         $deploymentService = `
             $factory.GetInstance('IDeploymentService');
@@ -181,10 +180,8 @@ Function New-Deployment {
                 [Guid]::TryParse($subscriptionInformation.TenantId, [ref]$tenantIdCheck) -and `
                 $subscriptionCheck -ne [Guid]::Empty -and `
                 $tenantIdCheck -ne [Guid]::Empty -and
-                $subscriptionCheck -ne $sub.Subscription.Id) {
-                
-                # Switch subscription only when in deployment mode.
-                if($Validate.IsPresent -eq $false) {
+                $subscriptionCheck -ne $sub.Subscription.Id -and `
+                $Validate.IsPresent -eq $false) {
 
                     Write-Debug "Setting subscription context";
 
@@ -887,10 +884,7 @@ Function Invoke-Bootstrap {
     param (
         [Parameter(Mandatory=$true)]
         [string]
-        $WorkingDirectory,
-        [Parameter(Mandatory=$false)]
-        [string]
-        $Mode = "deploy"
+        $WorkingDirectory
     )
 
     $toolkitConfigurationFileName = `
@@ -930,8 +924,7 @@ Function Invoke-Bootstrap {
                     $auditStorageInformation.SubscriptionId,
                     $auditStorageInformation.ResourceGroup,
                     $auditStorageInformation.Location,
-                    $auditStorageInformation.StorageAccountName,
-                    $Mode
+                    $auditStorageInformation.StorageAccountName
                     );
 
             $factory = `
