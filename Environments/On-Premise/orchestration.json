@@ -268,7 +268,11 @@
                     },
                     "storageAccountSku": {
                         "value": "${Parameters.ModuleConfigurationParameters.ArtifactsStorageAccount.Sku}"
+                    },
+                    "blobContainers": {
+                        "value": "${Parameters.ModuleConfigurationParameters.ArtifactsStorageAccount.Containers}"
                     }
+
                 }
             }
         },
