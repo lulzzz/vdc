@@ -58,7 +58,7 @@
             ]
         },
         "KeyVault": {
-            "Name": "${Parameters.InstanceName}-kv",
+            "Name": "${Parameters.InstanceName}-kv2",
             "ResourceGroup": "${Parameters.InstanceName}-keyvault-rg",
             "Sku": "Premium",
             "EnableVaultForDeployment": true,

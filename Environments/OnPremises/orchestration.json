@@ -172,7 +172,7 @@
         {
             "Name": "CreateRootCertificate",
             "Comments": "Create Root Certificate",
-            "Enabled": false,
+            "Enabled": true,
             "DependsOn": [
                 "KeyVault"
             ],
