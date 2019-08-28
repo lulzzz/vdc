@@ -310,7 +310,7 @@ Class CustomScriptExecution {
                             # $result = $_.Output | Select-Object -Property * -ExcludeProperty PSComputerName,RunspaceID,PSShowComputerName;
                             # TODO: add comments related to excludeprop
                             # Also provide an example
-                            $result = (ConvertTo-Json $_.Output -Depth 50 | ConvertFrom-Json -AsHashtable) | Select-Object -Property * -ExcludeProperty PSComputerName,RunspaceID,PSShowComputerName;
+                            $result = (ConvertTo-Json $_.Output -Depth 50 | ConvertFrom-Json) | Select-Object -Property * -ExcludeProperty PSComputerName,RunspaceID,PSShowComputerName;
 
                             Write-Host "Result type is $($result.Getype())";
                         }
