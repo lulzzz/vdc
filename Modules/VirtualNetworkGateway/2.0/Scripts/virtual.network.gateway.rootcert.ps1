@@ -45,7 +45,8 @@ if($null -eq $keyExists) {
         Write-Host "Generating Root Cert for Linux";
         Get-Location | Write-Host;
         bash -c "chmod 755 $BashScriptPath"
-        $rootCertPublicKey = (bash -c "$BashScriptPath $KeyVaultName $KeyName")[0];
+        $bashScriptResult = (bash -c "$BashScriptPath $KeyVaultName $KeyName");
+        $rootCertPublicKey = $bashScriptResult[$bashScriptResult.Count - 1];
     }
     $secureString = ConvertTo-SecureString -String $rootCertPublicKey -AsPlainText -Force;
     Set-AzKeyVaultSecret -VaultName $KeyVaultName -Name $KeyName -SecretValue $secureString;
