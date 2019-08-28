@@ -43,7 +43,6 @@ if($null -eq $keyExists) {
     }
     else {
         Write-Host "Generating Root Cert for Linux";
-        Get-Location | Write-Host;
         bash -c "chmod 755 $BashScriptPath"
         $bashScriptResult = (bash -c "$BashScriptPath $KeyVaultName $KeyName");
         $rootCertPublicKey = $bashScriptResult[$bashScriptResult.Count - 1];
