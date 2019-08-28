@@ -1,12 +1,6 @@
 [CmdletBinding()] 
 param(
     [Parameter(Mandatory=$true)]
-    [string]$TenantId,
-    [Parameter(Mandatory=$true)]
-    [string]$ServicePrincipal_ID,
-    [Parameter(Mandatory=$true)]
-    [string]$ServicePrincipal_Secret,
-    [Parameter(Mandatory=$true)]
     [string]$KeyVaultName,
     [Parameter(Mandatory=$true)]
     [string]$KeyName,
@@ -16,15 +10,17 @@ param(
 
 Import-Module -Name Az
 
-if($Env:OS -like "*windows*" -or $IsWindows -eq $true) {
-    $keyExists = Get-AzKeyVaultSecret -VaultName $KeyVaultName -Name $KeyName
 
-    if($null -eq $keyExists) {
+$keyExists = Get-AzKeyVaultSecret -VaultName $KeyVaultName -Name $KeyName
+
+if($null -eq $keyExists) {
+
+    if($Env:OS -like "*windows*" -or $IsWindows -eq $true) {
         Write-Host "Generating Root Cert for Windows";
         # Run the script in PowerShell 5 or less. If you're running in PowerShell Core,
         # New-SelfSignedCertificate is not available. So, make sure your windows machine
         # has both PowerShell Core and PowerShell.
-        $secureString = Powershell -Command {
+        $rootCertPublicKey = Powershell -Command {
             New-Item -Path "C:\" -Name "certs" -ItemType "directory" | Out-Null;
             $certFilePath = "C:\certs\rootCert.cer";
             $certPath = "Cert:\CurrentUser\My";
@@ -42,14 +38,15 @@ if($Env:OS -like "*windows*" -or $IsWindows -eq $true) {
                 Remove-Item -Path $certFilePath;
                 Remove-Item -Path "C:\certs";
             }
-            return ConvertTo-SecureString -String $rootCertPublicKey -AsPlainText -Force;
-            
+            return $rootCertPublicKey;
         }
-        Set-AzKeyVaultSecret -VaultName $KeyVaultName -Name $KeyName -SecretValue $secureString;
     }
-}
-else {
-    Write-Host "Generating Root Cert for Linux";
-    Get-Location | Write-Host;
-    bash -c "$BashScriptPath $TenantId $ServicePrincipal_ID $ServicePrincipal_Secret $KeyVaultName $KeyName";
+    else {
+        Write-Host "Generating Root Cert for Linux";
+        Get-Location | Write-Host;
+        bash -c "chmod 755 $BashScriptPath"
+        $rootCertPublicKey = (bash -c "$BashScriptPath $KeyVaultName $KeyName")[0];
+    }
+    $secureString = ConvertTo-SecureString -String $rootCertPublicKey -AsPlainText -Force;
+    Set-AzKeyVaultSecret -VaultName $KeyVaultName -Name $KeyName -SecretValue $secureString;
 }
