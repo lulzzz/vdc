@@ -329,7 +329,6 @@ Class CustomScriptExecution {
                 }
             }
 
-            Write-Host "Output here is $(ConvertTo-Json $result -Depth 50)";
             # Return the latest output
             return $result;
         }
