@@ -256,7 +256,7 @@ Class CustomScriptExecution {
     hidden [object] RunJob([string] $command, [string] $filePath, [array] $argumentsList) {
         
         # Variable to store the output from running a script
-        $result = $null;
+        $result = @();
         try {
             $job = $null;
             # Job is a set of commands to be executed. ScriptBlock
@@ -310,7 +310,12 @@ Class CustomScriptExecution {
                             # $result = $_.Output | Select-Object -Property * -ExcludeProperty PSComputerName,RunspaceID,PSShowComputerName;
                             # TODO: add comments related to excludeprop
                             # Also provide an example
-                            $result = (ConvertTo-Json $_.Output -Depth 50 | ConvertFrom-Json) | Select-Object -Property * -ExcludeProperty PSComputerName,RunspaceID,PSShowComputerName;
+
+                            $_.Output | ForEach-Object {
+                                $result += $_.value;
+                            }
+                            
+                            #$result = (ConvertTo-Json $_.Output -Depth 50 | ConvertFrom-Json) | Select-Object -Property * -ExcludeProperty PSComputerName,RunspaceID,PSShowComputerName;
 
                             Write-Host "Result type is $($result.Getype())";
                         }
