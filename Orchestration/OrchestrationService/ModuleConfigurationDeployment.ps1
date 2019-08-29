@@ -319,8 +319,7 @@ Function New-Deployment {
                 # If we are not in a subscription deployment
                 # proceed to create a resource group
                 if ($null -ne $subscriptionInformation -and `
-                    -not $isSubscriptionDeployment  -and `
-                    $TearDownValidationResourceGroup.IsPresent -eq $false) {
+                    -not $isSubscriptionDeployment) {
                         
                     if($Validate.IsPresent -eq $false) {
                         # Retrieve the deployment resource group name
