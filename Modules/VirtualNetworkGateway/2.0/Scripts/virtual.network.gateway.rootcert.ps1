@@ -14,14 +14,14 @@ Import-Module -Name Az
 $keyExists = Get-AzKeyVaultSecret -VaultName $KeyVaultName -Name $KeyName
 
 if($null -eq $keyExists) {
-
+    
     if($Env:OS -like "*windows*" -or $IsWindows -eq $true) {
-        $cwd = Get-Location;
         Write-Host "Generating Root Cert for Windows";
         # Run the script in PowerShell 5 or less. If you're running in PowerShell Core,
         # New-SelfSignedCertificate is not available. So, make sure your windows machine
         # has both PowerShell Core and PowerShell.
         $rootCertPublicKey = Powershell -Command {
+            $cwd = (Get-Location).Path;
             New-Item -Path $cwd -Name "certs" -ItemType "directory" | Out-Null;
             $certFilePath = "$cwd\certs\rootCert.cer";
             $certPath = "Cert:\CurrentUser\My";
@@ -44,10 +44,11 @@ if($null -eq $keyExists) {
     }
     else {
         Write-Host "Generating Root Cert for Linux";
+        $cwd = (Get-Location).Path;
         bash -c "chmod 755 $BashScriptPath"
         $bashScriptResult = (bash -c "$BashScriptPath $KeyVaultName $KeyName $cwd");
         $rootCertPublicKey = $bashScriptResult[$bashScriptResult.Count - 1];
     }
     $secureString = ConvertTo-SecureString -String $rootCertPublicKey -AsPlainText -Force;
-    Set-AzKeyVaultSecret -VaultName $KeyVaultName -Name $KeyName -SecretValue $secureString;
+    Set-AzKeyVaultSecret -VaultName $KeyVaultName -Name $KeyName -SecretValue $secureString | Out-Null;
 }
