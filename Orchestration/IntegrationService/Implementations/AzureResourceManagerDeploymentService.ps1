@@ -229,7 +229,7 @@ Class AzureResourceManagerDeploymentService: IDeploymentService {
             else {
                 # Fail early if the validation resource group does not
                 # exists
-                Throw "Validation resource group - $validationResourceGroupName is not setup. Create the validation resource `
+                Throw "Validation resource group - $resourceGroupName is not setup. Create the validation resource `
                     group before invoking the ARM validation.";
             }
         }
