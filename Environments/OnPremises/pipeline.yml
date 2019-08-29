@@ -27,7 +27,7 @@ stages:
     - task: AzurePowerShell@4
       displayName: "ARM Validation - Diagnostic Storage Account"
       inputs:
-        azureSubscription: 'vdc2-onprem'
+        azureSubscription: 'Kunachim Azure SC'
         ScriptType: 'FilePath'
         ScriptPath: 'Orchestration/OrchestrationService/ModuleConfigurationDeployment.ps1'
         ScriptArguments: '-DefinitionPath "Environments/On-Premise/definition.json" -ModuleConfigurationName "DiagnosticStorageAccount" -Validate'
@@ -75,7 +75,7 @@ stages:
     - task: AzurePowerShell@4
       displayName: "ARM Validation - Log Analytics"
       inputs:
-        azureSubscription: 'vdc2-onprem'
+        azureSubscription: 'Kunachim Azure SC'
         ScriptType: 'FilePath'
         ScriptPath: 'Orchestration/OrchestrationService/ModuleConfigurationDeployment.ps1'
         ScriptArguments: '-DefinitionPath "Environments/On-Premise/definition.json" -ModuleConfigurationName "LogAnalytics" -Validate'
@@ -113,7 +113,7 @@ stages:
     - task: AzurePowerShell@4
       displayName: "ARM Validation - On-Premises NSG"
       inputs:
-        azureSubscription: 'vdc2-onprem'
+        azureSubscription: 'Kunachim Azure SC'
         ScriptType: 'FilePath'
         ScriptPath: 'Orchestration/OrchestrationService/ModuleConfigurationDeployment.ps1'
         ScriptArguments: '-DefinitionPath "Environments/On-Premise/definition.json" -ModuleConfigurationName "OnPremisesNSG" -Validate'
@@ -151,7 +151,7 @@ stages:
     - task: AzurePowerShell@4
       displayName: "ARM Validation - Virtual Network"
       inputs:
-        azureSubscription: 'vdc2-onprem'
+        azureSubscription: 'Kunachim Azure SC'
         ScriptType: 'FilePath'
         ScriptPath: 'Orchestration/OrchestrationService/ModuleConfigurationDeployment.ps1'
         ScriptArguments: '-DefinitionPath "Environments/On-Premise/definition.json" -ModuleConfigurationName "VirtualNetwork" -Validate'
@@ -189,7 +189,7 @@ stages:
     - task: AzurePowerShell@4
       displayName: "ARM Validation - Virtual Network Gateway"
       inputs:
-        azureSubscription: 'vdc2-onprem'
+        azureSubscription: 'Kunachim Azure SC'
         ScriptType: 'FilePath'
         ScriptPath: 'Orchestration/OrchestrationService/ModuleConfigurationDeployment.ps1'
         ScriptArguments: '-DefinitionPath "Environments/On-Premise/definition.json" -ModuleConfigurationName "VirtualNetworkGateway" -Validate'
@@ -227,7 +227,7 @@ stages:
     - task: AzurePowerShell@4
       displayName: "ARM Validation - Key Vault"
       inputs:
-        azureSubscription: 'vdc2-onprem'
+        azureSubscription: 'Kunachim Azure SC'
         ScriptType: 'FilePath'
         ScriptPath: 'Orchestration/OrchestrationService/ModuleConfigurationDeployment.ps1'
         ScriptArguments: '-DefinitionPath "Environments/On-Premise/definition.json" -ModuleConfigurationName "KeyVault" -Validate'
@@ -248,7 +248,7 @@ stages:
     - task: AzurePowerShell@4
       displayName: "ARM Validation - Enable Service Endpoint On Key Vault"
       inputs:
-        azureSubscription: 'vdc2-onprem'
+        azureSubscription: 'Kunachim Azure SC'
         ScriptType: 'FilePath'
         ScriptPath: 'Orchestration/OrchestrationService/ModuleConfigurationDeployment.ps1'
         ScriptArguments: '-DefinitionPath "Environments/On-Premise/definition.json" -ModuleConfigurationName "EnableServiceEndpointOnKeyVault" -Validate'
@@ -286,7 +286,7 @@ stages:
     - task: AzurePowerShell@4
       displayName: "ARM Validation - Active Directory VM"
       inputs:
-        azureSubscription: 'vdc2-onprem'
+        azureSubscription: 'Kunachim Azure SC'
         ScriptType: 'FilePath'
         ScriptPath: 'Orchestration/OrchestrationService/ModuleConfigurationDeployment.ps1'
         ScriptArguments: '-DefinitionPath "Environments/On-Premise/definition.json" -ModuleConfigurationName "ActiveDirectoryVM" -Validate'
@@ -307,7 +307,7 @@ stages:
     - task: AzurePowerShell@4
       displayName: "ARM Validation - Install Active Directory"
       inputs:
-        azureSubscription: 'vdc2-onprem'
+        azureSubscription: 'Kunachim Azure SC'
         ScriptType: 'FilePath'
         ScriptPath: 'Orchestration/OrchestrationService/ModuleConfigurationDeployment.ps1'
         ScriptArguments: '-DefinitionPath "Environments/On-Premise/definition.json" -ModuleConfigurationName "InstallActiveDirectory" -Validate -TearDownValidationResourceGroup'
@@ -335,7 +335,7 @@ stages:
     - task: AzurePowerShell@4
       displayName: "Diagnostic Storage Account"
       inputs:
-        azureSubscription: 'vdc2-onprem'
+        azureSubscription: 'Kunachim Azure SC'
         ScriptType: 'FilePath'
         ScriptPath: 'Orchestration/OrchestrationService/ModuleConfigurationDeployment.ps1'
         ScriptArguments: '-DefinitionPath "Environments/On-Premise/definition.json" -ModuleConfigurationName "DiagnosticStorageAccount"'
@@ -374,7 +374,7 @@ stages:
     - task: AzurePowerShell@4
       displayName: "Log Analytics"
       inputs:
-        azureSubscription: 'vdc2-onprem'
+        azureSubscription: 'Kunachim Azure SC'
         ScriptType: 'FilePath'
         ScriptPath: 'Orchestration/OrchestrationService/ModuleConfigurationDeployment.ps1'
         ScriptArguments: '-DefinitionPath "Environments/On-Premise/definition.json" -ModuleConfigurationName "LogAnalytics"'
@@ -403,7 +403,7 @@ stages:
     - task: AzurePowerShell@4
       displayName: "On-premises Network Security Group"
       inputs:
-        azureSubscription: 'vdc2-onprem'
+        azureSubscription: 'Kunachim Azure SC'
         ScriptType: 'FilePath'
         ScriptPath: 'Orchestration/OrchestrationService/ModuleConfigurationDeployment.ps1'
         ScriptArguments: '-DefinitionPath "Environments/On-Premise/definition.json" -ModuleConfigurationName "OnPremisesNSG"'
@@ -432,7 +432,7 @@ stages:
     - task: AzurePowerShell@4
       displayName: "Virtual Network"
       inputs:
-        azureSubscription: 'vdc2-onprem'
+        azureSubscription: 'Kunachim Azure SC'
         ScriptType: 'FilePath'
         ScriptPath: 'Orchestration/OrchestrationService/ModuleConfigurationDeployment.ps1'
         ScriptArguments: '-DefinitionPath "Environments/On-Premise/definition.json" -ModuleConfigurationName "VirtualNetwork"'
@@ -461,7 +461,7 @@ stages:
     - task: AzurePowerShell@4
       displayName: "Key Vault"
       inputs:
-        azureSubscription: 'vdc2-onprem'
+        azureSubscription: 'Kunachim Azure SC'
         ScriptType: 'FilePath'
         ScriptPath: 'Orchestration/OrchestrationService/ModuleConfigurationDeployment.ps1'
         ScriptArguments: '-DefinitionPath "Environments/On-Premise/definition.json" -ModuleConfigurationName "KeyVault"'
@@ -482,7 +482,7 @@ stages:
     - task: AzurePowerShell@4
       displayName: "Create Root Certificate"
       inputs:
-        azureSubscription: 'vdc2-onprem'
+        azureSubscription: 'Kunachim Azure SC'
         ScriptType: 'FilePath'
         ScriptPath: 'Orchestration/OrchestrationService/ModuleConfigurationDeployment.ps1'
         ScriptArguments: '-DefinitionPath "Environments/On-Premise/definition.json" -ModuleConfigurationName "CreateRootCertificate"'
@@ -503,7 +503,7 @@ stages:
     - task: AzurePowerShell@4
       displayName: "Enable Service Endpoint on Key Vault"
       inputs:
-        azureSubscription: 'vdc2-onprem'
+        azureSubscription: 'Kunachim Azure SC'
         ScriptType: 'FilePath'
         ScriptPath: 'Orchestration/OrchestrationService/ModuleConfigurationDeployment.ps1'
         ScriptArguments: '-DefinitionPath "Environments/On-Premise/definition.json" -ModuleConfigurationName "EnableServiceEndpointOnKeyVault"'
@@ -532,7 +532,7 @@ stages:
     - task: AzurePowerShell@4
       displayName: "Virtual Network Gateway"
       inputs:
-        azureSubscription: 'vdc2-onprem'
+        azureSubscription: 'Kunachim Azure SC'
         ScriptType: 'FilePath'
         ScriptPath: 'Orchestration/OrchestrationService/ModuleConfigurationDeployment.ps1'
         ScriptArguments: '-DefinitionPath "Environments/On-Premise/definition.json" -ModuleConfigurationName "VirtualNetworkGateway"'
@@ -561,7 +561,7 @@ stages:
     - task: AzurePowerShell@4
       displayName: "Artifacts Storage Account"
       inputs:
-        azureSubscription: 'vdc2-onprem'
+        azureSubscription: 'Kunachim Azure SC'
         ScriptType: 'FilePath'
         ScriptPath: 'Orchestration/OrchestrationService/ModuleConfigurationDeployment.ps1'
         ScriptArguments: '-DefinitionPath "Environments/On-Premise/definition.json" -ModuleConfigurationName "ArtifactsStorageAccount"'
@@ -582,7 +582,7 @@ stages:
     - task: AzurePowerShell@4
       displayName: "Upload Scripts To Artifacts Storage"
       inputs:
-        azureSubscription: 'vdc2-onprem'
+        azureSubscription: 'Kunachim Azure SC'
         ScriptType: 'FilePath'
         ScriptPath: 'Orchestration/OrchestrationService/ModuleConfigurationDeployment.ps1'
         ScriptArguments: '-DefinitionPath "Environments/On-Premise/definition.json" -ModuleConfigurationName "UploadScriptsToArtifactsStorage"'
@@ -611,7 +611,7 @@ stages:
     - task: AzurePowerShell@4
       displayName: "Active Directory VM"
       inputs:
-        azureSubscription: 'vdc2-onprem'
+        azureSubscription: 'Kunachim Azure SC'
         ScriptType: 'FilePath'
         ScriptPath: 'Orchestration/OrchestrationService/ModuleConfigurationDeployment.ps1'
         ScriptArguments: '-DefinitionPath "Environments/On-Premise/definition.json" -ModuleConfigurationName "ActiveDirectoryVM"'
@@ -632,7 +632,7 @@ stages:
     - task: AzurePowerShell@4
       displayName: "Install Active Directory"
       inputs:
-        azureSubscription: 'vdc2-onprem'
+        azureSubscription: 'Kunachim Azure SC'
         ScriptType: 'FilePath'
         ScriptPath: 'Orchestration/OrchestrationService/ModuleConfigurationDeployment.ps1'
         ScriptArguments: '-DefinitionPath "Environments/On-Premise/definition.json" -ModuleConfigurationName "InstallActiveDirectory"'
