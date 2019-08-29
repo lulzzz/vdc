@@ -101,7 +101,7 @@
                 "Secrets": [
                     {
                         "secretName": "DomainAdminPassword",
-                        "secretValue": "P@ssword2019$123"
+                        "secretValue": "env(DOMAIN_ADMIN_USER_PWD)"
                     }
                 ]
             },
