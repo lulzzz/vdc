@@ -930,7 +930,7 @@ stages:
         azureSubscription: 'Kunachim Azure SC'
         ScriptType: 'FilePath'
         ScriptPath: 'Orchestration/OrchestrationService/ModuleConfigurationDeployment.ps1'
-        ScriptArguments: '-DefinitionPath "Environments/SharedServices_OnpremExtension/definition.json" -ModuleConfigurationName "VirtualNetworkGateway"'
+        ScriptArguments: '-DefinitionPath "Environments/SharedServices_OnpremExtension/definition.json" -ModuleConfigurationName "VirtualNetworkGateway" -Debug'
         azurePowerShellVersion: 'LatestVersion'
       env:
         ADMIN_USER_PWD: $(ADMIN_USER_PWD)
@@ -995,7 +995,7 @@ stages:
         azureSubscription: 'Kunachim Azure SC'
         ScriptType: 'FilePath'
         ScriptPath: 'Orchestration/OrchestrationService/ModuleConfigurationDeployment.ps1'
-        ScriptArguments: '-DefinitionPath "Environments/SharedServices_OnpremExtension/definition.json" -ModuleConfigurationName "AzureFirewall" -Debug'
+        ScriptArguments: '-DefinitionPath "Environments/SharedServices_OnpremExtension/definition.json" -ModuleConfigurationName "AzureFirewall"'
         azurePowerShellVersion: 'LatestVersion'
       env:
         ADMIN_USER_PWD: $(ADMIN_USER_PWD)
@@ -1014,7 +1014,7 @@ stages:
         azureSubscription: 'Kunachim Azure SC'
         ScriptType: 'FilePath'
         ScriptPath: 'Orchestration/OrchestrationService/ModuleConfigurationDeployment.ps1'
-        ScriptArguments: '-DefinitionPath "Environments/SharedServices_OnpremExtension/definition.json" -ModuleConfigurationName "AddRoutesToSharedServicesRouteTable" -Debug'
+        ScriptArguments: '-DefinitionPath "Environments/SharedServices_OnpremExtension/definition.json" -ModuleConfigurationName "AddRoutesToSharedServicesRouteTable"'
         azurePowerShellVersion: 'LatestVersion'
       env:
         ADMIN_USER_PWD: $(ADMIN_USER_PWD)
