@@ -40,11 +40,10 @@ Class CacheDataService: ICacheDataService {
         $cache = `
             $this.cacheRepository.GetByKey($key);
 
-        if ($null -ne $cache) {
-            
+        if (![string]::IsNullOrEmpty($cache)) {
             # If we can convert to object, then return converted object 
             # else return the string as-is.
-            if(Test-JsonContent -Content $cache) {
+            if($(Test-JsonContent -Content $cache) -eq $true) {
                 $cache = `
                     ConvertFrom-Json `
                         -AsHashtable `
