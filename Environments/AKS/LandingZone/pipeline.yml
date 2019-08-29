@@ -31,7 +31,7 @@ stages:
         azureSubscription: 'vdc2-spoke1'
         ScriptType: 'FilePath'
         ScriptPath: 'Orchestration/OrchestrationService/ModuleConfigurationDeployment.ps1'
-        ScriptArguments: '-DefinitionPath "Environments/AKS/LandingZone/definition.json" -ModuleConfigurationName "DiagnosticStorageAccount" -Validate'
+        ScriptArguments: '-DefinitionPath "Environments/AKS/LandingZone/definition.json" -ModuleConfigurationName "DiagnosticStorageAccount" -Validate -Debug'
         azurePowerShellVersion: 'LatestVersion'
       env:
         ADMIN_USER_PWD: $(ADMIN_USER_PWD)
