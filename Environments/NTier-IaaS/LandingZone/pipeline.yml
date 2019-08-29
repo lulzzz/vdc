@@ -3,7 +3,7 @@ variables:
 trigger:
 - master
 stages:
-- stage: Validate
+- stage: Validation
   jobs:
   - job: SetupValidationResourceGroup
     pool: 
@@ -326,7 +326,7 @@ stages:
         ScriptPath: 'Orchestration/OrchestrationService/ValidationResourceGroupSetup.ps1'
         ScriptArguments: '-TearDownResourceGroup'
         azurePowerShellVersion: 'LatestVersion'
-- stage: Deploy
+- stage: DiagnosticMonitoring
   jobs:
   - job: DiagnosticStorageAccount
     pool:
@@ -439,12 +439,11 @@ stages:
         ORGANIZATION_NAME: $(ORGANIZATION_NAME)
         VDC_SUBSCRIPTIONS: $(VDC_SUBSCRIPTIONS)
         VDC_TOOLKIT_SUBSCRIPTION: $(VDC_TOOLKIT_SUBSCRIPTION)
+- stage: CoreInfrastructure
+  jobs:
   - job: ApplicationSecurityGroups
     pool:
       name: 'vdc-self-hosted'
-    dependsOn: DiagnosticStorageAccount
-    variables: 
-      BOOTSTRAP_INITIALIZED: $[dependencies.DiagnosticStorageAccount.outputs['bootstratInitializedOutput.BOOTSTRAP_INITIALIZED']]
     steps:
     - task: AzurePowerShell@4
       displayName: "Web Application Security Group" 
@@ -465,6 +464,16 @@ stages:
         ORGANIZATION_NAME: $(ORGANIZATION_NAME)
         VDC_SUBSCRIPTIONS: $(VDC_SUBSCRIPTIONS)
         VDC_TOOLKIT_SUBSCRIPTION: $(VDC_TOOLKIT_SUBSCRIPTION)
+    - task: PowerShell@2
+      displayName: "Sets multi-job variable"
+      name: "bootstratInitializedOutput"
+      inputs:
+        targetType: 'inline'
+        script: '
+        
+          $bootstrapInitialized = $ENV:BOOTSTRAP_INITIALIZED;
+          Write-Host "##vso[task.setvariable variable=BOOTSTRAP_INITIALIZED;isOutput=true]$bootstrapInitialized";'
+        pwsh: true
     - task: AzurePowerShell@4
       displayName: "Business Application Security Group" 
       inputs:
@@ -508,7 +517,7 @@ stages:
       name: 'vdc-self-hosted'
     dependsOn: [ DiagnosticStorageAccount, LogAnalytics, ApplicationSecurityGroups ]
     variables: 
-      BOOTSTRAP_INITIALIZED: $[dependencies.DiagnosticStorageAccount.outputs['bootstratInitializedOutput.BOOTSTRAP_INITIALIZED']]
+      BOOTSTRAP_INITIALIZED: $[dependencies.ApplicationSecurityGroups.outputs['bootstratInitializedOutput.BOOTSTRAP_INITIALIZED']]
     steps:
     - task: AzurePowerShell@4
       displayName: "Default Network Security Group" 
@@ -532,9 +541,9 @@ stages:
   - job: RouteTables
     pool:
       name: 'vdc-self-hosted'
-    dependsOn: DiagnosticStorageAccount
+    dependsOn: ApplicationSecurityGroups
     variables: 
-      BOOTSTRAP_INITIALIZED: $[dependencies.DiagnosticStorageAccount.outputs['bootstratInitializedOutput.BOOTSTRAP_INITIALIZED']]
+      BOOTSTRAP_INITIALIZED: $[dependencies.ApplicationSecurityGroups.outputs['bootstratInitializedOutput.BOOTSTRAP_INITIALIZED']]
     steps:
     - task: AzurePowerShell@4
       displayName: "Default Route Table" 
@@ -558,9 +567,9 @@ stages:
   - job: VirtualNetwork
     pool:
       name: 'vdc-self-hosted'
-    dependsOn: [ NetworkSecurityGroups, RouteTables, DiagnosticStorageAccount ]
+    dependsOn: [ ApplicationSecurityGroups, NetworkSecurityGroups, RouteTables ]
     variables: 
-      BOOTSTRAP_INITIALIZED: $[dependencies.DiagnosticStorageAccount.outputs['bootstratInitializedOutput.BOOTSTRAP_INITIALIZED']]
+      BOOTSTRAP_INITIALIZED: $[dependencies.ApplicationSecurityGroups.outputs['bootstratInitializedOutput.BOOTSTRAP_INITIALIZED']]
     steps:
     - task: AzurePowerShell@4
       displayName: "Virtual Network" 
