@@ -316,7 +316,7 @@
                 "Command": "../../../Modules/AzureFirewall/2.0/Scripts/azure.firewall.addrulecollection.ps1",
                 "Arguments" : {
                     "SubscriptionId": "${Subscriptions.SharedServices.SubscriptionId}",
-                    "AzureFirewallId": "reference(${Parameters.Organization}-${Parameters.SharedServices.DeploymentName}.AzureFirewall.azureFirewallResourceId)",
+                    "AzureFirewallId": "reference(${Parameters.Organization}-${Parameters.ModuleConfigurationParameters.SharedServices.DeploymentName}.AzureFirewall.azureFirewallResourceId)",
                     "RuleCollections": "${Parameters.ModuleConfigurationParameters.VirtualNetwork.AzureFirewallNetworkRuleCollection}",
                     "RuleType": "network"
                 }
