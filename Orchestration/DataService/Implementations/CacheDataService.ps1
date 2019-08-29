@@ -40,24 +40,16 @@ Class CacheDataService: ICacheDataService {
         $cache = `
             $this.cacheRepository.GetByKey($key);
 
-        if ($cache) {
+        if ($null -ne $cache) {
             
             # If we can convert to object, then return converted object 
-            # else return string
-            Try {
+            # else return the string as-is.
+            if(Test-JsonContent -Content $cache) {
                 $cache = `
                     ConvertFrom-Json `
                         -AsHashtable `
                         -InputObject $cache `
                         -Depth 50;
-            }
-            Catch {
-                # No action item if an error is thrown. This is because Test-Json
-                # does not correctly check all string for Json conversion. Some strings
-                # that are convertible to Json fails Test-Json check. So, we need to rely
-                # on ConvertFrom-Json directly instead of using Test-Json to check and 
-                # then calling ConvertFrom-Json. However doing so will result in exception
-                # being thrown by ConvertFrom-Json if an invalid string is passed.
             }
             return $cache;
         }

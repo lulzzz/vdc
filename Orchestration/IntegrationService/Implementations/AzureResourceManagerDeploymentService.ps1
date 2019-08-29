@@ -54,25 +54,21 @@ Class AzureResourceManagerDeploymentService: IDeploymentService {
 
     [void] ExecuteValidation([string] $tenantId, `
                             [string] $subscriptionId, `
-                            [string] $archetypeInstanceName, `
+                            [string] $validationResourceGroupName, `
                             [string] $deploymentTemplate, `
                             [string] $deploymentParameters, `
                             [string] $location) {
         
         try {
-            # Try to fetch the validation resource group
-            $validationResourceGroup = `
-                Get-ValidationResourceGroup `
-                    -ArchetypeInstanceName $archetypeInstanceName;
-
+           
             # Does the validation resource group exists?
-            if($null -ne $validationResourceGroup) {
+            if(![string]::IsNullOrEmpty($validationResourceGroupName)) {
                 # call arm validation
                 $validation = `
                     $this.InvokeARMOperation(
                         $tenantId,
                         $subscriptionId,
-                        $validationResourceGroup.ResourceGroupName,
+                        $validationResourceGroupName,
                         $deploymentTemplate,
                         $deploymentParameters,
                         $location,
@@ -81,7 +77,7 @@ Class AzureResourceManagerDeploymentService: IDeploymentService {
             else {
                 # Fail early if the validation resource group does not
                 # exists
-                Throw "Validation resource group - $($validationResourceGroup.ResourceGroupName) is not setup. Create the validation resource `
+                Throw "Validation resource group - $validationResourceGroupName is not setup. Create the validation resource `
                     group before invoking the ARM validation.";
             }
 
