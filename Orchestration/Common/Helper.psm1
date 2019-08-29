@@ -39,19 +39,25 @@ Function Test-JsonContent() {
     )
 
     try {
-
-        # Test-Json does not correctly check all string for Json conversion. Some strings
-        # that are convertible to Json fails Test-Json check. So, we need to rely
-        # on ConvertFrom-Json directly. However doing so will result in exception
-        # being thrown by ConvertFrom-Json if an invalid / non-json string is passed.
-        ConvertFrom-Json `
-            -AsHashtable `
-            -InputObject $cache `
-            -Depth 50 | Out-Null;
+        if(![string]::IsNullOrEmpty($Content)) {
+            # Test-Json does not correctly check all string for Json conversion. Some strings
+            # that are convertible to Json fails Test-Json check. So, we need to rely
+            # on ConvertFrom-Json directly. However doing so will result in exception
+            # being thrown by ConvertFrom-Json if an invalid / non-json string is passed.
+            ConvertFrom-Json `
+                -AsHashtable `
+                -InputObject $cache `
+                -Depth 50 | Out-Null;
+            
+            # If the conversion from string to json object is sucessful, then it will 
+            # not error out. So, we return true.
+            return $true;
+        }
+        else {
+            # Empty string values should evaluate to false.
+            return $false;
+        }
         
-        # If the conversion from string to json object is sucessful, then it will 
-        # not error out. So, we return true.
-        return $true;
     }
     catch {
         # If we reach this block, then it means the conversion has failed. So, we
