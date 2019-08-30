@@ -178,47 +178,45 @@ Function New-Deployment {
                 $ModuleConfigurationName = `
                     $moduleConfiguration.Name;
 
-            $subscriptionInformation = $null;
-            $subscriptionInformation = `
-                Get-SubscriptionInformation `
-                    -ArchetypeInstanceJson $archetypeInstanceJson `
-                    -SubscriptionName $archetypeInstanceJson.Parameters.Subscription `
-                    -ModuleConfiguration $moduleConfiguration `
-                    -Mode @{ "False" = "deploy"; "True" = "validate"; }[$Validate.ToString()];
+                $subscriptionInformation = $null;
+                $subscriptionInformation = `
+                    Get-SubscriptionInformation `
+                        -ArchetypeInstanceJson $archetypeInstanceJson `
+                        -SubscriptionName $archetypeInstanceJson.Parameters.Subscription `
+                        -ModuleConfiguration $moduleConfiguration `
+                        -Mode @{ "False" = "deploy"; "True" = "validate"; }[$Validate.ToString()];
 
                 if ($null -eq $subscriptionInformation) {
                     throw "Subscription: $($archetypeInstanceJson.Parameters.Subscription) not found";
                 }
 
-            # Let's get the current subscription context
-            $sub = Get-AzContext | Select-Object Subscription
+                # Let's get the current subscription context
+                $sub = Get-AzContext | Select-Object Subscription
 
-            # Do not change the subscription context if the operation is validate.
-            # This is because the script will expect the validation resource
-            # group to be present in all the subscriptions we are deploying.
-            [Guid]$subscriptionCheck = [Guid]::Empty;
-            [Guid]$tenantIdCheck = [Guid]::Empty;
-            if($null -ne $subscriptionInformation -and `
-                [Guid]::TryParse($subscriptionInformation.SubscriptionId, [ref]$subscriptionCheck) -and `
-                [Guid]::TryParse($subscriptionInformation.TenantId, [ref]$tenantIdCheck) -and `
-                $subscriptionCheck -ne [Guid]::Empty -and `
-                $tenantIdCheck -ne [Guid]::Empty -and
-                $subscriptionCheck -ne $sub.Subscription.Id) {
+                # Do not change the subscription context if the operation is validate.
+                # This is because the script will expect the validation resource
+                # group to be present in all the subscriptions we are deploying.
+                [Guid]$subscriptionCheck = [Guid]::Empty;
+                [Guid]$tenantIdCheck = [Guid]::Empty;
+                if($null -ne $subscriptionInformation -and `
+                    [Guid]::TryParse($subscriptionInformation.SubscriptionId, [ref]$subscriptionCheck) -and `
+                    [Guid]::TryParse($subscriptionInformation.TenantId, [ref]$tenantIdCheck) -and `
+                    $subscriptionCheck -ne [Guid]::Empty -and `
+                    $tenantIdCheck -ne [Guid]::Empty -and
+                    $subscriptionCheck -ne $sub.Subscription.Id) {
 
-                Write-Debug "Setting subscription context";
+                    Write-Debug "Setting subscription context";
 
-                Set-SubscriptionContext `
-                    -SubscriptionId $subscriptionInformation.SubscriptionId `
-                    -TenantId $subscriptionInformation.TenantId;
+                    Set-SubscriptionContext `
+                        -SubscriptionId $subscriptionInformation.SubscriptionId `
+                        -TenantId $subscriptionInformation.TenantId;
 
-            }
+                }
 
-
-
-            # Let's attempt to get the Audit Id from cache
-            $auditCacheKey = `
-                    "{0}_AuditId" -f `
-                    $ArchetypeInstanceName;
+                # Let's attempt to get the Audit Id from cache
+                $auditCacheKey = `
+                        "{0}_AuditId" -f `
+                        $ArchetypeInstanceName;
 
                 Write-Debug "Audit Id cache key is: $auditCacheKey";
 
@@ -395,33 +393,33 @@ Function New-Deployment {
                             -WorkingDirectory $defaultWorkingDirectory;
                     Write-Debug "RBAC Deployment template contents is: $moduleConfigurationRBACDeploymentTemplate";
 
-                # If we are not in a subscription deployment
-                # proceed to create a resource group
-                if ($null -ne $subscriptionInformation -and `
-                    -not $isSubscriptionDeployment) {
+                    # If we are not in a subscription deployment
+                    # proceed to create a resource group
+                    if ($null -ne $subscriptionInformation -and `
+                        -not $isSubscriptionDeployment) {
 
-                    if($Validate.IsPresent -eq $false) {
-                        # Retrieve the deployment resource group name
-                        $moduleConfigurationResourceGroupName = `
-                            Get-ResourceGroupName `
-                                    -ArchetypeInstanceName $ArchetypeInstanceName `
-                                    -ModuleConfiguration $moduleConfiguration;
-                        Write-Debug "Resource Group is: $moduleConfigurationResourceGroupName";
+                        if($Validate.IsPresent -eq $false) {
+                            # Retrieve the deployment resource group name
+                            $moduleConfigurationResourceGroupName = `
+                                Get-ResourceGroupName `
+                                        -ArchetypeInstanceName $ArchetypeInstanceName `
+                                        -ModuleConfiguration $moduleConfiguration;
+                            Write-Debug "Resource Group is: $moduleConfigurationResourceGroupName";
+                        }
+                        elseif($Validate.IsPresent -eq $true) {
+                            # Retrieve the validation resource group name
+                            $moduleConfigurationResourceGroupName = `
+                                Get-ValidationResourceGroupName `
+                                    -ArchetypeInstanceName $ArchetypeInstanceName;
+                        }
+
+                        New-ResourceGroup `
+                            -ResourceGroupName $moduleConfigurationResourceGroupName `
+                            -ResourceGroupLocation $subscriptionInformation.Location `
+                            -Validate:$($Validate.IsPresent);
+
+                        Write-Debug "Resource Group successfully created";
                     }
-                    elseif($Validate.IsPresent -eq $true) {
-                        # Retrieve the validation resource group name
-                        $moduleConfigurationResourceGroupName = `
-                            Get-ValidationResourceGroupName `
-                                -ArchetypeInstanceName $ArchetypeInstanceName;
-                    }
-
-                    New-ResourceGroup `
-                        -ResourceGroupName $moduleConfigurationResourceGroupName `
-                        -ResourceGroupLocation $subscriptionInformation.Location `
-                        -Validate:$($Validate.IsPresent);
-
-                    Write-Debug "Resource Group successfully created";
-                }
 
                     if ($null -ne $moduleConfigurationRBACDeploymentTemplate) {
                         Write-Debug "About to trigger a deployment";
@@ -490,28 +488,28 @@ Function New-Deployment {
                         -RBAC $rbacResourceState `
                         -Validate:$($Validate.IsPresent);
                 Write-Debug "Module state created, Id: $($moduleStateId)";
-            }
 
-            # Store deployment state information
-            $moduleStateId = `
-                New-DeploymentStateInformation `
-                    -AuditId $auditId `
-                    -DeploymentId $resourceState.DeploymentId `
-                    -DeploymentName $resourceState.DeploymentName `
-                    -ArchetypeInstanceName $ArchetypeInstanceName `
-                    -ModuleConfigurationName $moduleConfigurationName `
-                    -ResourceStates $resourceState.ResourceStates `
-                    -ResourceIds $resourceState.ResourceIds `
-                    -ResourceGroupName $resourceState.ResourceGroupName `
-                    -DeploymentTemplate $resourceState.DeploymentTemplate `
-                    -DeploymentParameters $resourceState.DeploymentParameters `
-                    -DeploymentOutputs $resourceState.DeploymentOutputs `
-                    -TenantId @("", $subscriptionInformation.TenantId)[$null -ne $subscriptionInformation] `
-                    -SubscriptionId @("", $subscriptionInformation.SubscriptionId)[$null -ne $subscriptionInformation] `
-                    -Policies $policyResourceState `
-                    -RBAC $rbacResourceState `
-                    -Validate:$($Validate.IsPresent);
-            Write-Debug "Module state created, Id: $($moduleStateId)";
+                # Store deployment state information
+                $moduleStateId = `
+                    New-DeploymentStateInformation `
+                        -AuditId $auditId `
+                        -DeploymentId $resourceState.DeploymentId `
+                        -DeploymentName $resourceState.DeploymentName `
+                        -ArchetypeInstanceName $ArchetypeInstanceName `
+                        -ModuleConfigurationName $moduleConfigurationName `
+                        -ResourceStates $resourceState.ResourceStates `
+                        -ResourceIds $resourceState.ResourceIds `
+                        -ResourceGroupName $resourceState.ResourceGroupName `
+                        -DeploymentTemplate $resourceState.DeploymentTemplate `
+                        -DeploymentParameters $resourceState.DeploymentParameters `
+                        -DeploymentOutputs $resourceState.DeploymentOutputs `
+                        -TenantId @("", $subscriptionInformation.TenantId)[$null -ne $subscriptionInformation] `
+                        -SubscriptionId @("", $subscriptionInformation.SubscriptionId)[$null -ne $subscriptionInformation] `
+                        -Policies $policyResourceState `
+                        -RBAC $rbacResourceState `
+                        -Validate:$($Validate.IsPresent);
+                Write-Debug "Module state created, Id: $($moduleStateId)";
+            }
 
             # Finally, destroy the validation resource group only if the following conditions are satisfied:
             # 1. Deployment is run in Validate mode
@@ -522,7 +520,7 @@ Function New-Deployment {
                 Write-Debug "Validation Resource Group is being destroyed ..."
 
                 # Destroy the validation Resource Group
-                Destroy-ValidationResourceGroup `
+                Remove-ValidationResourceGroup `
                         -ArchetypeInstanceName $ArchetypeInstanceName;
 
                 Write-Host "Validation Resource Group is destroyed."
@@ -2710,7 +2708,7 @@ Function Get-OutputFromStateStore() {
     }
 }
 
-Function Destroy-ValidationResourceGroup() {
+Function Remove-ValidationResourceGroup() {
     [CmdletBinding()]
     param(
         [Parameter(Mandatory=$true)]
