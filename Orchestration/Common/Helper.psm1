@@ -47,13 +47,14 @@ Function Test-JsonContent() {
 
     try {
         if(![string]::IsNullOrEmpty($Content)) {
+            Write-Host "Converting string to Json: $Content";
             # Test-Json does not correctly check all string for Json conversion. Some strings
             # that are convertible to Json fails Test-Json check. So, we need to rely
             # on ConvertFrom-Json directly. However doing so will result in exception
             # being thrown by ConvertFrom-Json if an invalid / non-json string is passed.
             ConvertFrom-Json `
                 -AsHashtable `
-                -InputObject $cache `
+                -InputObject $Content `
                 -Depth 50 | Out-Null;
 
             # If the conversion from string to json object is sucessful, then it will
@@ -61,12 +62,14 @@ Function Test-JsonContent() {
             return $true;
         }
         else {
+            Write-Host "Trying to convert Empty string to Json";
             # Empty string values should evaluate to false.
             return $false;
         }
 
     }
     catch {
+        Write-Host "Error trying to convert to Json";
         # If we reach this block, then it means the conversion has failed. So, we
         # return false.
         return $false;
