@@ -254,7 +254,7 @@ stages:
         ScriptPath: 'Orchestration/OrchestrationService/ValidationResourceGroupSetup.ps1'
         ScriptArguments: '-TearDownResourceGroup'
         azurePowerShellVersion: 'LatestVersion'
-- stage: Deploy
+- stage: DeployEnvironment
   jobs:
   - job: KeyVault
     pool:

@@ -5,8 +5,9 @@
     "Subscription": "ASE_SQLDB",
     "Location": "West US",
     "ModuleConfigurationParameters": {
-        "KeyVaultManagementUserId": "env(KEYVAULT_MANAGEMENT_USER_ID)",
         "OnPremisesInformation": {
+            "DeploymentName": "onprem",
+            "InstanceName": "${Parameters.Organization}-${Parameters.ModuleConfigurationParameters.OnPremisesInformation.DeploymentName}",
             "ActiveDirectory": {
                 "PrimaryDomainControllerIP": "192.168.1.4",
                 "DomainName": "fontoso.com",
@@ -17,6 +18,11 @@
                 "AddressPrefix": "192.168.1.0/28"
             }
         },
+        "SharedServices": {
+            "DeploymentName": "shrdsvcs",
+            "InstanceName": "${Parameters.Organization}-${Parameters.ModuleConfigurationParameters.SharedServices.DeploymentName}"
+        },
+        "KeyVaultManagementUserId": "env(KEYVAULT_MANAGEMENT_USER_ID)",
         "Comments": "Adding VirtualNetwork property, because KeyVault references a VirtualNetwork property references NetworkSecurityGroups and RouteTable, this is why these two properties are also included",
         "RouteTables": "file(../LandingZone/NetworkParameters/routeTables.json)",
         "NetworkSecurityGroups": "file(../LandingZone/NetworkParameters/networkSecurityGroups.json)",

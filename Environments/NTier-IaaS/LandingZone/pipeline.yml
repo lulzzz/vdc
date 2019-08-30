@@ -326,7 +326,7 @@ stages:
         ScriptPath: 'Orchestration/OrchestrationService/ValidationResourceGroupSetup.ps1'
         ScriptArguments: '-TearDownResourceGroup'
         azurePowerShellVersion: 'LatestVersion'
-- stage: DiagnosticMonitoring
+- stage: Governance
   jobs:
   - job: DiagnosticStorageAccount
     pool:

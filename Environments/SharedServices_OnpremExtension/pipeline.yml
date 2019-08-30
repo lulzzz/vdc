@@ -8,7 +8,7 @@ variables:
 trigger:
 - master
 stages:
-- stage: Validation
+- stage: Validate
   jobs:
   - job: SetupValidationResourceGroup
     pool: 
@@ -640,7 +640,7 @@ stages:
         ScriptPath: 'Orchestration/OrchestrationService/ValidationResourceGroupSetup.ps1'
         ScriptArguments: '-TearDownResourceGroup'
         azurePowerShellVersion: 'LatestVersion'
-- stage: DiagnosticMonitoring
+- stage: ApplyGovernance
   jobs:
   - job: DiagnosticStorageAccount
     pool:
@@ -753,7 +753,7 @@ stages:
         ORGANIZATION_NAME: $(ORGANIZATION_NAME)
         VDC_SUBSCRIPTIONS: $(VDC_SUBSCRIPTIONS)
         VDC_TOOLKIT_SUBSCRIPTION: $(VDC_TOOLKIT_SUBSCRIPTION)
-- stage: Infrastructure
+- stage: DeployEnvironment
   jobs:
   - job: AutomationAccounts
     timeoutInMinutes: 0

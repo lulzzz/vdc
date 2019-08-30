@@ -5,6 +5,14 @@
     "Subscription": "NTier_IaaS",
     "Location": "West US",
     "ModuleConfigurationParameters": {
+        "OnPremisesInformation": {
+            "DeploymentName": "onprem",
+            "InstanceName": "${Parameters.Organization}-${Parameters.ModuleConfigurationParameters.OnPremisesInformation.DeploymentName}"
+        },
+        "SharedServices": {
+            "DeploymentName": "shrdsvcs",
+            "InstanceName": "${Parameters.Organization}-${Parameters.ModuleConfigurationParameters.SharedServices.DeploymentName}"
+        },
         "KeyVaultManagementUserId": "env(KEYVAULT_MANAGEMENT_USER_ID)",
         "DevOpsServicePrincipalId": "env(DEVOPS_SERVICE_PRINCIPAL_USER_ID)",
         "Comments": "Adding VirtualNetwork property, because KeyVault references a VirtualNetwork property references NetworkSecurityGroups and RouteTable, this is why these two properties are also included",

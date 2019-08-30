@@ -3,11 +3,13 @@
     "DeploymentName": "shrdsvcs",
     "InstanceName": "${Parameters.Organization}-${Parameters.DeploymentName}",
     "Subscription": "SharedServices",
-    "Location": "West US",
+    "Location": "West US 2",
     "ModuleConfigurationParameters": {
         "KeyVaultManagementUserId": "env(KEYVAULT_MANAGEMENT_USER_ID)",
         "DevOpsServicePrincipalId": "env(DEVOPS_SERVICE_PRINCIPAL_USER_ID)",
         "OnPremisesInformation": {
+            "DeploymentName": "onprem",
+            "InstanceName": "${Parameters.Organization}-${Parameters.ModuleConfigurationParameters.OnPremisesInformation.DeploymentName}",
             "ActiveDirectory": {
                 "PrimaryDomainControllerIP": "192.168.1.4",
                 "DomainName": "contoso.com",
