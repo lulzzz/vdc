@@ -1,6 +1,6 @@
 {
     "Organization": "env(ORGANIZATION_NAME)",
-    "DeploymentName": "shrdsvcsne",
+    "DeploymentName": "shrdsvcs",
     "InstanceName": "${Parameters.Organization}-${Parameters.DeploymentName}",
     "Subscription": "SharedServices",
     "Location": "West US",
