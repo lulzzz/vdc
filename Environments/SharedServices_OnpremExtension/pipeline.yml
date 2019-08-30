@@ -64,7 +64,7 @@ stages:
         azureSubscription: 'Kunachim Azure SC'
         ScriptType: 'FilePath'
         ScriptPath: 'Orchestration/OrchestrationService/ModuleConfigurationDeployment.ps1'
-        ScriptArguments: '-DefinitionPath "Environments/SharedServices_OnpremExtension/definition.json" -ModuleConfigurationName "EnableServiceEndpointOnDiagnosticStorageAccount" -Validate'
+        ScriptArguments: '-DefinitionPath "Environments/SharedServices_OnpremExtension/definition.json" -ModuleConfigurationName "EnableServiceEndpointOnDiagnosticStorageAccount" -Validate -Debug'
         azurePowerShellVersion: 'LatestVersion'
       env:
         ADMIN_USER_PWD: $(ADMIN_USER_PWD)
@@ -83,7 +83,7 @@ stages:
         azureSubscription: 'Kunachim Azure SC'
         ScriptType: 'FilePath'
         ScriptPath: 'Orchestration/OrchestrationService/ModuleConfigurationDeployment.ps1'
-        ScriptArguments: '-DefinitionPath "Environments/SharedServices_OnpremExtension/definition.json" -ModuleConfigurationName "ArtifactsStorageAccount" -Validate'
+        ScriptArguments: '-DefinitionPath "Environments/SharedServices_OnpremExtension/definition.json" -ModuleConfigurationName "ArtifactsStorageAccount" -Validate -Debug'
         azurePowerShellVersion: 'LatestVersion'
       env:
         ADMIN_USER_PWD: $(ADMIN_USER_PWD)
@@ -129,7 +129,7 @@ stages:
         azureSubscription: 'Kunachim Azure SC'
         ScriptType: 'FilePath'
         ScriptPath: 'Orchestration/OrchestrationService/ModuleConfigurationDeployment.ps1'
-        ScriptArguments: '-DefinitionPath "Environments/SharedServices_OnpremExtension/definition.json" -ModuleConfigurationName "LogAnalytics" -Validate'
+        ScriptArguments: '-DefinitionPath "Environments/SharedServices_OnpremExtension/definition.json" -ModuleConfigurationName "LogAnalytics" -Validate -Debug'
         azurePowerShellVersion: 'LatestVersion'
       env:
         ADMIN_USER_PWD: $(ADMIN_USER_PWD)
@@ -148,7 +148,7 @@ stages:
         azureSubscription: 'Kunachim Azure SC'
         ScriptType: 'FilePath'
         ScriptPath: 'Orchestration/OrchestrationService/ModuleConfigurationDeployment.ps1'
-        ScriptArguments: '-DefinitionPath "Environments/SharedServices_OnpremExtension/definition.json" -ModuleConfigurationName "LinkLogAnalyticsWithAutomationAccount" -Validate'
+        ScriptArguments: '-DefinitionPath "Environments/SharedServices_OnpremExtension/definition.json" -ModuleConfigurationName "LinkLogAnalyticsWithAutomationAccount" -Validate -Debug'
         azurePowerShellVersion: 'LatestVersion'
       env:
         VDC_SUBSCRIPTIONS: $(VDC_SUBSCRIPTIONS)
@@ -180,7 +180,7 @@ stages:
         azureSubscription: 'Kunachim Azure SC'
         ScriptType: 'FilePath'
         ScriptPath: 'Orchestration/OrchestrationService/ModuleConfigurationDeployment.ps1'
-        ScriptArguments: '-DefinitionPath "Environments/SharedServices_OnpremExtension/definition.json" -ModuleConfigurationName "AutomationAccounts" -Validate'
+        ScriptArguments: '-DefinitionPath "Environments/SharedServices_OnpremExtension/definition.json" -ModuleConfigurationName "AutomationAccounts" -Validate -Debug'
         azurePowerShellVersion: 'LatestVersion'
       env:
         ADMIN_USER_PWD: $(ADMIN_USER_PWD)
@@ -216,7 +216,7 @@ stages:
         azureSubscription: 'Kunachim Azure SC'
         ScriptType: 'FilePath'
         ScriptPath: 'Orchestration/OrchestrationService/ModuleConfigurationDeployment.ps1'
-        ScriptArguments: '-DefinitionPath "Environments/SharedServices_OnpremExtension/definition.json" -ModuleConfigurationName "JumpboxASG" -Validate'
+        ScriptArguments: '-DefinitionPath "Environments/SharedServices_OnpremExtension/definition.json" -ModuleConfigurationName "JumpboxASG" -Validate -Debug'
         azurePowerShellVersion: 'LatestVersion'
       env:
         ADMIN_USER_PWD: $(ADMIN_USER_PWD)
@@ -235,7 +235,7 @@ stages:
         azureSubscription: 'Kunachim Azure SC'
         ScriptType: 'FilePath'
         ScriptPath: 'Orchestration/OrchestrationService/ModuleConfigurationDeployment.ps1'
-        ScriptArguments: '-DefinitionPath "Environments/SharedServices_OnpremExtension/definition.json" -ModuleConfigurationName "DomainControllerASG" -Validate'
+        ScriptArguments: '-DefinitionPath "Environments/SharedServices_OnpremExtension/definition.json" -ModuleConfigurationName "DomainControllerASG" -Validate -Debug'
         azurePowerShellVersion: 'LatestVersion'
       env:
         ADMIN_USER_PWD: $(ADMIN_USER_PWD)
@@ -271,7 +271,7 @@ stages:
         azureSubscription: 'Kunachim Azure SC'
         ScriptType: 'FilePath'
         ScriptPath: 'Orchestration/OrchestrationService/ModuleConfigurationDeployment.ps1'
-        ScriptArguments: '-DefinitionPath "Environments/SharedServices_OnpremExtension/definition.json" -ModuleConfigurationName "SharedServicesNSG" -Validate'
+        ScriptArguments: '-DefinitionPath "Environments/SharedServices_OnpremExtension/definition.json" -ModuleConfigurationName "SharedServicesNSG" -Validate -Debug'
         azurePowerShellVersion: 'LatestVersion'
       env:
         ADMIN_USER_PWD: $(ADMIN_USER_PWD)
@@ -290,7 +290,7 @@ stages:
         azureSubscription: 'Kunachim Azure SC'
         ScriptType: 'FilePath'
         ScriptPath: 'Orchestration/OrchestrationService/ModuleConfigurationDeployment.ps1'
-        ScriptArguments: '-DefinitionPath "Environments/SharedServices_OnpremExtension/definition.json" -ModuleConfigurationName "DMZNSG" -Validate'
+        ScriptArguments: '-DefinitionPath "Environments/SharedServices_OnpremExtension/definition.json" -ModuleConfigurationName "DMZNSG" -Validate -Debug'
         azurePowerShellVersion: 'LatestVersion'
       env:
         ADMIN_USER_PWD: $(ADMIN_USER_PWD)
@@ -326,7 +326,7 @@ stages:
         azureSubscription: 'Kunachim Azure SC'
         ScriptType: 'FilePath'
         ScriptPath: 'Orchestration/OrchestrationService/ModuleConfigurationDeployment.ps1'
-        ScriptArguments: '-DefinitionPath "Environments/SharedServices_OnpremExtension/definition.json" -ModuleConfigurationName "SharedServicesRouteTable" -Validate'
+        ScriptArguments: '-DefinitionPath "Environments/SharedServices_OnpremExtension/definition.json" -ModuleConfigurationName "SharedServicesRouteTable" -Validate -Debug'
         azurePowerShellVersion: 'LatestVersion'
       env:
         ADMIN_USER_PWD: $(ADMIN_USER_PWD)
@@ -362,7 +362,7 @@ stages:
         azureSubscription: 'Kunachim Azure SC'
         ScriptType: 'FilePath'
         ScriptPath: 'Orchestration/OrchestrationService/ModuleConfigurationDeployment.ps1'
-        ScriptArguments: '-DefinitionPath "Environments/SharedServices_OnpremExtension/definition.json" -ModuleConfigurationName "VirtualNetwork" -Validate'
+        ScriptArguments: '-DefinitionPath "Environments/SharedServices_OnpremExtension/definition.json" -ModuleConfigurationName "VirtualNetwork" -Validate -Debug'
         azurePowerShellVersion: 'LatestVersion'
       env:
         ADMIN_USER_PWD: $(ADMIN_USER_PWD)
@@ -398,7 +398,7 @@ stages:
         azureSubscription: 'Kunachim Azure SC'
         ScriptType: 'FilePath'
         ScriptPath: 'Orchestration/OrchestrationService/ModuleConfigurationDeployment.ps1'
-        ScriptArguments: '-DefinitionPath "Environments/SharedServices_OnpremExtension/definition.json" -ModuleConfigurationName "VirtualNetworkGateway" -Validate'
+        ScriptArguments: '-DefinitionPath "Environments/SharedServices_OnpremExtension/definition.json" -ModuleConfigurationName "VirtualNetworkGateway" -Validate -Debug'
         azurePowerShellVersion: 'LatestVersion'
       env:
         ADMIN_USER_PWD: $(ADMIN_USER_PWD)
@@ -434,7 +434,7 @@ stages:
         azureSubscription: 'Kunachim Azure SC'
         ScriptType: 'FilePath'
         ScriptPath: 'Orchestration/OrchestrationService/ModuleConfigurationDeployment.ps1'
-        ScriptArguments: '-DefinitionPath "Environments/SharedServices_OnpremExtension/definition.json" -ModuleConfigurationName "LocalVirtualNetworkGatewayConnection" -Validate'
+        ScriptArguments: '-DefinitionPath "Environments/SharedServices_OnpremExtension/definition.json" -ModuleConfigurationName "LocalVirtualNetworkGatewayConnection" -Validate -Debug'
         azurePowerShellVersion: 'LatestVersion'
       env:
         ADMIN_USER_PWD: $(ADMIN_USER_PWD)
@@ -470,7 +470,7 @@ stages:
         azureSubscription: 'Kunachim Azure SC'
         ScriptType: 'FilePath'
         ScriptPath: 'Orchestration/OrchestrationService/ModuleConfigurationDeployment.ps1'
-        ScriptArguments: '-DefinitionPath "Environments/SharedServices_OnpremExtension/definition.json" -ModuleConfigurationName "AzureFirewall" -Validate'
+        ScriptArguments: '-DefinitionPath "Environments/SharedServices_OnpremExtension/definition.json" -ModuleConfigurationName "AzureFirewall" -Validate -Debug'
         azurePowerShellVersion: 'LatestVersion'
       env:
         ADMIN_USER_PWD: $(ADMIN_USER_PWD)
@@ -506,7 +506,7 @@ stages:
         azureSubscription: 'Kunachim Azure SC'
         ScriptType: 'FilePath'
         ScriptPath: 'Orchestration/OrchestrationService/ModuleConfigurationDeployment.ps1'
-        ScriptArguments: '-DefinitionPath "Environments/SharedServices_OnpremExtension/definition.json" -ModuleConfigurationName "KeyVault" -Validate'
+        ScriptArguments: '-DefinitionPath "Environments/SharedServices_OnpremExtension/definition.json" -ModuleConfigurationName "KeyVault" -Validate -Debug'
         azurePowerShellVersion: 'LatestVersion'
       env:
         ADMIN_USER_PWD: $(ADMIN_USER_PWD)
@@ -542,7 +542,7 @@ stages:
         azureSubscription: 'Kunachim Azure SC'
         ScriptType: 'FilePath'
         ScriptPath: 'Orchestration/OrchestrationService/ModuleConfigurationDeployment.ps1'
-        ScriptArguments: '-DefinitionPath "Environments/SharedServices_OnpremExtension/definition.json" -ModuleConfigurationName "WindowsJumpbox" -Validate'
+        ScriptArguments: '-DefinitionPath "Environments/SharedServices_OnpremExtension/definition.json" -ModuleConfigurationName "WindowsJumpbox" -Validate -Debug'
         azurePowerShellVersion: 'LatestVersion'
       env:
         ADMIN_USER_PWD: $(ADMIN_USER_PWD)
@@ -561,7 +561,7 @@ stages:
         azureSubscription: 'Kunachim Azure SC'
         ScriptType: 'FilePath'
         ScriptPath: 'Orchestration/OrchestrationService/ModuleConfigurationDeployment.ps1'
-        ScriptArguments: '-DefinitionPath "Environments/SharedServices_OnpremExtension/definition.json" -ModuleConfigurationName "LinuxJumpbox" -Validate'
+        ScriptArguments: '-DefinitionPath "Environments/SharedServices_OnpremExtension/definition.json" -ModuleConfigurationName "LinuxJumpbox" -Validate -Debug'
         azurePowerShellVersion: 'LatestVersion'
       env:
         ADMIN_USER_PWD: $(ADMIN_USER_PWD)
@@ -580,7 +580,7 @@ stages:
         azureSubscription: 'Kunachim Azure SC'
         ScriptType: 'FilePath'
         ScriptPath: 'Orchestration/OrchestrationService/ModuleConfigurationDeployment.ps1'
-        ScriptArguments: '-DefinitionPath "Environments/SharedServices_OnpremExtension/definition.json" -ModuleConfigurationName "ActiveDirectoryDomainServicesVMs" -Validate'
+        ScriptArguments: '-DefinitionPath "Environments/SharedServices_OnpremExtension/definition.json" -ModuleConfigurationName "ActiveDirectoryDomainServicesVMs" -Validate -Debug'
         azurePowerShellVersion: 'LatestVersion'
       env:
         ADMIN_USER_PWD: $(ADMIN_USER_PWD)
@@ -616,7 +616,7 @@ stages:
         azureSubscription: 'Kunachim Azure SC'
         ScriptType: 'FilePath'
         ScriptPath: 'Orchestration/OrchestrationService/ModuleConfigurationDeployment.ps1'
-        ScriptArguments: '-DefinitionPath "Environments/SharedServices_OnpremExtension/definition.json" -ModuleConfigurationName "InstallActiveDirectoryDomainServices" -Validate'
+        ScriptArguments: '-DefinitionPath "Environments/SharedServices_OnpremExtension/definition.json" -ModuleConfigurationName "InstallActiveDirectoryDomainServices" -Validate -Debug'
         azurePowerShellVersion: 'LatestVersion'
       env:
         ADMIN_USER_PWD: $(ADMIN_USER_PWD)
