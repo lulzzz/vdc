@@ -101,7 +101,7 @@
         "AzureBastion": {
             "ResourceGroup": "${Parameters.ModuleConfigurationParameters.VirtualNetwork.ResourceGroup}",
             "Name": "${Parameters.InstanceName}-bastion",
-            "Location": "West US",
+            "Location": "${Parameters.Location}",
             "ListOfAllowedRegions": [
                 "West US",
                 "East US",
