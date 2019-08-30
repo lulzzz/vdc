@@ -20,9 +20,9 @@ stages:
       inputs:
         targetType: 'inline'
         script: '# Write your powershell commands here.
-          
+
           Invoke-Pester -Script "./Modules/ContainerRegistries/2.0/Tests";
-          
+
           # Use the environment variables input below to pass secret variables to this script.'
         pwsh: true
     - task: AzurePowerShell@4
@@ -36,8 +36,7 @@ stages:
       env:
         VDC_SUBSCRIPTIONS: $(VDC_SUBSCRIPTIONS)
         VDC_TOOLKIT_SUBSCRIPTION: $(VDC_TOOLKIT_SUBSCRIPTION)
-        DEPLOYMENT_APP_ID: $(DEPLOYMENT_APP_ID)
-        DEPLOYMENT_USER_ID: $(DEPLOYMENT_USER_ID)
+        KEYVAULT_MANAGEMENT_USER_ID: $(KEYVAULT_MANAGEMENT_USER_ID)
         ADMIN_USER_PWD: $(ADMIN_USER_PWD)
         ADMIN_USER_SSH: $(ADMIN_USER_SSH)
         DOMAIN_ADMIN_USER_PWD: $(DOMAIN_ADMIN_USER_PWD)
@@ -61,7 +60,7 @@ stages:
       inputs:
         targetType: 'inline'
         script: '
-        
+
           $bootstrapInitialized = $ENV:BOOTSTRAP_INITIALIZED;
           Write-Host "##vso[task.setvariable variable=BOOTSTRAP_INITIALIZED;isOutput=true]$bootstrapInitialized";'
         pwsh: true
@@ -69,7 +68,7 @@ stages:
     pool:
       name: 'vdc-self-hosted'
     dependsOn: [ ContainerRegistry ]
-    variables: 
+    variables:
       BOOTSTRAP_INITIALIZED: $[dependencies.ContainerRegistry.outputs['bootstratInitializedOutput.BOOTSTRAP_INITIALIZED']]
     steps:
     - task: PowerShell@2
@@ -77,9 +76,9 @@ stages:
       inputs:
         targetType: 'inline'
         script: '# Write your powershell commands here.
-          
+
           Invoke-Pester -Script "./Modules/AzureKubernetesServices/2.0/Tests";
-          
+
           # Use the environment variables input below to pass secret variables to this script.'
         pwsh: true
     - task: AzurePowerShell@4
@@ -93,8 +92,7 @@ stages:
       env:
         VDC_SUBSCRIPTIONS: $(VDC_SUBSCRIPTIONS)
         VDC_TOOLKIT_SUBSCRIPTION: $(VDC_TOOLKIT_SUBSCRIPTION)
-        DEPLOYMENT_APP_ID: $(DEPLOYMENT_APP_ID)
-        DEPLOYMENT_USER_ID: $(DEPLOYMENT_USER_ID)
+        KEYVAULT_MANAGEMENT_USER_ID: $(KEYVAULT_MANAGEMENT_USER_ID)
         ADMIN_USER_PWD: $(ADMIN_USER_PWD)
         ADMIN_USER_SSH: $(ADMIN_USER_SSH)
         DOMAIN_ADMIN_USER_PWD: $(DOMAIN_ADMIN_USER_PWD)
@@ -130,8 +128,7 @@ stages:
       env:
         VDC_SUBSCRIPTIONS: $(VDC_SUBSCRIPTIONS)
         VDC_TOOLKIT_SUBSCRIPTION: $(VDC_TOOLKIT_SUBSCRIPTION)
-        DEPLOYMENT_APP_ID: $(DEPLOYMENT_APP_ID)
-        DEPLOYMENT_USER_ID: $(DEPLOYMENT_USER_ID)
+        KEYVAULT_MANAGEMENT_USER_ID: $(KEYVAULT_MANAGEMENT_USER_ID)
         ADMIN_USER_PWD: $(ADMIN_USER_PWD)
         ADMIN_USER_SSH: $(ADMIN_USER_SSH)
         DOMAIN_ADMIN_USER_PWD: $(DOMAIN_ADMIN_USER_PWD)
@@ -155,7 +152,7 @@ stages:
       inputs:
         targetType: 'inline'
         script: '
-        
+
           $bootstrapInitialized = $ENV:BOOTSTRAP_INITIALIZED;
           Write-Host "##vso[task.setvariable variable=BOOTSTRAP_INITIALIZED;isOutput=true]$bootstrapInitialized";'
         pwsh: true
@@ -164,7 +161,7 @@ stages:
     pool:
       name: 'vdc-self-hosted'
     dependsOn: ContainerRegistry
-    variables: 
+    variables:
       BOOTSTRAP_INITIALIZED: $[dependencies.ContainerRegistry.outputs['bootstratInitializedOutput.BOOTSTRAP_INITIALIZED']]
     steps:
     - task: AzurePowerShell@4
@@ -178,8 +175,7 @@ stages:
       env:
         VDC_SUBSCRIPTIONS: $(VDC_SUBSCRIPTIONS)
         VDC_TOOLKIT_SUBSCRIPTION: $(VDC_TOOLKIT_SUBSCRIPTION)
-        DEPLOYMENT_APP_ID: $(DEPLOYMENT_APP_ID)
-        DEPLOYMENT_USER_ID: $(DEPLOYMENT_USER_ID)
+        KEYVAULT_MANAGEMENT_USER_ID: $(KEYVAULT_MANAGEMENT_USER_ID)
         ADMIN_USER_PWD: $(ADMIN_USER_PWD)
         ADMIN_USER_SSH: $(ADMIN_USER_SSH)
         DOMAIN_ADMIN_USER_PWD: $(DOMAIN_ADMIN_USER_PWD)
@@ -202,7 +198,7 @@ stages:
     pool:
       name: 'vdc-self-hosted'
     dependsOn: ContainerRegistry
-    variables: 
+    variables:
       BOOTSTRAP_INITIALIZED: $[dependencies.ContainerRegistry.outputs['bootstratInitializedOutput.BOOTSTRAP_INITIALIZED']]
     steps:
     - task: AzurePowerShell@4
@@ -216,8 +212,7 @@ stages:
       env:
         VDC_SUBSCRIPTIONS: $(VDC_SUBSCRIPTIONS)
         VDC_TOOLKIT_SUBSCRIPTION: $(VDC_TOOLKIT_SUBSCRIPTION)
-        DEPLOYMENT_APP_ID: $(DEPLOYMENT_APP_ID)
-        DEPLOYMENT_USER_ID: $(DEPLOYMENT_USER_ID)
+        KEYVAULT_MANAGEMENT_USER_ID: $(KEYVAULT_MANAGEMENT_USER_ID)
         ADMIN_USER_PWD: $(ADMIN_USER_PWD)
         ADMIN_USER_SSH: $(ADMIN_USER_SSH)
         DOMAIN_ADMIN_USER_PWD: $(DOMAIN_ADMIN_USER_PWD)
@@ -246,8 +241,7 @@ stages:
       env:
         VDC_SUBSCRIPTIONS: $(VDC_SUBSCRIPTIONS)
         VDC_TOOLKIT_SUBSCRIPTION: $(VDC_TOOLKIT_SUBSCRIPTION)
-        DEPLOYMENT_APP_ID: $(DEPLOYMENT_APP_ID)
-        DEPLOYMENT_USER_ID: $(DEPLOYMENT_USER_ID)
+        KEYVAULT_MANAGEMENT_USER_ID: $(KEYVAULT_MANAGEMENT_USER_ID)
         ADMIN_USER_PWD: $(ADMIN_USER_PWD)
         ADMIN_USER_SSH: $(ADMIN_USER_SSH)
         DOMAIN_ADMIN_USER_PWD: $(DOMAIN_ADMIN_USER_PWD)
@@ -270,7 +264,7 @@ stages:
     pool:
       name: 'vdc-self-hosted'
     dependsOn: [ AzureKubernetesServices, ScriptsPreReqs, ContainerRegistry ]
-    variables: 
+    variables:
       BOOTSTRAP_INITIALIZED: $[dependencies.ContainerRegistry.outputs['bootstratInitializedOutput.BOOTSTRAP_INITIALIZED']]
     steps:
     - task: AzurePowerShell@4
@@ -284,8 +278,7 @@ stages:
       env:
         VDC_SUBSCRIPTIONS: $(VDC_SUBSCRIPTIONS)
         VDC_TOOLKIT_SUBSCRIPTION: $(VDC_TOOLKIT_SUBSCRIPTION)
-        DEPLOYMENT_APP_ID: $(DEPLOYMENT_APP_ID)
-        DEPLOYMENT_USER_ID: $(DEPLOYMENT_USER_ID)
+        KEYVAULT_MANAGEMENT_USER_ID: $(KEYVAULT_MANAGEMENT_USER_ID)
         ADMIN_USER_PWD: $(ADMIN_USER_PWD)
         ADMIN_USER_SSH: $(ADMIN_USER_SSH)
         DOMAIN_ADMIN_USER_PWD: $(DOMAIN_ADMIN_USER_PWD)

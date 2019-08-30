@@ -172,6 +172,7 @@
         {
             "Name": "CreateRootCertificate",
             "Comments": "Create Root Certificate",
+            "Enabled": false,
             "DependsOn": [
                 "KeyVault"
             ],
@@ -208,13 +209,6 @@
                     },
                     "vNetId": {
                         "value": "reference(VirtualNetwork.vNetResourceId)"
-                    },
-                    "vpnClientAddressPoolPrefix": {
-                        "value": "10.10.8.0/24"
-                    },
-                    "clientRootCertData": "${Parameters.ModuleConfigurationParameters.Network.VirtualGateway.VpnClientConfiguration.VpnClientRootCertificateData}",
-                    "clientRevokedCertThumbprint": {
-                        "value": "${Parameters.ModuleConfigurationParameters.Network.VirtualGateway.VpnClientConfiguration.VpnClientRevokedCertificateThumbprint}"
                     }
                 }
             }
@@ -225,7 +219,7 @@
             "Updates": "KeyVault",
             "ResourceGroupName": "${Parameters.ModuleConfigurationParameters.KeyVault.ResourceGroup}",
             "DependsOn": [
-                "VirtualNetworkGateway"
+                "KeyVault"
             ],
             "Deployment": {
                 "OverrideParameters": {
@@ -353,6 +347,9 @@
                     },
                     "adminPassword": {
                         "reference": "${Parameters.ModuleConfigurationParameters.ActiveDirectory.DomainAdminPassword}"
+                    },
+                    "enablePublicIP": {
+                        "value": "${Parameters.ModuleConfigurationParameters.ActiveDirectory.EnablePublicIP}"
                     },
                     "virtualMachineDataDisks": {
                         "value": [
