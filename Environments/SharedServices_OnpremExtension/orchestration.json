@@ -530,7 +530,7 @@
             "ModuleDefinitionName": "StorageAccounts",
             "ResourceGroupName": "${Parameters.ModuleConfigurationParameters.ArtifactsStorageAccount.ResourceGroup}",
             "Comments": "Storage Account that is used for ...",
-            "Enabled": true,
+            "Enabled": false,
             "DependsOn": [],
             "Policies": {
                 "Comments": "Optional - If no object is specified, no Policies deployment will occur",
