@@ -3,7 +3,7 @@
     "DeploymentName": "shrdsvcs",
     "InstanceName": "${Parameters.Organization}-${Parameters.DeploymentName}",
     "Subscription": "SharedServices",
-    "Location": "West US",
+    "Location": "WestUS2",
     "ModuleConfigurationParameters": {
         "KeyVaultManagementUserId": "env(KEYVAULT_MANAGEMENT_USER_ID)",
         "DevOpsServicePrincipalId": "env(DEVOPS_SERVICE_PRINCIPAL_USER_ID)",
