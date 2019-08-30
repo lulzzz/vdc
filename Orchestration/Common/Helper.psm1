@@ -47,7 +47,6 @@ Function Test-JsonContent() {
 
     try {
         if(![string]::IsNullOrEmpty($Content)) {
-            Write-Host "Converting string to Json: $Content";
             # Test-Json does not correctly check all string for Json conversion. Some strings
             # that are convertible to Json fails Test-Json check. So, we need to rely
             # on ConvertFrom-Json directly. However doing so will result in exception
@@ -62,14 +61,12 @@ Function Test-JsonContent() {
             return $true;
         }
         else {
-            Write-Host "Trying to convert Empty string to Json";
             # Empty string values should evaluate to false.
             return $false;
         }
 
     }
     catch {
-        Write-Host "Error trying to convert to Json";
         # If we reach this block, then it means the conversion has failed. So, we
         # return false.
         return $false;
