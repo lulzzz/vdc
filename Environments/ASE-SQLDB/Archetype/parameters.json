@@ -7,20 +7,14 @@
     "ModuleConfigurationParameters": {
         "OnPremisesInformation": {
             "DeploymentName": "onprem",
-            "InstanceName": "${Parameters.Organization}-${Parameters.ModuleConfigurationParameters.OnPremisesInformation.DeploymentName}",
-            "ActiveDirectory": {
-                "PrimaryDomainControllerIP": "192.168.1.4",
-                "DomainName": "fontoso.com",
-                "ADSitename": "Cloud-Site",
-                "DomainAdminUserName": "fontoso"
-            },
-            "Network": {
-                "AddressPrefix": "192.168.1.0/28"
-            }
+            "InstanceName": "${Parameters.Organization}-${Parameters.ModuleConfigurationParameters.OnPremisesInformation.DeploymentName}"
         },
         "SharedServices": {
             "DeploymentName": "shrdsvcs",
-            "InstanceName": "${Parameters.Organization}-${Parameters.ModuleConfigurationParameters.SharedServices.DeploymentName}"
+            "InstanceName": "${Parameters.Organization}-${Parameters.ModuleConfigurationParameters.SharedServices.DeploymentName}",
+            "DomainName": "reference(${Parameters.Organization}-shrdsvcs.InstallActiveDirectoryDomainServices.domainName)",
+            "DomainAdminUsername": "env(DOMAIN_ADMIN_USERNAME)",
+            "DomainAdminPassword": "env(DOMAIN_ADMIN_USER_PWD)"
         },
         "KeyVaultManagementUserId": "env(KEYVAULT_MANAGEMENT_USER_ID)",
         "Comments": "Adding VirtualNetwork property, because KeyVault references a VirtualNetwork property references NetworkSecurityGroups and RouteTable, this is why these two properties are also included",

@@ -135,13 +135,13 @@
                         "reference": "${Parameters.ModuleConfigurationParameters.WebApp.AdminPassword}"
                     },
                     "domainAdminUsername": {
-                        "value": "${Parameters.ModuleConfigurationParameters.WebApp.DomainAdminUsername}"
+                        "value": "${Parameters.ModuleConfigurationParameters.SharedServices.DomainAdminUsername}"
                     },
                     "domainAdminPassword": {
-                        "value": "${Parameters.ModuleConfigurationParameters.WebApp.DomainAdminPassword}"
+                        "value": "${Parameters.ModuleConfigurationParameters.SharedServices.DomainAdminPassword}"
                     },
                     "domainName": {
-                        "value": "${Parameters.ModuleConfigurationParameters.WebApp.DomainName}"
+                        "value": "${Parameters.ModuleConfigurationParameters.SharedServices.DomainName}"
                     }
                 }
             }
@@ -257,13 +257,13 @@
                         "reference": "${Parameters.ModuleConfigurationParameters.BusinessApp.AdminPassword}"
                     },
                     "domainAdminUsername": {
-                        "value": "${Parameters.ModuleConfigurationParameters.BusinessApp.DomainAdminUsername}"
+                        "value": "${Parameters.ModuleConfigurationParameters.SharedServices.DomainAdminUsername}"
                     },
                     "domainAdminPassword": {
-                        "value": "${Parameters.ModuleConfigurationParameters.BusinessApp.DomainAdminPassword}"
+                        "value": "${Parameters.ModuleConfigurationParameters.SharedServices.DomainAdminPassword}"
                     },
                     "domainName": {
-                        "value": "${Parameters.ModuleConfigurationParameters.BusinessApp.DomainName}"
+                        "value": "${Parameters.ModuleConfigurationParameters.SharedServices.DomainName}"
                     }
                 }
             }
@@ -394,13 +394,13 @@
                         "reference": "${Parameters.ModuleConfigurationParameters.SQLServerAlwaysOn.AdminPassword}"
                     },
                     "domainAdminUsername": {
-                        "value": "${Parameters.ModuleConfigurationParameters.SQLServerAlwaysOn.DomainAdminUsername}"
+                        "value": "${Parameters.ModuleConfigurationParameters.SharedServices.DomainAdminUsername}"
                     },
                     "domainAdminPassword": {
-                        "value": "${Parameters.ModuleConfigurationParameters.SQLServerAlwaysOn.DomainAdminPassword}"
+                        "value": "${Parameters.ModuleConfigurationParameters.SharedServices.DomainAdminPassword}"
                     },
                     "domainName": {
-                        "value": "${Parameters.ModuleConfigurationParameters.SQLServerAlwaysOn.DomainName}"
+                        "value": "${Parameters.ModuleConfigurationParameters.SharedServices.DomainName}"
                     }
                 }
             }
@@ -466,13 +466,13 @@
                         "reference": "${Parameters.ModuleConfigurationParameters.SQLServerAlwaysOn.AdminPassword}"
                     },
                     "domainAdminUsername": {
-                        "value": "${Parameters.ModuleConfigurationParameters.SQLServerAlwaysOn.DomainAdminUsername}"
+                        "value": "${Parameters.ModuleConfigurationParameters.SharedServices.DomainAdminUsername}"
                     },
                     "domainAdminPassword": {
-                        "value": "${Parameters.ModuleConfigurationParameters.SQLServerAlwaysOn.DomainAdminPassword}"
+                        "value": "${Parameters.ModuleConfigurationParameters.SharedServices.DomainAdminPassword}"
                     },
                     "domainName": {
-                        "value": "${Parameters.ModuleConfigurationParameters.SQLServerAlwaysOn.DomainName}"
+                        "value": "${Parameters.ModuleConfigurationParameters.SharedServices.DomainName}"
                     },
                     "clusterName": {
                         "value": "${Parameters.ModuleConfigurationParameters.SQLServerAlwaysOn.ClusterName}"
