@@ -65,6 +65,12 @@
                     },
                     "subnetName": {
                         "value": "${Parameters.ModuleConfigurationParameters.WebAppLoadBalancer.SubnetName}"
+                    },
+                    "workspaceId": {
+                        "value": "reference(LogAnalytics.logAnalyticsWorkspaceResourceId)"
+                    },
+                    "diagnosticStorageAccountId": {
+                        "value": "reference(DiagnosticStorageAccount.storageAccountResourceId)"
                     }
                 }
             }
@@ -187,6 +193,12 @@
                     },
                     "subnetName": {
                         "value": "${Parameters.ModuleConfigurationParameters.BusinessAppLoadBalancer.SubnetName}"
+                    },
+                    "workspaceId": {
+                        "value": "reference(LogAnalytics.logAnalyticsWorkspaceResourceId)"
+                    },
+                    "diagnosticStorageAccountId": {
+                        "value": "reference(DiagnosticStorageAccount.storageAccountResourceId)"
                     }
                 }
             }
@@ -312,6 +324,12 @@
                     },
                     "subnetName": {
                         "value": "${Parameters.ModuleConfigurationParameters.SQLServerAlwaysOnLoadBalancer.SubnetName}"
+                    },
+                    "workspaceId": {
+                        "value": "reference(LogAnalytics.logAnalyticsWorkspaceResourceId)"
+                    },
+                    "diagnosticStorageAccountId": {
+                        "value": "reference(DiagnosticStorageAccount.storageAccountResourceId)"
                     }
                 }
             }

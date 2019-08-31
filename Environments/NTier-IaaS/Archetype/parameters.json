@@ -18,6 +18,7 @@
         },
         "KeyVaultManagementUserId": "env(KEYVAULT_MANAGEMENT_USER_ID)",
         "DevOpsServicePrincipalId": "env(DEVOPS_SERVICE_PRINCIPAL_USER_ID)",
+        "ArtifactsStorageAccount": "file(../../_Common/artifactsStorageAccount.json)",
         "KeyVault": {
             "Name": "${Parameters.InstanceName}-kv",
             "ResourceGroup": "${Parameters.InstanceName}-keyvault-rg",
@@ -246,7 +247,7 @@
             "SubnetName": "reference(VirtualNetwork.subnetNames)"
         },
         "SQLServerAlwaysOnCloudWitness": {
-            "Name": "${Parameters.InstanceName}ntierstrg",
+            "Name": "${Parameters.InstanceName}cwstrg",
             "ResourceGroup": "${Parameters.ModuleConfigurationParameters.SQLServerAlwaysOn.ResourceGroup}",
             "Sku": "Standard_GRS",
             "NetworkAcls": {

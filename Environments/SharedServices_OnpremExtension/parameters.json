@@ -395,6 +395,31 @@
                         }
                     },
                     {
+                        "name": "allow-azure-bastion-rdp-into-jb",
+                        "properties": {
+                            "access": "Allow",
+                            "destinationAddressPrefixes": [],
+                            "destinationAddressPrefix": "",
+                            "destinationPortRanges": [
+                                "3389",
+                                "22"
+                            ],
+                            "destinationPortRange": "",
+                            "direction": "Inbound",
+                            "priority": 180,
+                            "protocol": "TCP",
+                            "sourceAddressPrefix": "${Parameters.ModuleConfigurationParameters.VirtualNetwork.Subnets[5].addressPrefix}",
+                            "sourcePortRange": "*",
+                            "sourcePortRanges": [],
+                            "destinationApplicationSecurityGroups": [
+                                {
+                                    "name": "${Parameters.ModuleConfigurationParameters.ApplicationSecurityGroups.Jumpbox.Name}"
+                                }
+                            ],
+                            "sourceApplicationSecurityGroups": []
+                        }
+                    },
+                    {
                         "name": "deny-vnet",
                         "properties": {
                             "access": "Deny",

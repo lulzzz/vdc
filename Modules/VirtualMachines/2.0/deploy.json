@@ -418,6 +418,7 @@
             ],
             "name": "[concat(parameters('virtualMachineName'), copyIndex(parameters('virtualMachineOffset')), '-nic')]",
             "properties": {
+                "enableIPForwarding": true,
                 "ipConfigurations": [
                     {
                         "name": "ipconfig1",
