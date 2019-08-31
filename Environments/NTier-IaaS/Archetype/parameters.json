@@ -18,7 +18,6 @@
         },
         "KeyVaultManagementUserId": "env(KEYVAULT_MANAGEMENT_USER_ID)",
         "DevOpsServicePrincipalId": "env(DEVOPS_SERVICE_PRINCIPAL_USER_ID)",
-        "Comments": "Adding VirtualNetwork property, because KeyVault references a VirtualNetwork property references NetworkSecurityGroups and RouteTable, this is why these two properties are also included",
         "KeyVault": {
             "Name": "${Parameters.InstanceName}-kv",
             "ResourceGroup": "${Parameters.InstanceName}-keyvault-rg",
