@@ -107,10 +107,10 @@
                     "logAnalyticsWorkspacePrimarySharedKey": {
                         "value": "reference(LogAnalytics.logAnalyticsPrimarySharedKey)"
                     },
-                    "diagnosticsStorageAccountName": {
+                    "diagnosticStorageAccountName": {
                         "value": "reference(DiagnosticStorageAccount.storageAccountName)"
                     },
-                    "diagnosticsStorageAccountSasToken": {
+                    "diagnosticStorageAccountSasToken": {
                         "value": "reference(DiagnosticStorageAccount.storageAccountSasToken)"
                     },
                     "artifactsStorageAccountName": {
@@ -229,10 +229,10 @@
                     "logAnalyticsWorkspacePrimarySharedKey": {
                         "value": "reference(LogAnalytics.logAnalyticsPrimarySharedKey)"
                     },
-                    "diagnosticsStorageAccountName": {
+                    "diagnosticStorageAccountName": {
                         "value": "reference(DiagnosticStorageAccount.storageAccountName)"
                     },
-                    "diagnosticsStorageAccountSasToken": {
+                    "diagnosticStorageAccountSasToken": {
                         "value": "reference(DiagnosticStorageAccount.storageAccountSasToken)"
                     },
                     "artifactsStorageAccountName": {
@@ -357,13 +357,13 @@
                     "logAnalyticsWorkspacePrimarySharedKey": {
                         "value": "reference(LogAnalytics.logAnalyticsPrimarySharedKey)"
                     },
-                    "diagnosticsStorageAccountId": {
+                    "diagnosticStorageAccountId": {
                         "value": "reference(DiagnosticStorageAccount.storageAccountResourceId)"
                     },
-                    "diagnosticsStorageAccountName": {
+                    "diagnosticStorageAccountName": {
                         "value": "reference(DiagnosticStorageAccount.storageAccountName)"
                     },
-                    "diagnosticsStorageAccountSasToken": {
+                    "diagnosticStorageAccountSasToken": {
                         "value": "reference(DiagnosticStorageAccount.storageAccountSasToken)"
                     },
                     "artifactsStorageAccountName": {

@@ -1011,10 +1011,10 @@
             ]
         },
         {
-            "apiVersion": "2015-03-20",
             "name": "[concat(parameters('logAnalyticsWorkspaceName'), '/', parameters('diagnosticStorageAccountName'))]",
             "condition": "[and(not(empty(parameters('diagnosticStorageAccountName'))), not(empty(parameters('diagnosticStorageAccountId'))), not(empty(parameters('diagnosticStorageAccountAccessKey'))))]",
-            "type": "Microsoft.OperationsManagement/storageinsightconfigs",
+            "type": "Microsoft.OperationalInsights/workspaces/storageinsightconfigs",
+            "apiVersion": "2015-03-20",
             "dependsOn": [
                 "[concat('Microsoft.OperationalInsights/workspaces/', parameters('logAnalyticsWorkspaceName'))]"
             ],

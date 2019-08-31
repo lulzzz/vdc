@@ -280,6 +280,12 @@
                     },
                     "enableBgp": {
                         "value": "${Parameters.ModuleConfigurationParameters.VirtualNetworkGateway.EnableBgp}"
+                    },
+                    "workspaceId": {
+                        "value": "reference(LogAnalytics.logAnalyticsWorkspaceResourceId)"
+                    },
+                    "diagnosticStorageAccountId": {
+                        "value": "reference(DiagnosticStorageAccount.storageAccountResourceId)"
                     }
                 }
             }
@@ -594,6 +600,12 @@
                     },
                     "vNetId": {
                         "value": "reference(VirtualNetwork.vNetResourceId)"
+                    },
+                    "diagnosticStorageAccountId": {
+                        "value": "reference(DiagnosticStorageAccount.storageAccountResourceId)"
+                    },
+                    "workspaceId": {
+                        "value": "reference(LogAnalytics.logAnalyticsWorkspaceResourceId)"
                     }
                 }
             }
@@ -638,13 +650,13 @@
                     "logAnalyticsWorkspacePrimarySharedKey": {
                         "value": "reference(LogAnalytics.logAnalyticsPrimarySharedKey)"
                     },
-                    "diagnosticsStorageAccountId": {
+                    "diagnosticStorageAccountId": {
                         "value": "reference(DiagnosticStorageAccount.storageAccountResourceId)"
                     },
-                    "diagnosticsStorageAccountName": {
+                    "diagnosticStorageAccountName": {
                         "value": "reference(DiagnosticStorageAccount.storageAccountName)"
                     },
-                    "diagnosticsStorageAccountSasToken": {
+                    "diagnosticStorageAccountSasToken": {
                         "value": "reference(DiagnosticStorageAccount.storageAccountSasToken)"
                     },
                     "artifactsStorageAccountKey": {
@@ -749,13 +761,13 @@
                     "logAnalyticsWorkspacePrimarySharedKey": {
                         "value": "reference(LogAnalytics.logAnalyticsPrimarySharedKey)"
                     },
-                    "diagnosticsStorageAccountId": {
+                    "diagnosticStorageAccountId": {
                         "value": "reference(DiagnosticStorageAccount.storageAccountResourceId)"
                     },
-                    "diagnosticsStorageAccountName": {
+                    "diagnosticStorageAccountName": {
                         "value": "reference(DiagnosticStorageAccount.storageAccountName)"
                     },
-                    "diagnosticsStorageAccountSasToken": {
+                    "diagnosticStorageAccountSasToken": {
                         "value": "reference(DiagnosticStorageAccount.storageAccountSasToken)"
                     },
                     "artifactsStorageAccountKey": {
@@ -864,13 +876,13 @@
                     "logAnalyticsWorkspacePrimarySharedKey": {
                         "value": "reference(LogAnalytics.logAnalyticsPrimarySharedKey)"
                     },
-                    "diagnosticsStorageAccountId": {
+                    "diagnosticStorageAccountId": {
                         "value": "reference(DiagnosticStorageAccount.storageAccountResourceId)"
                     },
-                    "diagnosticsStorageAccountName": {
+                    "diagnosticStorageAccountName": {
                         "value": "reference(DiagnosticStorageAccount.storageAccountName)"
                     },
-                    "diagnosticsStorageAccountSasToken": {
+                    "diagnosticStorageAccountSasToken": {
                         "value": "reference(DiagnosticStorageAccount.storageAccountSasToken)"
                     },
                     "artifactsStorageAccountKey": {
