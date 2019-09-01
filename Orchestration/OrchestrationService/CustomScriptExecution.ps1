@@ -314,6 +314,11 @@ Class CustomScriptExecution {
                             # [ { name: "abc", protocol: 443, PSComputerName: ***, RunspaceID: ***, PSShowComputerName: *** },
                             # { name: "xyz", protocol: 80, PSComputerName: ***, RunspaceID: ***, PSShowComputerName: *** } ]
                             $result = (ConvertTo-Json $_.Output -Depth 50 | ConvertFrom-Json) | Select-Object -Property * -ExcludeProperty PSComputerName,RunspaceID,PSShowComputerName;
+
+                            # If the result has only one properties with the name "value", then return $result.value
+                            if(($result | Get-Member | Where-Object { $_.MemberType -ne "Method" -and $_.Name.ToLower() -eq "value"}).Count -eq 1) {
+                                $result = $result.value;
+                            }
                         }
                         else {
                             $result = $null;
