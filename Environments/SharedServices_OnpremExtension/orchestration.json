@@ -904,7 +904,7 @@
                         "value": "${Parameters.ModuleConfigurationParameters.ActiveDirectoryDomainServices.AddsIPAddressStart}"
                     },
                     "applicationSecurityGroupId": {
-                        "value": "reference(JumpboxASG.applicationSecurityGroupResourceId)"
+                        "value": "reference(DomainControllerASG.applicationSecurityGroupResourceId)"
                     },
                     "adminUsername": {
                         "value": "${Parameters.ModuleConfigurationParameters.ActiveDirectoryDomainServices.AdminUsername}"
