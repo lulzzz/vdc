@@ -865,12 +865,50 @@ stages:
         VDC_SUBSCRIPTIONS: $(VDC_SUBSCRIPTIONS)
         VDC_TOOLKIT_SUBSCRIPTION: $(VDC_TOOLKIT_SUBSCRIPTION)
     - task: AzurePowerShell@4
+      displayName: "Enable NSG Flow Logs on Shared Services Network Security Group"
+      inputs:
+        azureSubscription: 'vdc2-hub'
+        ScriptType: 'FilePath'
+        ScriptPath: 'Orchestration/OrchestrationService/ModuleConfigurationDeployment.ps1'
+        ScriptArguments: '-DefinitionPath "Environments/SharedServices_OnpremExtension_OnpremExtension/definition.json" -ModuleConfigurationName "EnableSharedServicesNSGFlowLogs"'
+        azurePowerShellVersion: 'LatestVersion'
+      env:
+        ADMIN_USER_PWD: $(ADMIN_USER_PWD)
+        ADMIN_USER_SSH: $(ADMIN_USER_SSH)
+        DEVOPS_SERVICE_PRINCIPAL_USER_ID: $(DEVOPS_SERVICE_PRINCIPAL_USER_ID)
+        KEYVAULT_MANAGEMENT_USER_ID: $(KEYVAULT_MANAGEMENT_USER_ID)
+        DOMAIN_ADMIN_USER_PWD: $(DOMAIN_ADMIN_USER_PWD)
+        DOMAIN_ADMIN_USERNAME: $(DOMAIN_ADMIN_USERNAME)
+        TENANT_ID: $(TENANT_ID)
+        ORGANIZATION_NAME: $(ORGANIZATION_NAME)
+        VDC_SUBSCRIPTIONS: $(VDC_SUBSCRIPTIONS)
+        VDC_TOOLKIT_SUBSCRIPTION: $(VDC_TOOLKIT_SUBSCRIPTION)
+    - task: AzurePowerShell@4
       displayName: "DMZ NSG"
       inputs:
         azureSubscription: 'vdc2-hub'
         ScriptType: 'FilePath'
         ScriptPath: 'Orchestration/OrchestrationService/ModuleConfigurationDeployment.ps1'
         ScriptArguments: '-DefinitionPath "Environments/SharedServices/definition.json" -ModuleConfigurationName "DMZNSG"'
+        azurePowerShellVersion: 'LatestVersion'
+      env:
+        ADMIN_USER_PWD: $(ADMIN_USER_PWD)
+        ADMIN_USER_SSH: $(ADMIN_USER_SSH)
+        DEVOPS_SERVICE_PRINCIPAL_USER_ID: $(DEVOPS_SERVICE_PRINCIPAL_USER_ID)
+        KEYVAULT_MANAGEMENT_USER_ID: $(KEYVAULT_MANAGEMENT_USER_ID)
+        DOMAIN_ADMIN_USER_PWD: $(DOMAIN_ADMIN_USER_PWD)
+        DOMAIN_ADMIN_USERNAME: $(DOMAIN_ADMIN_USERNAME)
+        TENANT_ID: $(TENANT_ID)
+        ORGANIZATION_NAME: $(ORGANIZATION_NAME)
+        VDC_SUBSCRIPTIONS: $(VDC_SUBSCRIPTIONS)
+        VDC_TOOLKIT_SUBSCRIPTION: $(VDC_TOOLKIT_SUBSCRIPTION)
+    - task: AzurePowerShell@4
+      displayName: "Enable NSG Flow Logs on DMZ Network Security Group"
+      inputs:
+        azureSubscription: 'vdc2-hub'
+        ScriptType: 'FilePath'
+        ScriptPath: 'Orchestration/OrchestrationService/ModuleConfigurationDeployment.ps1'
+        ScriptArguments: '-DefinitionPath "Environments/SharedServices_OnpremExtension_OnpremExtension/definition.json" -ModuleConfigurationName "EnableDMZNSGFlowLogs"'
         azurePowerShellVersion: 'LatestVersion'
       env:
         ADMIN_USER_PWD: $(ADMIN_USER_PWD)
@@ -944,6 +982,52 @@ stages:
         ScriptType: 'FilePath'
         ScriptPath: 'Orchestration/OrchestrationService/ModuleConfigurationDeployment.ps1'
         ScriptArguments: '-DefinitionPath "Environments/SharedServices/definition.json" -ModuleConfigurationName "EnableServiceEndpointOnDiagnosticStorageAccount"'
+        azurePowerShellVersion: 'LatestVersion'
+      env:
+        ADMIN_USER_PWD: $(ADMIN_USER_PWD)
+        ADMIN_USER_SSH: $(ADMIN_USER_SSH)
+        DEVOPS_SERVICE_PRINCIPAL_USER_ID: $(DEVOPS_SERVICE_PRINCIPAL_USER_ID)
+        KEYVAULT_MANAGEMENT_USER_ID: $(KEYVAULT_MANAGEMENT_USER_ID)
+        DOMAIN_ADMIN_USER_PWD: $(DOMAIN_ADMIN_USER_PWD)
+        DOMAIN_ADMIN_USERNAME: $(DOMAIN_ADMIN_USERNAME)
+        TENANT_ID: $(TENANT_ID)
+        ORGANIZATION_NAME: $(ORGANIZATION_NAME)
+        VDC_SUBSCRIPTIONS: $(VDC_SUBSCRIPTIONS)
+        VDC_TOOLKIT_SUBSCRIPTION: $(VDC_TOOLKIT_SUBSCRIPTION)
+  - job: AzureBastion
+    timeoutInMinutes: 0
+    pool:
+      name: 'vdc-self-hosted' 
+    dependsOn: "VirtualNetwork"
+    variables: 
+      BOOTSTRAP_INITIALIZED: $[dependencies.AutomationAccounts.outputs['bootstratInitializedOutput.BOOTSTRAP_INITIALIZED']]
+    steps:
+    - task: AzurePowerShell@4
+      displayName: "Azure Bastion feature registration"
+      inputs:
+        azureSubscription: 'vdc2-hub'
+        ScriptType: 'FilePath'
+        ScriptPath: 'Orchestration/OrchestrationService/ModuleConfigurationDeployment.ps1'
+        ScriptArguments: '-DefinitionPath "Environments/SharedServices_OnpremExtension_OnpremExtension/definition.json" -ModuleConfigurationName "RegisterAzureBastionFeature"'
+        azurePowerShellVersion: 'LatestVersion'
+      env:
+        ADMIN_USER_PWD: $(ADMIN_USER_PWD)
+        ADMIN_USER_SSH: $(ADMIN_USER_SSH)
+        DEVOPS_SERVICE_PRINCIPAL_USER_ID: $(DEVOPS_SERVICE_PRINCIPAL_USER_ID)
+        KEYVAULT_MANAGEMENT_USER_ID: $(KEYVAULT_MANAGEMENT_USER_ID)
+        DOMAIN_ADMIN_USER_PWD: $(DOMAIN_ADMIN_USER_PWD)
+        DOMAIN_ADMIN_USERNAME: $(DOMAIN_ADMIN_USERNAME)
+        TENANT_ID: $(TENANT_ID)
+        ORGANIZATION_NAME: $(ORGANIZATION_NAME)
+        VDC_SUBSCRIPTIONS: $(VDC_SUBSCRIPTIONS)
+        VDC_TOOLKIT_SUBSCRIPTION: $(VDC_TOOLKIT_SUBSCRIPTION)
+    - task: AzurePowerShell@4
+      displayName: "Azure Bastion"
+      inputs:
+        azureSubscription: 'vdc2-hub'
+        ScriptType: 'FilePath'
+        ScriptPath: 'Orchestration/OrchestrationService/ModuleConfigurationDeployment.ps1'
+        ScriptArguments: '-DefinitionPath "Environments/SharedServices_OnpremExtension_OnpremExtension/definition.json" -ModuleConfigurationName "AzureBastion"'
         azurePowerShellVersion: 'LatestVersion'
       env:
         ADMIN_USER_PWD: $(ADMIN_USER_PWD)

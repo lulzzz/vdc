@@ -163,6 +163,24 @@
             }
         },
         {
+            "Name": "EnableSharedServicesNSGFlowLogs",
+            "DependsOn": [
+                "SharedServicesNSG"
+            ],
+            "Script": {
+                "Command": "../../Modules/NetworkSecurityGroups/2.0/Scripts/enable.flow.logs.ps1",
+                "Arguments": {
+                    "SubscriptionId": "${Parameters.SubscriptionId}",
+                    "NetworkWatcherRegion": "${Parameters.Location}",
+                    "NetworkSecurityGroupId": "reference(SharedServicesNSG.networkSecurityGroupResourceId)",
+                    "DiagnosticStorageAccountId": "reference(DiagnosticStorageAccount.storageAccountResourceId)",
+                    "WorkspaceId": "reference(LogAnalytics.logAnalyticsWorkspaceId)",
+                    "LogAnalyticsWorkspaceId": "reference(LogAnalytics.logAnalyticsWorkspaceResourceId)",
+                    "WorkspaceRegion": "${Parameters.ModuleConfigurationParameters.LogAnalytics.Location}"
+                }
+            }
+        },
+        {
             "Name": "DMZNSG",
             "ModuleDefinitionName": "NetworkSecurityGroups",
             "ResourceGroupName": "${Parameters.ModuleConfigurationParameters.NetworkSecurityGroups.ResourceGroup}",
@@ -190,6 +208,24 @@
             }
         },
         {
+            "Name": "EnableDMZNSGFlowLogs",
+            "DependsOn": [
+                "DMZNSG"
+            ],
+            "Script": {
+                "Command": "../../Modules/NetworkSecurityGroups/2.0/Scripts/enable.flow.logs.ps1",
+                "Arguments": {
+                    "SubscriptionId": "${Parameters.SubscriptionId}",
+                    "NetworkWatcherRegion": "${Parameters.Location}",
+                    "NetworkSecurityGroupId": "reference(DMZNSG.networkSecurityGroupResourceId)",
+                    "DiagnosticStorageAccountId": "reference(DiagnosticStorageAccount.storageAccountResourceId)",
+                    "WorkspaceId": "reference(LogAnalytics.logAnalyticsWorkspaceId)",
+                    "LogAnalyticsWorkspaceId": "reference(LogAnalytics.logAnalyticsWorkspaceResourceId)",
+                    "WorkspaceRegion": "${Parameters.ModuleConfigurationParameters.LogAnalytics.Location}"
+                }
+            }
+        },
+        {
             "Name": "SharedServicesRouteTable",
             "ModuleDefinitionName": "RouteTables",
             "ResourceGroupName": "${Parameters.ModuleConfigurationParameters.RouteTables.ResourceGroup}",
@@ -207,8 +243,8 @@
             "ModuleDefinitionName": "VirtualNetwork",
             "ResourceGroupName": "${Parameters.ModuleConfigurationParameters.VirtualNetwork.ResourceGroup}",
             "DependsOn": [
-                "SharedServicesNSG",
-                "DMZNSG",
+                "EnableSharedServicesNSGFlowLogs",
+                "EnableDMZNSGFlowLogs",
                 "SharedServicesRouteTable"
             ],
             "Deployment": {
@@ -578,7 +614,7 @@
         {
             "Name": "RegisterAzureBastionFeature",
             "Script": {
-                "Command": "../../Modules/AzureBastion/2.0/Scripts/RegisterProviderFeature.ps1",
+                "Command": "../../Modules/AzureBastion/2.0/Scripts/register.provider.feature.ps1",
                 "Arguments": {}
             }
         },
