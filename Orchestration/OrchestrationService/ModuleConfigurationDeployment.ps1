@@ -415,7 +415,7 @@ Function New-Deployment {
 
                         New-ResourceGroup `
                             -ResourceGroupName $moduleConfigurationResourceGroupName `
-                            -ResourceGroupLocation $subscriptionInformation.Location `
+                            -ResourceGroupLocation $location `
                             -Validate:$($Validate.IsPresent);
 
                         Write-Debug "Resource Group successfully created";

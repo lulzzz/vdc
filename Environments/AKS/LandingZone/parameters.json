@@ -131,6 +131,23 @@
                                 "destinationPorts": [
                                     "22"
                                 ]
+                            },
+                            {
+                                "name": "allow-internet-connectivity",
+                                "description": "Allows outbound connectivity to internet for AKS VNet",
+                                "protocols": [
+                                    "TCP",
+                                    "UDP"
+                                ],
+                                "sourceAddresses": [
+                                    "${Parameters.ModuleConfigurationParameters.VirtualNetwork.AddressPrefixes[0]}"
+                                ],
+                                "destinationAddresses": [
+                                    "*"
+                                ],
+                                "destinationPorts": [
+                                    "*"
+                                ]
                             }
                         ]
                     }
