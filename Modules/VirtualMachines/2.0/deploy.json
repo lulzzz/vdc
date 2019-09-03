@@ -419,6 +419,7 @@
             "name": "[concat(parameters('virtualMachineName'), copyIndex(parameters('virtualMachineOffset')), '-nic')]",
             "properties": {
                 "enableIPForwarding": true,
+                "enableAcceleratedNetworking": true,
                 "ipConfigurations": [
                     {
                         "name": "ipconfig1",
