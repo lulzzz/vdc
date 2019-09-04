@@ -228,7 +228,7 @@ stages:
         azureSubscription: 'vdc2-spoke1'
         ScriptType: 'FilePath'
         ScriptPath: 'Orchestration/OrchestrationService/ModuleConfigurationDeployment.ps1'
-        ScriptArguments: '-DefinitionPath "Environments/ASE-SQLDB/LandingZone/definition.json" -ModuleConfigurationName "RouteTables" -Validate'
+        ScriptArguments: '-DefinitionPath "Environments/ASE-SQLDB/LandingZone/definition.json" -ModuleConfigurationName "DefaultRouteTable" -Validate'
         azurePowerShellVersion: 'LatestVersion'
       env:
         ADMIN_USER_PWD: $(ADMIN_USER_PWD)
@@ -506,7 +506,7 @@ stages:
         azureSubscription: 'vdc2-spoke1'
         ScriptType: 'FilePath'
         ScriptPath: 'Orchestration/OrchestrationService/ModuleConfigurationDeployment.ps1'
-        ScriptArguments: '-DefinitionPath "Environments/ASE-SQLDB/LandingZone/definition.json" -ModuleConfigurationName "RouteTables"'
+        ScriptArguments: '-DefinitionPath "Environments/ASE-SQLDB/LandingZone/definition.json" -ModuleConfigurationName "DefaultRouteTable"'
         azurePowerShellVersion: 'LatestVersion'
       env:
         ADMIN_USER_PWD: $(ADMIN_USER_PWD)
