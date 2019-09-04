@@ -515,7 +515,7 @@ stages:
   - job: NetworkSecurityGroups
     pool:
       name: 'vdc-self-hosted'
-    dependsOn: [ DiagnosticStorageAccount, LogAnalytics, ApplicationSecurityGroups ]
+    dependsOn: [ LogAnalytics, ApplicationSecurityGroups ]
     variables: 
       BOOTSTRAP_INITIALIZED: $[dependencies.ApplicationSecurityGroups.outputs['bootstratInitializedOutput.BOOTSTRAP_INITIALIZED']]
     steps:
