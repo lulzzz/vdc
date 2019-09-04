@@ -65,6 +65,37 @@
             }
         },
         {
+            "Name": "AzureSecurityCenter",
+            "ModuleDefinitionName": "AzureSecurityCenter",
+            "DependsOn": [
+                "LogAnalytics"
+            ],
+            "Deployment": {
+                "OverrideParameters": {
+                    "workspaceId": {
+                        "value": "reference(LogAnalytics.logAnalyticsWorkspaceResourceId)"
+                    }
+                }
+            }
+        },
+        {
+            "Name": "NISTControls",
+            "ModuleDefinitionName": "NISTControls",
+            "DependsOn": [
+                "LogAnalytics"
+            ],
+            "Deployment": {
+                "OverrideParameters": {
+                    "workspaceId": {
+                        "value": "reference(LogAnalytics.logAnalyticsWorkspaceId)"
+                    },
+                    "location": {
+                        "value": "${Parameters.Location}"
+                    }
+                }
+            }
+        },
+        {
             "Name": "AutomationAccounts",
             "ModuleDefinitionName": "AutomationAccounts",
             "ResourceGroupName": "${Parameters.ModuleConfigurationParameters.AutomationAccounts.ResourceGroup}",
