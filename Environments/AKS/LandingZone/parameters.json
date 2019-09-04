@@ -13,7 +13,7 @@
         "SharedServices": {
             "DeploymentName": "shrdsvcs",
             "ActiveDirectory": {
-                "VmIpAddressStart": [ "172.0.0.10" ]
+                "VmIpAddressStart": [ "192.168.1.4" ]
             },
             "VirtualNetwork": {
                 "Id": "/subscriptions/${Subscriptions.SharedServices.SubscriptionId}/resourceGroups/${Parameters.ModuleConfigurationParameters.SharedServices.VirtualNetwork.ResourceGroupName}/providers/Microsoft.Network/virtualNetworks/${Parameters.ModuleConfigurationParameters.SharedServices.VirtualNetwork.Name}",
