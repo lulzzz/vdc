@@ -7,7 +7,10 @@
     "ModuleConfigurationParameters": {
         "OnPremisesInformation": {
             "DeploymentName": "onprem",
-            "InstanceName": "${Parameters.Organization}-${Parameters.ModuleConfigurationParameters.OnPremisesInformation.DeploymentName}"
+            "InstanceName": "${Parameters.Organization}-${Parameters.ModuleConfigurationParameters.OnPremisesInformation.DeploymentName}",
+            "Network": {
+                "AddressPrefix": "192.168.1.0/28"
+            }
         },
         "SharedServices": {
             "DeploymentName": "shrdsvcs",
