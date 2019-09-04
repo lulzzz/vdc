@@ -770,7 +770,7 @@
                 "Name": "linux-jb-vm",
                 "VMCount": 1,
                 "OSType": "Linux",
-                "VMSize": "Standard_D2s_v3",
+                "VMSize": "Standard_DS2_v2",
                 "OSImage": {
                     "publisher": "Canonical",
                     "offer": "UbuntuServer",
