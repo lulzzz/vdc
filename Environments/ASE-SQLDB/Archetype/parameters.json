@@ -71,7 +71,7 @@
         "AppServiceEnvironments": {
             "Name": "${Parameters.InstanceName}-ase",
             "ResourceGroup": "${Parameters.InstanceName}-ase-rg",
-            "DnsSuffix": "${Parameters.ModuleConfigurationParameters.OnPremisesInformation.ActiveDirectory.DomainName}",
+            "DnsSuffix": "${Parameters.ModuleConfigurationParameters.SharedServices.DomainName}",
             "InternalLoadBalancingMode": "Web",
             "IpSSLAddressCount": 0
         },
