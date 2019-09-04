@@ -439,7 +439,7 @@ stages:
         ORGANIZATION_NAME: $(ORGANIZATION_NAME)
         VDC_SUBSCRIPTIONS: $(VDC_SUBSCRIPTIONS)
         VDC_TOOLKIT_SUBSCRIPTION: $(VDC_TOOLKIT_SUBSCRIPTION)
-- stage: DeployCoreInfrastructure
+- stage: DeployEnvironment
   jobs:
   - job: NetworkSecurityGroups
     pool:

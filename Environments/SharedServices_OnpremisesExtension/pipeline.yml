@@ -269,7 +269,7 @@ stages:
         azureSubscription: 'vdc2-hub'
         ScriptType: 'FilePath'
         ScriptPath: 'Orchestration/OrchestrationService/ModuleConfigurationDeployment.ps1'
-        ScriptArguments: '-DefinitionPath "Environments/SharedServices_OnpremisesExtension/definition.json" -ModuleConfigurationName "SharedServices_OnpremExtensionNSG" -Validate'
+        ScriptArguments: '-DefinitionPath "Environments/SharedServices_OnpremisesExtension/definition.json" -ModuleConfigurationName "SharedServicesNSG" -Validate'
         azurePowerShellVersion: 'LatestVersion'
       env:
         ADMIN_USER_PWD: $(ADMIN_USER_PWD)
@@ -324,7 +324,7 @@ stages:
         azureSubscription: 'vdc2-hub'
         ScriptType: 'FilePath'
         ScriptPath: 'Orchestration/OrchestrationService/ModuleConfigurationDeployment.ps1'
-        ScriptArguments: '-DefinitionPath "Environments/SharedServices_OnpremisesExtension/definition.json" -ModuleConfigurationName "SharedServices_OnpremExtensionRouteTable" -Validate'
+        ScriptArguments: '-DefinitionPath "Environments/SharedServices_OnpremisesExtension/definition.json" -ModuleConfigurationName "SharedServicesRouteTable" -Validate'
         azurePowerShellVersion: 'LatestVersion'
       env:
         ADMIN_USER_PWD: $(ADMIN_USER_PWD)
