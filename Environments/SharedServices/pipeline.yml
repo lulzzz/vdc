@@ -1235,18 +1235,25 @@ stages:
         ORGANIZATION_NAME: $(ORGANIZATION_NAME)
         VDC_SUBSCRIPTIONS: $(VDC_SUBSCRIPTIONS)
         VDC_TOOLKIT_SUBSCRIPTION: $(VDC_TOOLKIT_SUBSCRIPTION)
-    - task: turtlesystems-azure-storage@1
-      displayName: "Upload Scripts to Artifacts Storage"
+    - task: AzurePowerShell@4
+      displayName: "Upload scripts to artifacts Storage Account"
       inputs:
         azureSubscription: 'vdc2-hub'
-        action: 'create'
-        resourceGroupName: $(vdc_cache_ArtifactsStorageAccount_StorageAccountResourceGroup)
-        location: $(vdc_cache_ArtifactsStorageAccount_StorageAccountRegion)
-        storageAccountName: $(vdc_cache_ArtifactsStorageAccount_StorageAccountName)
-        containerName: 'scripts'
-        uploadDirectory: 'Scripts'
-        sasTokenStartTime: '1m'
-        sasTokenExpiryTime: '1h'
+        ScriptType: 'FilePath'
+        ScriptPath: 'Orchestration/OrchestrationService/ModuleConfigurationDeployment.ps1'
+        ScriptArguments: '-DefinitionPath "Environments/SharedServices/definition.json" -ModuleConfigurationName "UploadScriptsToArtifactsStorage"'
+        azurePowerShellVersion: 'LatestVersion'
+      env:
+        ADMIN_USER_PWD: $(ADMIN_USER_PWD)
+        ADMIN_USER_SSH: $(ADMIN_USER_SSH)
+        DEVOPS_SERVICE_PRINCIPAL_USER_ID: $(DEVOPS_SERVICE_PRINCIPAL_USER_ID)
+        KEYVAULT_MANAGEMENT_USER_ID: $(KEYVAULT_MANAGEMENT_USER_ID)
+        DOMAIN_ADMIN_USER_PWD: $(DOMAIN_ADMIN_USER_PWD)
+        DOMAIN_ADMIN_USERNAME: $(DOMAIN_ADMIN_USERNAME)
+        TENANT_ID: $(TENANT_ID)
+        ORGANIZATION_NAME: $(ORGANIZATION_NAME)
+        VDC_SUBSCRIPTIONS: $(VDC_SUBSCRIPTIONS)
+        VDC_TOOLKIT_SUBSCRIPTION: $(VDC_TOOLKIT_SUBSCRIPTION)
   - job: ActiveDirectory
     timeoutInMinutes: 0
     pool:
