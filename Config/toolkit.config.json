@@ -10,7 +10,7 @@
         },
         "Cache": {
             "Comments": "Caching service",
-            "StorageType": "Local"
+            "StorageType": "AzureDevOps"
         }
     }
 }
