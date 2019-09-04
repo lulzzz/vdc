@@ -18,7 +18,7 @@
             "Jumpbox_SubnetAddressPrefix": "172.0.0.0/24"
         },
         "DiagnosticStorageAccount": {
-            "Name": "${Parameters.Organization}asesqldiag01",
+            "Name": "${Parameters.Organization}ntieridiag01",
             "ResourceGroup": "${Parameters.InstanceName}-diagnostics-rg",
             "Sku": "Standard_GRS",
             "NetworkAcls": {
