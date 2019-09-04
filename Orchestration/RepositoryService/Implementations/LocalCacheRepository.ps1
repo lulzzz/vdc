@@ -44,7 +44,7 @@ Class LocalCacheRepository: ICacheRepository {
                [string] $value) {
         
         $policy = New-Object System.Runtime.Caching.CacheItemPolicy;
-        $policy.AbsoluteExpiration = (Get-Date).AddHours(1);
+        $policy.AbsoluteExpiration = (Get-Date).AddHours(3);
         
         if(![string]::IsNullOrEmpty($key)) {
             # Add prefix to the key before attempting save

@@ -45,8 +45,8 @@ Class AzureDevOpsCacheRepository: ICacheRepository {
         # return type from Get-Item is name-value pair, if present
         # return its Value
         if($null -ne $environmentValue) {
-            Write-Debug "Key: $key found in cache, with value: $($environmentValue.Value)"
-            return $environmentValue.Value;
+            Write-Debug "Key: $key found in cache, with value: $($environmentValue)"
+            return $environmentValue;
         }
         else {
             Write-Debug "Key: $key not found in cache, returning null"
