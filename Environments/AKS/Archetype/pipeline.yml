@@ -4,7 +4,7 @@
 # https://aka.ms/yaml
 # Set variables once
 variables:
-- group: VDC_SECRETS_Test
+- group: VDC_SECRETS
 - group: VDC_AKS_SECRETS
 trigger:
 - master
@@ -28,7 +28,7 @@ stages:
     - task: AzurePowerShell@4
       displayName: "ARM Validation - Container Registries"
       inputs:
-        azureSubscription: 'Kunachim Azure SC'
+        azureSubscription: 'vdc2-spoke1'
         ScriptType: 'FilePath'
         ScriptPath: 'Orchestration/OrchestrationService/ModuleConfigurationDeployment.ps1'
         ScriptArguments: '-DefinitionPath "Environments/AKS/Archetype/definition.json" -ModuleConfigurationName "ContainerRegistry" -Validate'
@@ -84,7 +84,7 @@ stages:
     - task: AzurePowerShell@4
       displayName: "ARM Validation - Azure Kubernetes Services"
       inputs:
-        azureSubscription: 'Kunachim Azure SC'
+        azureSubscription: 'vdc2-spoke1'
         ScriptType: 'FilePath'
         ScriptPath: 'Orchestration/OrchestrationService/ModuleConfigurationDeployment.ps1'
         ScriptArguments: '-DefinitionPath "Environments/AKS/Archetype/definition.json" -ModuleConfigurationName "AzureKubernetesServices" -Validate -TearDownValidationResourceGroup'
@@ -120,7 +120,7 @@ stages:
     - task: AzurePowerShell@4
       displayName: "Container Registries"
       inputs:
-        azureSubscription: 'Kunachim Azure SC'
+        azureSubscription: 'vdc2-spoke1'
         ScriptType: 'FilePath'
         ScriptPath: 'Orchestration/OrchestrationService/ModuleConfigurationDeployment.ps1'
         ScriptArguments: '-DefinitionPath "Environments/AKS/Archetype/definition.json" -ModuleConfigurationName "ContainerRegistry"'
@@ -167,7 +167,7 @@ stages:
     - task: AzurePowerShell@4
       displayName: "Azure Kubernetes Services"
       inputs:
-        azureSubscription: 'Kunachim Azure SC'
+        azureSubscription: 'vdc2-spoke1'
         ScriptType: 'FilePath'
         ScriptPath: 'Orchestration/OrchestrationService/ModuleConfigurationDeployment.ps1'
         ScriptArguments: '-DefinitionPath "Environments/AKS/Archetype/definition.json" -ModuleConfigurationName "AzureKubernetesServices"'
@@ -204,7 +204,7 @@ stages:
     - task: AzurePowerShell@4
       displayName: "Permissions Scripts Pre Reqs"
       inputs:
-        azureSubscription: 'Kunachim Azure SC'
+        azureSubscription: 'vdc2-spoke1'
         ScriptType: 'FilePath'
         ScriptPath: 'Orchestration/OrchestrationService/ModuleConfigurationDeployment.ps1'
         ScriptArguments: '-DefinitionPath "Environments/AKS/Archetype/definition.json" -ModuleConfigurationName "PermissionsScriptsPreReqs"'
@@ -233,7 +233,7 @@ stages:
     - task: AzurePowerShell@4
       displayName: "Scripts Pre Reqs"
       inputs:
-        azureSubscription: 'Kunachim Azure SC'
+        azureSubscription: 'vdc2-spoke1'
         ScriptType: 'FilePath'
         ScriptPath: 'Orchestration/OrchestrationService/ModuleConfigurationDeployment.ps1'
         ScriptArguments: '-DefinitionPath "Environments/AKS/Archetype/definition.json" -ModuleConfigurationName "ScriptsPreReqs"'
@@ -270,7 +270,7 @@ stages:
     - task: AzurePowerShell@4
       displayName: "Create Cluster RBAC Role Bindings"
       inputs:
-        azureSubscription: 'Kunachim Azure SC'
+        azureSubscription: 'vdc2-spoke1'
         ScriptType: 'FilePath'
         ScriptPath: 'Orchestration/OrchestrationService/ModuleConfigurationDeployment.ps1'
         ScriptArguments: '-DefinitionPath "Environments/AKS/Archetype/definition.json" -ModuleConfigurationName "CreateClusterRBACRoleBindings"'
