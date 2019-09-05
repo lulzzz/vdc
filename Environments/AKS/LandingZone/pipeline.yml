@@ -9,7 +9,7 @@ variables:
 trigger:
 - master
 stages:
-- stage: Validate
+- stage: Validation
   jobs:
   - job: StorageAccounts
     pool:
@@ -454,7 +454,7 @@ stages:
         VDC_TOOLKIT_SUBSCRIPTION: $(VDC_TOOLKIT_SUBSCRIPTION)
         SCRIPT_EXECUTION_SP_ID: $(SCRIPT_EXECUTION_SP_ID)
         SCRIPT_EXECUTION_SP_KEY: $(SCRIPT_EXECUTION_SP_KEY)
-- stage: Deploy
+- stage: ApplyGovernance
   jobs:
   - job: DiagnosticStorageAccount
     timeoutInMinutes: 0
@@ -550,6 +550,8 @@ stages:
         VDC_TOOLKIT_SUBSCRIPTION: $(VDC_TOOLKIT_SUBSCRIPTION)
         SCRIPT_EXECUTION_SP_ID: $(SCRIPT_EXECUTION_SP_ID)
         SCRIPT_EXECUTION_SP_KEY: $(SCRIPT_EXECUTION_SP_KEY)
+- stage: Deploy
+  jobs:
   - job: EventHub
     timeoutInMinutes: 0
     pool:
@@ -579,13 +581,23 @@ stages:
         VDC_TOOLKIT_SUBSCRIPTION: $(VDC_TOOLKIT_SUBSCRIPTION)
         SCRIPT_EXECUTION_SP_ID: $(SCRIPT_EXECUTION_SP_ID)
         SCRIPT_EXECUTION_SP_KEY: $(SCRIPT_EXECUTION_SP_KEY)
+    - task: PowerShell@2
+      displayName: "Sets multi-job variable"
+      name: "bootstratInitializedOutput"
+      inputs:
+        targetType: 'inline'
+        script: '
+        
+          $bootstrapInitialized = $ENV:BOOTSTRAP_INITIALIZED;
+          Write-Host "##vso[task.setvariable variable=BOOTSTRAP_INITIALIZED;isOutput=true]$bootstrapInitialized";'
+        pwsh: true
   - job: NetworkSecurityGroups
     timeoutInMinutes: 0
     pool:
       name: 'vdc-self-hosted'
-    dependsOn: [ LogAnalytics, DiagnosticStorageAccount ]
+    dependsOn: EventHub
     variables: 
-      BOOTSTRAP_INITIALIZED: $[dependencies.DiagnosticStorageAccount.outputs['bootstratInitializedOutput.BOOTSTRAP_INITIALIZED']]
+      BOOTSTRAP_INITIALIZED: $[dependencies.EventHub.outputs['bootstratInitializedOutput.BOOTSTRAP_INITIALIZED']]
     steps:
     - task: AzurePowerShell@4
       displayName: "Network Security Groups"
@@ -633,9 +645,9 @@ stages:
     timeoutInMinutes: 0
     pool:
       name: 'vdc-self-hosted'
-    dependsOn: DiagnosticStorageAccount
+    dependsOn: EventHub
     variables: 
-      BOOTSTRAP_INITIALIZED: $[dependencies.DiagnosticStorageAccount.outputs['bootstratInitializedOutput.BOOTSTRAP_INITIALIZED']]
+      BOOTSTRAP_INITIALIZED: $[dependencies.EventHub.outputs['bootstratInitializedOutput.BOOTSTRAP_INITIALIZED']]
     steps:
     - task: AzurePowerShell@4
       displayName: "Route Tables"
@@ -662,9 +674,9 @@ stages:
     timeoutInMinutes: 0
     pool:
       name: 'vdc-self-hosted'
-    dependsOn: [ LogAnalytics, DiagnosticStorageAccount, DefaultRouteTable, NetworkSecurityGroups ]
+    dependsOn: [ EventHub, DefaultRouteTable, NetworkSecurityGroups ]
     variables: 
-      BOOTSTRAP_INITIALIZED: $[dependencies.DiagnosticStorageAccount.outputs['bootstratInitializedOutput.BOOTSTRAP_INITIALIZED']]
+      BOOTSTRAP_INITIALIZED: $[dependencies.EventHub.outputs['bootstratInitializedOutput.BOOTSTRAP_INITIALIZED']]
     steps:
     - task: AzurePowerShell@4
       displayName: "Virtual Network"
@@ -750,14 +762,13 @@ stages:
         VDC_TOOLKIT_SUBSCRIPTION: $(VDC_TOOLKIT_SUBSCRIPTION)
         SCRIPT_EXECUTION_SP_ID: $(SCRIPT_EXECUTION_SP_ID)
         SCRIPT_EXECUTION_SP_KEY: $(SCRIPT_EXECUTION_SP_KEY)
-    
   - job: KeyVault
     timeoutInMinutes: 0
     pool:
       name: 'vdc-self-hosted'
-    dependsOn: [ DiagnosticStorageAccount, LogAnalytics, VirtualNetwork ]
+    dependsOn: [ EventHub, VirtualNetwork ]
     variables: 
-      BOOTSTRAP_INITIALIZED: $[dependencies.DiagnosticStorageAccount.outputs['bootstratInitializedOutput.BOOTSTRAP_INITIALIZED']]
+      BOOTSTRAP_INITIALIZED: $[dependencies.EventHub.outputs['bootstratInitializedOutput.BOOTSTRAP_INITIALIZED']]
     steps:
     - task: AzurePowerShell@4
       displayName: "Key Vault"
@@ -826,9 +837,9 @@ stages:
     timeoutInMinutes: 0
     pool:
       name: 'vdc-self-hosted'
-    dependsOn: DiagnosticStorageAccount
+    dependsOn: EventHub
     variables: 
-      BOOTSTRAP_INITIALIZED: $[dependencies.DiagnosticStorageAccount.outputs['bootstratInitializedOutput.BOOTSTRAP_INITIALIZED']]
+      BOOTSTRAP_INITIALIZED: $[dependencies.EventHub.outputs['bootstratInitializedOutput.BOOTSTRAP_INITIALIZED']]
     steps:
     - task: AzurePowerShell@4
       displayName: "Consolidate Application Rules"
