@@ -177,6 +177,23 @@ The following is the series of commands to execute.
 ./Orchestration/OrchestrationService/ModuleConfigurationDeployment.ps1 -DefinitionPath ./Environments/SharedServices/definition.json -ModuleConfigurationName "ArtifactsStorageAccount"
 ```
 
+### Teardown the environment
+
+You can easily tear down the shared services environment by running this command:
+
+``` PowerShell
+./Orchestration/OrchestrationService/ModuleConfigurationDeployment.ps1 -TearDownEnvironment -DefinitionPath ./Environments/SharedServices/definition.json
+```
+
+> Note: This is the same command you used to deploy expect that you include ` -TearDownEnvironment`.
+> It uses the same configuration, so if you change the configuration the tear down may not execute as expected.
+
+For satefy reason, the key vault will not be deleted. Instead, it will be set to a _removed_ state. This means that the name is still considered in use. To fully delete the key vault, use:
+
+``` PowerShell
+Get-AzKeyVault -InRemovedState | ? { Write-Host "Removing vault: $($_.VaultName)"; Remove-AzKeyVault -InRemovedState -VaultName $_.VaultName -Location $_.Location -Force }
+```
+
 ### Next steps
 
 Congratulations! You've deployed your first environment with the VDC Toolkit.
