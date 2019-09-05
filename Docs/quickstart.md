@@ -29,7 +29,7 @@ These steps assume that the `git` command is on your path.
 
 ### Build the Docker image
 
-1. Ensure that the [Docker daemon(https://docs.docker.com/config/daemon/)] is running. If you are new to Docker, the easiest way to do this is to install [Docker Desktop](https://www.docker.com/products/docker-desktop).
+1. Ensure that the [Docker daemon](https://docs.docker.com/config/daemon/) is running. If you are new to Docker, the easiest way to do this is to install [Docker Desktop](https://www.docker.com/products/docker-desktop).
 1. Open a terminal window
 1. Navigate to the folder where you cloned the repository. _The rest of the quickstart assumes that this path is `C:\Users\vdcadmin\vdc\`_
 1. Run `docker build . -t vdc:latest` to build the image.
@@ -152,7 +152,7 @@ To use the above script:
 The toolkit will begin deploying the constituent modules and the status will be sent to the terminal.
 Open the [Azure portal](https://portal.azure.com) and you can check the status of the invididual deployments.
 
-## Deploying individual moduesl
+## Deploying individual moduels
 
 If you prefer you can deploy the constituent modules for shared services individually. 
 The following is the series of commands to execute.
