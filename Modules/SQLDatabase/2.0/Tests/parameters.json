@@ -7,6 +7,12 @@
         },
         "serverName": {
             "value": "bestesqlserver0"
+        },
+        "diagnosticStorageAccountId": {
+            "value": "foo"
+        },
+        "workspaceId": {
+            "value": "/subscriptions/00000000/resourceGroups/resourceGroup"
         }
     }
 }
