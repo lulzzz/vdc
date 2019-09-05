@@ -3,7 +3,7 @@
     "DeploymentName": "aks",
     "InstanceName": "${Parameters.Organization}-${Parameters.DeploymentName}",
     "Subscription": "AKS",
-    "Location": "West US",
+    "Location": "West US 2",
     "ModuleConfigurationParameters": {
         "ResourceGroupPrefix": "${Parameters.Organization}-${Parameters.DeploymentName}",
         "Region": "westus2",

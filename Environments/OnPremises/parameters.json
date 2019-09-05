@@ -224,11 +224,7 @@
                 }
             ],
             "EnableDdosProtection": false,
-            "EnableVmProtection": false,
-            "DnsServers": [
-                "${Parameters.ModuleConfigurationParameters.ActiveDirectory.PrimaryDomainControllerIP}",
-                "168.63.129.16"
-            ]
+            "EnableVmProtection": false
         }
     }
 }
