@@ -1,21 +1,24 @@
 {
-  "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentParameters.json#",
-  "contentVersion": "1.0.0.0",
-  "parameters": {
-    "administratorLogin": {
-      "value": "hardtoguess"
-    },
-    "administratorLoginPassword": {
-      "value": null
-    },
-    "serverName": {
-      "value": "bestesqlserver0"
-    },
-    "diagnosticStorageAccountPrimaryBlobEndpoint": {
-      "value": "https://sqlva4epkclsmplqrm.blob.core.windows.net/"
-    },
-    "diagnosticStorageAccountAccessKey": {
-      "value": "sqlva4epkclsmplqrm"
+    "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentParameters.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "administratorLogin": {
+            "value": "contoso"
+        },
+        "administratorLoginPassword": {
+            "value": "password"
+        },
+        "serverName": {
+            "value": "foo"
+        },
+        "diagnosticLogsRetentionInDays": {
+            "value": 365
+        },
+        "diagnosticStorageAccountId": {
+            "value": "foo"
+        },
+        "workspaceId": {
+            "value": "/subscriptions/00000000/resourceGroups/resourceGroup"
+        }
     }
-  }
 }

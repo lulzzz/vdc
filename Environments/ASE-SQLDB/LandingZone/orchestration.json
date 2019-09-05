@@ -44,6 +44,9 @@
                     },
                     "storageAccountSku": {
                         "value": "${Parameters.ModuleConfigurationParameters.DiagnosticStorageAccount.Sku}"
+                    },
+                    "blobContainers": {
+                        "value": "${Parameters.ModuleConfigurationParameters.DiagnosticStorageAccount.Containers}"
                     }
                 }
             }

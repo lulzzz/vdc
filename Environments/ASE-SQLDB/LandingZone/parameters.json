@@ -30,7 +30,12 @@
             },
             "Policies": {
                 "Effect": "Audit"
-            }
+            },
+            "Containers": [
+                {
+                    "name": "vulnerability-assessment"
+                }
+            ]
         },
         "LogAnalytics": {
             "Name": "${Parameters.InstanceName}-la",
