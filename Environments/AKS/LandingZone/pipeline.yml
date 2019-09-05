@@ -9,7 +9,7 @@ variables:
 trigger:
 - master
 stages:
-- stage: Validation
+- stage: Validate
   jobs:
   - job: StorageAccounts
     pool:
@@ -550,7 +550,7 @@ stages:
         VDC_TOOLKIT_SUBSCRIPTION: $(VDC_TOOLKIT_SUBSCRIPTION)
         SCRIPT_EXECUTION_SP_ID: $(SCRIPT_EXECUTION_SP_ID)
         SCRIPT_EXECUTION_SP_KEY: $(SCRIPT_EXECUTION_SP_KEY)
-- stage: Deploy
+- stage: DeployEnvironment
   jobs:
   - job: EventHub
     timeoutInMinutes: 0

@@ -110,7 +110,7 @@ stages:
         DEV_USER_GROUP_ID: $(DEV_USER_GROUP_ID)
         SCRIPT_EXECUTION_SP_ID: $(SCRIPT_EXECUTION_SP_ID)
         SCRIPT_EXECUTION_SP_KEY: $(SCRIPT_EXECUTION_SP_KEY)
-- stage: Deploy
+- stage: DeployEnvironment
   jobs:
   - job: ContainerRegistry
     timeoutInMinutes: 0
