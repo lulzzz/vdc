@@ -52,7 +52,7 @@
                     "servicePrincipalClientSecret": {
                         "value": "${Parameters.ModuleConfigurationParameters.Kubernetes.ServicePrincipalClientSecret}"
                     },
-                    "osType": {
+                    "agentOSType": {
                         "value": "${Parameters.ModuleConfigurationParameters.Kubernetes.OsType}"
                     },
                     "kubernetesVersion": {
