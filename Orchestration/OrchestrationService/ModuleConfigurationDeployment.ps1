@@ -17,6 +17,9 @@
     $Validate,
     [Parameter(Mandatory=$false)]
     [switch]
+    $TearDownValidationResourceGroup,
+    [Parameter(Mandatory=$false)]
+    [switch]
     $TearDownEnvironment)
 
 $rootPath = Split-Path -Path $MyInvocation.MyCommand.Definition -Parent;
